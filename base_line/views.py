@@ -93,9 +93,7 @@ def ministry_health_system(request):
 @csrf_exempt
 def bs_save_hs_data_mock(request):
     bs_data = (yaml.safe_load(request.body))
-    #bs_table_hs_data = (yaml.safe_load(request.body))
-    #bs_data = (yaml.safe_load('{"table_data":{"Table_1":{"BhsPlc":[{"male":5,"female":3,"children":5,"elderly":7}],"BhsComDiseases":[{"com_disease":"Diarrhea","male":5,"female":6,"children":7,"elderly":8},{"com_disease":"Dengue","male":5,"female":6,"children":7,"elderly":8}],"BhsVi":[{"vital_indicators":"Under-5 Mortality Rate","male":3,"female":3,"children":3,"elderly":3},{"vital_indicators":"Mortality Rate","male":3,"female":3,"children":3,"elderly":3}],"BhsOi":[{"other_indicators":"Crude Birth Rate","unit_measure":1},{"other_indicators":"Maternal Mortality Rate","unit_measure":""}]}}}'))
-
+   
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
 
