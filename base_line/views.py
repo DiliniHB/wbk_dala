@@ -14,6 +14,7 @@ from django.http import Http404
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
 from django.http import JsonResponse
+from django.conf import settings
 
 
 # render baseline health table
@@ -227,36 +228,46 @@ def bs_save_data(request):
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
+    is_edit = bs_data['is_edit']
 
-    for interface_table in bs_table_hs_data:
-        print 'interface table', ' -->', interface_table, '\n'
-        for db_table in bs_table_hs_data[interface_table]:
+    if not is_edit:
 
-            print 'db table', ' -->', db_table, '\n'
+        try:
+            for interface_table in bs_table_hs_data:
+                print 'interface table', ' -->', interface_table, '\n'
+                for db_table in bs_table_hs_data[interface_table]:
 
-            for row in bs_table_hs_data[interface_table][db_table]:
+                    print 'db table', ' -->', db_table, '\n'
 
-                model_class = apps.get_model('base_line', db_table)
-                model_object = model_class()
+                    for row in bs_table_hs_data[interface_table][db_table]:
 
-                # assigning common properties to model object
-                model_object.created_date = todate
-                model_object.lmd = todate
-                #model_object.district_id = com_data['district']
-                model_object.bs_date = com_data['bs_date']
+                        model_class = apps.get_model('base_line', db_table)
+                        model_object = model_class()
 
-                print 'row', ' --> ', row, '\n', ' object '
+                        # assigning common properties to model object
+                        model_object.created_date = todate
+                        model_object.lmd = todate
+                        model_object.district_id = com_data['district']
+                        model_object.bs_date = com_data['bs_date']
 
-                for property in row:
-                    setattr(model_object, property, row[property])
+                        print 'row', ' --> ', row, '\n', ' object '
 
-                    print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
-                    model_object.save()
+                        for property in row:
+                            setattr(model_object, property, row[property])
 
-    record_exist = BdSessionKeys.objects.filter(bs_date=com_data['bs_date'])
-    if not record_exist:
-        bdSession = BdSessionKeys(bs_date=com_data['bs_date'], date=todate, data_type='base_line')
-        bdSession.save()
+                            print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
+                            model_object.save()
+
+            record_exist = BdSessionKeys.objects.filter(bs_date=com_data['bs_date'])
+            if not record_exist:
+                bd_session = BdSessionKeys(bs_date=com_data['bs_date'], date=todate, data_type='base_line')
+                bd_session.save()
+
+        except Exception as e:
+            return HttpResponse(e)
+
+    else:
+        bs_save_edit_data(bs_table_hs_data, com_data)
 
     return HttpResponse('success')
 
@@ -284,33 +295,24 @@ def bs_get_data(request):
     )
 
 
-table_property_mapper = {
-    'Table_1':
-        {'BhsPlc': ['children', 'elderly', 'female', 'male'],
-         'BhsComDiseases': ['com_disease', 'male', 'female', 'children', 'elderly'],
-         'BhsVi': ['children', 'elderly', 'female', 'male', 'vital_indicators'],
-         'BhsOi': ['unit_measure', 'other_indicators']
-         }
-}
-
-
 @csrf_exempt
 def bs_fetch_edit_data(request):
 
-    bs_date = '12/2016'
-    district = 2
     data = (yaml.safe_load(request.body))
     table_name = data['table_name']
-    #table_name = 'Table_1'
-    tables = table_property_mapper[table_name]
+    com_data = data['com_data']
+    bs_date = com_data['bs_date']
+    district = com_data['district']
+    tables = settings.TABLE_PROPERTY_MAPPER[table_name]
 
     bs_mtable_data = {table_name: {}}
 
     for table in tables:
         table_fields = tables[table]
         model_class = apps.get_model('base_line', table)
-        bs_mtable_data[table_name][table] = list(model_class.objects.filter(bs_date=bs_date, district=district).\
-        values(*table_fields))
+        bs_mtable_data[table_name][table] = list(model_class.objects.
+                                                 filter(bs_date=bs_date, district=district).
+                                                 values(*table_fields))
 
     return HttpResponse(
         json.dumps(bs_mtable_data),
@@ -319,14 +321,10 @@ def bs_fetch_edit_data(request):
 
 
 @csrf_exempt
-def bs_save_edit_data():
-    #district = com_data['district']
-    #bs_date = com_data['bs_date']
-    district = 2
-    bs_date = '12/2016'
+def bs_save_edit_data(table_data, com_data):
 
-    table_data = (yaml.safe_load('{"table_data": {"Table_1":{"BhsComDiseases":[{"com_disease":"Diarrhea","male":90,"female":6,"children":7,"elderly":8},{"com_disease":"Dengue","male":5,"female":6,"children":7,"elderly":8}]}}}'))
-    table_data = table_data['table_data']
+    district = com_data['district']
+    bs_date = com_data['bs_date']
 
     for interface_table in table_data:
         print 'interface table', ' -->', interface_table, '\n'
@@ -337,7 +335,7 @@ def bs_save_edit_data():
             for row in table_data[interface_table][db_table]:
 
                 model_class = apps.get_model('base_line', db_table)
-                model_object = model_class.objects.filter(bs_date=bs_date, district=district, com_disease=row['com_disease'])
+                model_object = model_class.objects.filter(bs_date=bs_date, district=district, id=row['id'])
                 model_object.update(**row)
 
                 print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'

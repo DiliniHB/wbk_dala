@@ -2,7 +2,7 @@ from django.shortcuts import render
 from settings.models import District, BdSessionKeys, Province
 from incidents.models import IncidentReport
 from base_line.models import BucOmarStructure
-import yaml
+import yaml, json
 from django.utils import timezone
 from django.http import HttpResponse
 from django.apps import apps
@@ -13,6 +13,7 @@ from django.http import Http404
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
 from django.http import JsonResponse
+from django.conf import settings
 
 
 def dl_health_damagelost_other_medical_facilities(request):
@@ -78,40 +79,110 @@ def dl_health_summary_damage_nationwide(request):
 @csrf_exempt
 def dl_save_data(request):
     bs_data = (yaml.safe_load(request.body))
-    bs_table_hs_data = bs_data['table_data']
+    dl_table_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
+    is_edit = bs_data['is_edit']
 
-    try:
-        for interface_table in bs_table_hs_data:
-            print 'interface table', ' -->', interface_table, '\n'
-            for db_table in bs_table_hs_data[interface_table]:
+    if not is_edit:
+        try:
+            for interface_table in dl_table_data:
+                print 'interface table', ' -->', interface_table, '\n'
+                for db_table in dl_table_data[interface_table]:
 
-                print 'db table', ' -->', db_table, '\n'
+                    print 'db table', ' -->', db_table, '\n'
 
-                for row in bs_table_hs_data[interface_table][db_table]:
+                    for row in dl_table_data[interface_table][db_table]:
 
-                    model_class = apps.get_model('damage_losses', db_table)
-                    model_object = model_class()
+                        model_class = apps.get_model('damage_losses', db_table)
+                        model_object = model_class()
 
-                    # assigning common properties to model object
-                    model_object.created_date = todate
-                    model_object.lmd = todate
-                    #model_object.district_id = com_data['district']
-                    #model_object.incident_id = com_data['incident']
+                        # assigning common properties to model object
+                        model_object.created_date = todate
+                        model_object.lmd = todate
+                        model_object.district_id = com_data['district']
+                        model_object.incident_id = com_data['incident']
 
-                    print 'row', ' --> ', row, '\n', ' object '
+                        print 'row', ' --> ', row, '\n', ' object '
 
-                    for property in row:
-                        setattr(model_object, property, row[property])
+                        for property in row:
+                            setattr(model_object, property, row[property])
 
-                        print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
-                        model_object.save()
+                            print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
+                            model_object.save()
 
-    except Exception as e:
-        return HttpResponse(e)
+        except Exception as e:
+            return HttpResponse(e)
+
+    else:
+        dl_save_edit_data(dl_table_data, com_data)
 
     return HttpResponse('success')
 
+
+@csrf_exempt
+def dl_get_data(request):
+    data = (yaml.safe_load(request.body))
+    com_data = data['com_data']
+    incident = com_data['incident']
+    district = com_data['district']
+    db_tables = data['db_tables']
+
+    bs_mtable_data = {}
+
+    for db_table in db_tables:
+        model_class = apps.get_model('damage_losses', db_table)
+        bs_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident, district=district).order_by('id'))
+
+    return HttpResponse(
+        json.dumps(bs_mtable_data),
+        content_type='application/javascript; charset=utf8'
+    )
+
+
+@csrf_exempt
+def dl_fetch_edit_data(request):
+
+    data = (yaml.safe_load(request.body))
+    table_name = data['table_name']
+    com_data = data['com_data']
+    incident = com_data['incident']
+    district = com_data['district']
+    tables = settings.TABLE_PROPERTY_MAPPER[table_name]
+
+    bs_mtable_data = {table_name: {}}
+
+    for table in tables:
+        table_fields = tables[table]
+        model_class = apps.get_model('damage_losses', table)
+        bs_mtable_data[table_name][table] = list(model_class.objects.
+                                                 filter(incident=incident, district=district).
+                                                 values(*table_fields))
+
+    return HttpResponse(
+        json.dumps(bs_mtable_data),
+        content_type='application/javascript; charset=utf8'
+    )
+
+
+@csrf_exempt
+def dl_save_edit_data(table_data, com_data):
+
+    incident = com_data['incident']
+    district = com_data['district']
+
+    for interface_table in table_data:
+        print 'interface table', ' -->', interface_table, '\n'
+        for db_table in table_data[interface_table]:
+
+            print 'db table', ' -->', db_table, '\n'
+
+            for row in table_data[interface_table][db_table]:
+
+                model_class = apps.get_model('base_line', db_table)
+                model_object = model_class.objects.filter(incident=incident, district=district, id=row['id'])
+                model_object.update(**row)
+
+                print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
 
 

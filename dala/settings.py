@@ -131,3 +131,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# table properties
+TABLE_PROPERTY_MAPPER = {
+    'Table_1':
+        {'BhsPlc': ['children', 'elderly', 'female', 'male', 'id'],
+         'BhsComDiseases': ['com_disease', 'male', 'female', 'children', 'elderly', 'id'],
+         'BhsVi': ['children', 'elderly', 'female', 'male', 'vital_indicators', 'id'],
+         'BhsOi': ['unit_measure', 'other_indicators', 'id']
+         }
+}

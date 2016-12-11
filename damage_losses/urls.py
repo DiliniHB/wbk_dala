@@ -8,6 +8,9 @@ urlpatterns = [
     url(r'^dl_health_damagelost_other_medical_facilities$', views.dl_health_damagelost_other_medical_facilities,
         name='dl_health_damagelost_other_medical_facilities'),
     url(r'^dl_save_data$', views.dl_save_data, name='dl_save_data'),
+    url(r'^dl_get_data$', views.dl_get_data, name='dl_get_data'),
+    url(r'^dl_fetch_edit_data$', views.dl_fetch_edit_data, name='dl_fetch_edit_data'),
+
 
     #Dileepa and Sachie's
     url(r'^dl_health_other_medical_facilities', views.dl_health_other_medical_facilities,

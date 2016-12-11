@@ -81,7 +81,7 @@ console.log(($scope.dataHealthStatus));
 
  $http({
     method: "POST",
-    url: "/base_line/bs_save_hs_data",
+    url: "/base_line/bs_save_data",
     data: angular.toJson({'table_data': ($scope.dataHealthStatus), 'com_data': {'district': $scope.district,
           'bs_date': $scope.bs_date}, 'is_edit': $scope.is_edit }),
     }).success(function(data) {
@@ -134,7 +134,8 @@ $scope.bsHsDataEdit = function()
     $http({
     method: "POST",
     url: "/base_line/bs_fetch_edit_data",
-    data: angular.toJson({'table_name': 'Table_1' }),
+    data: angular.toJson({'table_name': 'Table_1', 'com_data': {'district': $scope.district,
+          'bs_date': $scope.bs_date} }),
     }).success(function(data) {
 
     console.log(data);
