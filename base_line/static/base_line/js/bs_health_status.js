@@ -93,13 +93,6 @@ console.log(($scope.dataHealthStatus));
 
 }
 
-$scope.error_field;
-$scope.check_valida = function check_valida()
-{
-
-alert(form_pop_lat_census.dataHealthStatus.Table_1.BhsPlc[0].male.$valid);
-}
-
 $scope.insertDisease = function(table)
 {
     console.log($scope.dataHealthStatus.Table_1[table]);
