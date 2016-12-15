@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from tastypie.api import Api
+
 from api.resources import DistrictResource, ProvinceResource, BmfPubMfResource
 
 v1_api = Api(api_name='v1')

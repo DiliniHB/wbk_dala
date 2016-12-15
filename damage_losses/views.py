@@ -61,8 +61,10 @@ def dl_health_other_medical_facilities(request):
 
 def dl_health_summary_sector_district(request):
     districts = District.objects.all()
+    incidents = IncidentReport.objects.all()
     context = {
-        'districts': districts
+        'districts': districts,
+        'incidents': incidents,
     }
     return render(request, 'damage_losses/health_summery_damageloss_dis.html', context)
 
@@ -82,7 +84,7 @@ def dl_save_data(request):
     dl_table_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
-    is_edit = bs_data['is_edit']
+    is_edit = com_data['is_edit']
 
     if not is_edit:
         try:
@@ -100,7 +102,7 @@ def dl_save_data(request):
                         # assigning common properties to model object
                         model_object.created_date = todate
                         model_object.lmd = todate
-                        model_object.district_id = com_data['district']
+                        #model_object.district_id = com_data['district']
                         model_object.incident_id = com_data['incident']
 
                         print 'row', ' --> ', row, '\n', ' object '
@@ -124,18 +126,18 @@ def dl_save_data(request):
 def dl_get_data(request):
     data = (yaml.safe_load(request.body))
     com_data = data['com_data']
-    incident = com_data['incident']
+    incident_id = com_data['incident']
     district = com_data['district']
     db_tables = data['db_tables']
 
-    bs_mtable_data = {}
+    dl_mtable_data = {}
 
     for db_table in db_tables:
         model_class = apps.get_model('damage_losses', db_table)
-        bs_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident, district=district).order_by('id'))
+        dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident_id, district=district).order_by('id'))
 
     return HttpResponse(
-        json.dumps(bs_mtable_data),
+        json.dumps(dl_mtable_data),
         content_type='application/javascript; charset=utf8'
     )
 

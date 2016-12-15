@@ -40,23 +40,37 @@
                         <tr class="trhead">
                             <td style="padding-left:5px;"> Name of District</td>
 
-                            <td colspan="7" style="background:#EFEFEF;">
-                                <select id="selectbasic" name="selectbasic" ng-model="$scope.district"
-                                        class="form-control" style="width:50%;font-weight:400;">
+                            <td colspan="3" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" ng-model="district"
+                                        class="form-control"
+                                        style="width:100%;font-weight:400;"
+                                        ng-change="changedValue(district)"
+                                >
+
                                     <option value="" selected="true">Select a District</option>
                                     {% for district in districts %}
+
                                     <option value={{district.id}}>{{district.name}}
                                         {% endfor %}
                                 </select>
+
                             </td>
                             <td colspan="3" style="padding-right:5px;text-align:right;">
-                                Disaster Type
+                                Incident
                             </td>
-                            <td colspan="6" style="background:#EFEFEF;">
-                                <select id="select" name="selectbasic" class="form-control"
-                                        style="width:100%;font-weight:400;">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+                            <td colspan="2" style="background:#EFEFEF;">
+
+                                <select id="select" name="selectbasic" ng-model="incident"
+                                        class="form-control"
+                                        style="width:100%;font-weight:400;"
+                                        ng-change="changedValue(incident)">
+
+                                    <option value="" selected="true">Select an Incident</option>
+                                    {% for incident in incidents %}
+
+                                    <option value={{incident.id}}>{{incident.disaster_type.name}}
+                                        {{incident.reported_date_time}}
+                                        {% endfor %}
                                 </select>
                             </td>
                         </tr>
@@ -118,39 +132,623 @@
                                 <td width="98">
                                 </td>
                             </tr>
+                            <!--Table 8 :table one:tab1  first row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubLmh[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_num_affected=dl_data['DmhDfNum'][0].fields.teaching_hospital + dl_data['DmhPdfaNum'][0].fields.teaching_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].male=dl_data['DmhDfPaf'][0].fields.teaching_hospital + dl_data['DmhPdfaPaf'][0].fields.teaching_hospital">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].female=dl_data['DmhDfPaf'][1].fields.teaching_hospital + dl_data['DmhPdfaPaf'][1].fields.teaching_hospital">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_damages=dl_data['DmhPdfaOassets'][7].fields.teaching_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y1=dl_data['DmhLosFi'][0].fields.teaching_hospital+ dl_data['DmhLosCud'][0].fields.teaching_hospital + dl_data['DmhLosHoc'][0].fields.teaching_hospital + dl_data['DmhLosOue'][0].fields.teaching_hospital ">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y2=dl_data['DmhLosFi'][1].fields.teaching_hospital+ dl_data['DmhLosCud'][1].fields.teaching_hospital + dl_data['DmhLosHoc'][1].fields.teaching_hospital + dl_data['DmhLosOue'][1].fields.teaching_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[0].total_losses=dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 8 :table one:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubLmh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_num_affected=dl_data['DmhDfNum'][0].fields.provincial_general_hospital + dl_data['DmhPdfaNum'][0].fields.teaching_hospital ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].male=dl_data['DmhDfPaf'][0].fields.provincial_general_hospital + dl_data['DmhPdfaPaf'][0].fields.provincial_general_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].female=dl_data['DmhDfPaf'][1].fields.provincial_general_hospital + dl_data['DmhPdfaPaf'][1].fields.provincial_general_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_damages=dl_data['DmhPdfaOassets'][7].fields.provincial_general_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y1=dl_data['DmhLosFi'][0].fields.provincial_general_hospital+ dl_data['DmhLosCud'][0].fields.teaching_hospital + dl_data['DmhLosHoc'][0].fields.provincial_general_hospital + dl_data['DmhLosOue'][0].fields.provincial_general_hospital ">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y2=dl_data['DmhLosFi'][1].fields.provincial_general_hospital+ dl_data['DmhLosCud'][1].fields.provincial_general_hospital + dl_data['DmhLosHoc'][1].fields.provincial_general_hospital + dl_data['DmhLosOue'][1].fields.provincial_general_hospital ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[1].total_losses=dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y1 + dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+                            <!--Table 8 :table one:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubLmh[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_num_affected=dl_data['DmhDfNum'][0].fields.district_general_hospital + dl_data['DmhPdfaNum'][0].fields.district_general_hospital ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].male=dl_data['DmhDfPaf'][0].fields.district_general_hospital + dl_data['DmhPdfaPaf'][0].fields.district_general_hospital">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].female=dl_data['DmhDfPaf'][1].fields.district_general_hospital + dl_data['DmhPdfaPaf'][1].fields.district_general_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_damages=dl_data['DmhPdfaOassets'][7].fields.district_general_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y1=dl_data['DmhLosFi'][0].fields.district_general_hospital+ dl_data['DmhLosCud'][0].fields.district_general_hospital + dl_data['DmhLosHoc'][0].fields.district_general_hospital + dl_data['DmhLosOue'][0].fields.district_general_hospital ">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y2=dl_data['DmhLosFi'][1].fields.district_general_hospital+ dl_data['DmhLosCud'][1].fields.district_general_hospital + dl_data['DmhLosHoc'][1].fields.district_general_hospital + dl_data['DmhLosOue'][1].fields.district_general_hospital ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[2].total_losses=dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y1 + dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+                            <!--Table 8 :table one:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubLmh[3].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_num_affected=dlhealthsectordistrict.Table_8.DshPubLmh[0].total_num_affected + dlhealthsectordistrict.Table_8.DshPubLmh[1].total_num_affected + dlhealthsectordistrict.Table_8.DshPubLmh[2].total_num_affected">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].male=dlhealthsectordistrict.Table_8.DshPubLmh[0].male + dlhealthsectordistrict.Table_8.DshPubLmh[1].male + dlhealthsectordistrict.Table_8.DshPubLmh[2].male">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].female=dlhealthsectordistrict.Table_8.DshPubLmh[0].female + dlhealthsectordistrict.Table_8.DshPubLmh[1].female + dlhealthsectordistrict.Table_8.DshPubLmh[2].female">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_damages=dlhealthsectordistrict.Table_8.DshPubLmh[0].total_damages + dlhealthsectordistrict.Table_8.DshPubLmh[1].total_damages + dlhealthsectordistrict.Table_8.DshPubLmh[2].total_damages">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y1=dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y1 + dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y1">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y2=dlhealthsectordistrict.Table_8.DshPubLmh[0].losses_y2 + dlhealthsectordistrict.Table_8.DshPubLmh[1].losses_y2 + dlhealthsectordistrict.Table_8.DshPubLmh[2].losses_y2">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubLmh[3].total_losses=dlhealthsectordistrict.Table_8.DshPubLmh[0].total_losses + dlhealthsectordistrict.Table_8.DshPubLmh[1].total_losses + dlhealthsectordistrict.Table_8.DshPubLmh[2].total_losses">
+
+
+                                </td>
+
+
+                            </tr>
                             <tr height="20" class="trheadc">
-                                <td width="264" height="20">
-                                    Teaching Hospitals
+                                <td width="202" height="20">
+                                    MOH
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
-                                <td width="98">
+                                <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dshPubTh in dlhealthsectordistrict.Table_8.DshPubTh" height="20">
 
-                                <td ng-bind="dshPubTh.facilities_assets" ng-if="dshPubTh.facilities_assets=='Total'" width="264" height="20" class="boldash">
+                            <!--Table 8 :table two:tab1  first row-->
+
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubMoh[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-bind="dshPubTh.facilities_assets" ng-if="dshPubTh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_num_affected=dl_data['DmhDfNum'][0].fields.office + dl_data['DmhPdfaNum'][0].fields.office ">
+
 
                                 </td>
-                                <td ng-repeat="(key, value) in dshPubTh" ng-if="$index > 0" width="98">
-                                    <input id="textinput" ng-model="dshPubTh[key]" name="textinput" type="text" placeholder=""
-                                           class="form-control input-md">
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].male=dl_data['DmhDfPaf'][0].fields.office + dl_data['DmhPdfaPaf'][0].fields.office">
+
+
                                 </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].female=dl_data['DmhDfPaf'][1].fields.office + dl_data['DmhPdfaPaf'][1].fields.office">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_damages=dl_data['DmhPdfaOassets'][7].fields.office">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y1=dl_data['DmhLosFi'][0].fields.office+ dl_data['DmhLosCud'][0].fields.office + dl_data['DmhLosHoc'][0].fields.office + dl_data['DmhLosOue'][0].fields.office ">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y2=dl_data['DmhLosFi'][1].fields.office+ dl_data['DmhLosCud'][1].fields.office + dl_data['DmhLosHoc'][1].fields.office + dl_data['DmhLosOue'][1].fields.office ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[0].total_losses=dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y2">
+
+
+                                </td>
+
 
                             </tr>
+                            <!--Table 8 :table two:tab1  second row-->
+
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubMoh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_num_affected=dl_data['DmhDfNum'][0].fields.other + dl_data['DmhPdfaNum'][0].fields.other ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].male=dl_data['DmhDfPaf'][0].fields.other + dl_data['DmhPdfaPaf'][0].fields.other">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].female=dl_data['DmhDfPaf'][1].fields.other + dl_data['DmhPdfaPaf'][1].fields.other">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_damages=dl_data['DmhPdfaOassets'][7].fields.other">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y1=dl_data['DmhLosFi'][0].fields.other+ dl_data['DmhLosCud'][0].fields.other + dl_data['DmhLosHoc'][0].fields.other + dl_data['DmhLosOue'][0].fields.other ">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y2=dl_data['DmhLosFi'][1].fields.other+ dl_data['DmhLosCud'][1].fields.other + dl_data['DmhLosHoc'][1].fields.other + dl_data['DmhLosOue'][1].fields.other ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[1].total_losses=dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y1 + dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 8 :table two:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubMoh[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_num_affected=dlhealthsectordistrict.Table_8.DshPubMoh[0].total_num_affected + dlhealthsectordistrict.Table_8.DshPubMoh[1].total_num_affected">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].male=dlhealthsectordistrict.Table_8.DshPubMoh[0].male + dlhealthsectordistrict.Table_8.DshPubMoh[1].male ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].female=dlhealthsectordistrict.Table_8.DshPubMoh[0].female + dlhealthsectordistrict.Table_8.DshPubMoh[1].female ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_damages=dlhealthsectordistrict.Table_8.DshPubMoh[0].total_damages + dlhealthsectordistrict.Table_8.DshPubMoh[1].total_damages">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y1=dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y1">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin" ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y2=dlhealthsectordistrict.Table_8.DshPubMoh[0].losses_y2 + dlhealthsectordistrict.Table_8.DshPubMoh[1].losses_y2">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubMoh[2].total_losses=dlhealthsectordistrict.Table_8.DshPubMoh[0].total_losses + dlhealthsectordistrict.Table_8.DshPubMoh[1].total_losses">
+
+
+                                </td>
+
+
+                            </tr>
+
+
                             <tr height="20" class="trheadc">
                                 <td width="264" height="20">
                                     Other Medical Facilities
@@ -170,17 +768,787 @@
                                 <td width="98">
                                 </td>
                             </tr>
-                              <tr ng-repeat="dshPubOmc in dlhealthsectordistrict.Table_8.DshPubOmc" height="20">
+                            <!--Table 8 :table Three:tab1  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dshPubOmc.facilities_assets" ng-if="dshPubOmc.facilities_assets=='Total' || dshPubOmc.facilities_assets=='TOTAL' " width="264" height="20" class="boldash">
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-bind="dshPubOmc.facilities_assets" ng-if="dshPubOmc.facilities_assets!='Total' && dshPubOmc.facilities_assets!='TOTAL'" width="264" height="20" class="tdpa">
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_num_affected=dl_data['DmfDfaNum'][0].fields.base_hospital + dl_data['DmfPdfaNum'][0].fields.base_hospital ">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dshPubOmc" ng-if="$index > 0" width="98">
-                                    <input id="textinput" ng-model="dshPubOmc[key]" name="textinput" type="text" placeholder=""
-                                           class="form-control input-md">
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].male=dl_data['DmfDfaPaf'][0].fields.base_hospital + dl_data['DmfPdfaPaf'][0].fields.base_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].female=dl_data['DmfDfaPaf'][1].fields.base_hospital + dl_data['DmfPdfaPaf'][1].fields.base_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_damages=dl_data['DmfPdaOassets'][7].fields.base_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y1=dl_data['DmfLosFi'][0].fields.base_hospital + dl_data['DmfLosCud'][0].fields.base_hospital + dl_data['DmfLosHoc'][0].fields.base_hospital  + dl_data['DmfLosOue'][0].fields.base_hospital  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y2=dl_data['DmfLosFi'][1].fields.base_hospital + dl_data['DmfLosCud'][1].fields.base_hospital + dl_data['DmfLosHoc'][1].fields.base_hospital  + dl_data['DmfLosOue'][1].fields.base_hospital">
+
+
+                                </td>
+                                 <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[0].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y1  + dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y2">
+
+
+                                </td>
+
+                            </tr>
+                            <!--Table 8 :table three:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_num_affected=dl_data['DmfDfaNum'][0].fields.divisional_hospital + dl_data['DmfPdfaNum'][0].fields.divisional_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].male=dl_data['DmfDfaPaf'][0].fields.divisional_hospital + dl_data['DmfPdfaPaf'][0].fields.divisional_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].female=dl_data['DmfDfaPaf'][1].fields.divisional_hospital + dl_data['DmfPdfaPaf'][1].fields.divisional_hospital ">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_damages=dl_data['DmfPdaOassets'][7].fields.divisional_hospital">
+
+
+                                </td>
+
+                                 <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y1=dl_data['DmfLosFi'][0].fields.divisional_hospital + dl_data['DmfLosCud'][0].fields.divisional_hospital + dl_data['DmfLosHoc'][0].fields.divisional_hospital  + dl_data['DmfLosOue'][0].fields.divisional_hospital  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y2=dl_data['DmfLosFi'][1].fields.divisional_hospital + dl_data['DmfLosCud'][1].fields.divisional_hospital + dl_data['DmfLosHoc'][1].fields.divisional_hospital  + dl_data['DmfLosOue'][1].fields.divisional_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[1].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y1+ dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y2">
+
+
+                                </td>
+
+                            </tr>
+                            <!--Table 8 :table three:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_num_affected=dl_data['DmfDfaNum'][0].fields.rural_hospital + dl_data['DmfPdfaNum'][0].fields.rural_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].male=dl_data['DmfDfaPaf'][0].fields.rural_hospital + dl_data['DmfPdfaPaf'][0].fields.rural_hospital ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].female=dl_data['DmfDfaPaf'][1].fields.rural_hospital + dl_data['DmfPdfaPaf'][1].fields.rural_hospital ">
+
+                                </td>
+                                 <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_damages=dl_data['DmfPdaOassets'][7].fields.rural_hospital">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y1=dl_data['DmfLosFi'][0].fields.rural_hospital + dl_data['DmfLosCud'][0].fields.rural_hospital + dl_data['DmfLosHoc'][0].fields.rural_hospital  + dl_data['DmfLosOue'][0].fields.rural_hospital  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y2=dl_data['DmfLosFi'][1].fields.rural_hospital + dl_data['DmfLosCud'][1].fields.rural_hospital + dl_data['DmfLosHoc'][1].fields.rural_hospital  + dl_data['DmfLosOue'][1].fields.rural_hospital">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[2].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y2">
+
+
+                                </td>
+
+                            </tr>
+                            <!--Table 8 :table three:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[3].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_num_affected=dl_data['DmfDfaNum'][0].fields.central_dispensary + dl_data['DmfPdfaNum'][0].fields.central_dispensary ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].male=dl_data['DmfDfaPaf'][0].fields.central_dispensary + dl_data['DmfPdfaPaf'][0].fields.central_dispensary ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].female=dl_data['DmfDfaPaf'][1].fields.central_dispensary + dl_data['DmfPdfaPaf'][1].fields.central_dispensary ">
+
+                                </td>
+
+                                 <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_damages=dl_data['DmfPdaOassets'][7].fields.central_dispensary">
+
+
+                                </td>
+                                   <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y1=dl_data['DmfLosFi'][0].fields.central_dispensary + dl_data['DmfLosCud'][0].fields.central_dispensary + dl_data['DmfLosHoc'][0].fields.central_dispensary  + dl_data['DmfLosOue'][0].fields.central_dispensary  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y2=dl_data['DmfLosFi'][1].fields.central_dispensary + dl_data['DmfLosCud'][1].fields.central_dispensary + dl_data['DmfLosHoc'][1].fields.central_dispensary  + dl_data['DmfLosOue'][1].fields.central_dispensary">
+
+
+                                </td>
+
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[3].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 8 :table three:tab1  fifth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[4].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_num_affected=dl_data['DmfDfaNum'][0].fields.pmcus + dl_data['DmfPdfaNum'][0].fields.pmcus ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].male=dl_data['DmfDfaPaf'][0].fields.pmcus + dl_data['DmfPdfaPaf'][0].fields.pmcus ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].female=dl_data['DmfDfaPaf'][1].fields.pmcus + dl_data['DmfPdfaPaf'][1].fields.pmcus ">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_damages=dl_data['DmfPdaOassets'][7].fields.pmcus">
+
+
+                                </td>
+
+                                  <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y1=dl_data['DmfLosFi'][0].fields.pmcus + dl_data['DmfLosCud'][0].fields.pmcus + dl_data['DmfLosHoc'][0].fields.pmcus  + dl_data['DmfLosOue'][0].fields.pmcus  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y2=dl_data['DmfLosFi'][1].fields.pmcus + dl_data['DmfLosCud'][1].fields.pmcus + dl_data['DmfLosHoc'][1].fields.pmcus  + dl_data['DmfLosOue'][1].fields.pmcus">
+
+
+                                </td>
+
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[4].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y2">
+
+
+                                </td>
+
+                            </tr>
+
+
+                            <!--Table 8 :table three:tab1  sixth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[5].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_num_affected=dl_data['DmfDfaNum'][0].fields.phccs + dl_data['DmfPdfaNum'][0].fields.phccs ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].male=dl_data['DmfDfaPaf'][0].fields.phccs + dl_data['DmfPdfaPaf'][0].fields.phccs ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].female=dl_data['DmfDfaPaf'][1].fields.phccs + dl_data['DmfPdfaPaf'][1].fields.phccs ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_damages=dl_data['DmfPdaOassets'][7].fields.phccs">
+
+
+                                </td>
+
+                                 <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y1=dl_data['DmfLosFi'][0].fields.phccs + dl_data['DmfLosCud'][0].fields.phccs + dl_data['DmfLosHoc'][0].fields.phccs  + dl_data['DmfLosOue'][0].fields.phccs  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y2=dl_data['DmfLosFi'][1].fields.phccs + dl_data['DmfLosCud'][1].fields.phccs + dl_data['DmfLosHoc'][1].fields.phccs  + dl_data['DmfLosOue'][1].fields.phccs">
+
+
+                                </td>
+
+                                  <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[5].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y2">
+
+
+                                </td>
+
+                            </tr>
+
+                            <!--Table 8 :table three:tab1  seventh row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[6].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_num_affected=dl_data['DmfDfaNum'][0].fields.mchcs + dl_data['DmfPdfaNum'][0].fields.mchcs ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].male=dl_data['DmfDfaPaf'][0].fields.mchcs + dl_data['DmfPdfaPaf'][0].fields.mchcs ">
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].female=dl_data['DmfDfaPaf'][1].fields.mchcs + dl_data['DmfPdfaPaf'][1].fields.mchcs ">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_damages=dl_data['DmfPdaOassets'][7].fields.mchcs">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y1=dl_data['DmfLosFi'][0].fields.mchcs + dl_data['DmfLosCud'][0].fields.mchcs + dl_data['DmfLosHoc'][0].fields.mchcs  + dl_data['DmfLosOue'][0].fields.mchcs  ">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y2=dl_data['DmfLosFi'][1].fields.mchcs + dl_data['DmfLosCud'][1].fields.mchcs + dl_data['DmfLosHoc'][1].fields.mchcs  + dl_data['DmfLosOue'][1].fields.mchcs">
+
+
+                                </td>
+
+
+                                  <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[6].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y2">
+
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 8 :table three:tab1  eight row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[7].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_num_affected=dlhealthsectordistrict.Table_8.DshPubOmf[0].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[1].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[2].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[3].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[4].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[5].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[6].total_num_affected">
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].male=dlhealthsectordistrict.Table_8.DshPubOmf[0].male + dlhealthsectordistrict.Table_8.DshPubOmf[1].male + dlhealthsectordistrict.Table_8.DshPubOmf[2].male + dlhealthsectordistrict.Table_8.DshPubOmf[3].male + dlhealthsectordistrict.Table_8.DshPubOmf[4].male + dlhealthsectordistrict.Table_8.DshPubOmf[5].male + dlhealthsectordistrict.Table_8.DshPubOmf[6].male">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].female=dlhealthsectordistrict.Table_8.DshPubOmf[0].female + dlhealthsectordistrict.Table_8.DshPubOmf[1].female + dlhealthsectordistrict.Table_8.DshPubOmf[2].female + dlhealthsectordistrict.Table_8.DshPubOmf[3].male + dlhealthsectordistrict.Table_8.DshPubOmf[4].male + dlhealthsectordistrict.Table_8.DshPubOmf[5].female + dlhealthsectordistrict.Table_8.DshPubOmf[6].female">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_damages=dlhealthsectordistrict.Table_8.DshPubOmf[0].total_damages+dlhealthsectordistrict.Table_8.DshPubOmf[1].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[2].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[3].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[4].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[5].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[6].total_damages">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y1=dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y1+dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y1">
+
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y2=dlhealthsectordistrict.Table_8.DshPubOmf[0].losses_y2+dlhealthsectordistrict.Table_8.DshPubOmf[1].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[2].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[3].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[4].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[5].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[6].losses_y2">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[7].total_losses=dlhealthsectordistrict.Table_8.DshPubOmf[0].total_losses+dlhealthsectordistrict.Table_8.DshPubOmf[1].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[2].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[3].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[4].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[5].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[6].total_losses">
+
+
+                                </td>
+
+                            </tr>
+                            <!--Table 8 :table three:tab1  ninth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPubOmf[8].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_num_affected=dlhealthsectordistrict.Table_8.DshPubLmh[3].total_num_affected + dlhealthsectordistrict.Table_8.DshPubMoh[2].total_num_affected + dlhealthsectordistrict.Table_8.DshPubOmf[7].total_num_affected">
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].male=dlhealthsectordistrict.Table_8.DshPubLmh[3].male + dlhealthsectordistrict.Table_8.DshPubMoh[2].male + dlhealthsectordistrict.Table_8.DshPubOmf[7].male">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].female=dlhealthsectordistrict.Table_8.DshPubLmh[3].female + dlhealthsectordistrict.Table_8.DshPubMoh[2].female + dlhealthsectordistrict.Table_8.DshPubOmf[7].female">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_damages=dlhealthsectordistrict.Table_8.DshPubLmh[3].total_damages + dlhealthsectordistrict.Table_8.DshPubMoh[2].total_damages + dlhealthsectordistrict.Table_8.DshPubOmf[7].total_damages">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y1=dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y1 + dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y1 + dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y1">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y2=dlhealthsectordistrict.Table_8.DshPubLmh[3].losses_y2 + dlhealthsectordistrict.Table_8.DshPubMoh[2].losses_y2 + dlhealthsectordistrict.Table_8.DshPubOmf[7].losses_y2">
+
+
+                                </td>
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPubOmf[8].total_losses=dlhealthsectordistrict.Table_8.DshPubLmh[3].total_losses + dlhealthsectordistrict.Table_8.DshPubMoh[2].total_losses + dlhealthsectordistrict.Table_8.DshPubOmf[7].total_losses">
+
+
                                 </td>
 
                             </tr>
@@ -236,18 +1604,266 @@
                                 Year 2
                             </td>
                         </tr>
-                        <tr ng-repeat="dshPvtFa in dlhealthsectordistrict.Table_8.DshPvtFa" height="20">
+                        <!--Table 8:tab 2 : table one : row one-->
 
-                                <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets=='TOTAL' " width="264" height="20" class="boldash">
+                        <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPvtFa[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets!='TOTAL'" width="264" height="20" class="tdpa">
+
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_num_affected=dl_data['DapNapTmf'][0].fields.num_affected_fac">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dshPvtFa" ng-if="$index > 0" width="98">
-                                    <input id="textinput" ng-model="dshPvtFa[key]" name="textinput" type="text" placeholder=""
-                                           class="form-control input-md">
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].male=dl_data['DapNapTmf'][0].fields.male">
+
                                 </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].female=dl_data['DapNapTmf'][0].fields.female">
+
+                                </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_damages=dl_data['DapBefPc1'][3].fields.total_damages + dl_data['DapBefPcn'][3].fields.total_damages">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y1=dl_data['DapBefPc1'][3].fields.est_losses_y1 + dl_data['DapBefPcn'][3].fields.est_losses_y1">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y2=dl_data['DapBefPc1'][3].fields.est_losses_y2 + dl_data['DapBefPcn'][3].fields.est_losses_y2">
+
+                                </td>
+
+                             <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[0].total_losses=dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y2">
+
+                                </td>
+
+
+
+
+                            </tr>
+
+                       <!--Table 8:tab 2 : table one row two-->
+
+                        <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPvtFa[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_num_affected=dl_data['DapNapTmf'][1].fields.num_affected_fac">
+
+                                </td>
+                            <td
+
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].male=dl_data['DapNapTmf'][1].fields.male">
+
+                                </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].female=dl_data['DapNapTmf'][1].fields.female">
+
+                                </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_damages=dl_data['DapBefOther'][4].fields.total_damages">
+
+                                </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y1=dl_data['DapBefOther'][4].fields.est_losses_y1">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y2=dl_data['DapBefOther'][4].fields.est_losses_y2">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[1].total_losses=dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y1 + dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y2">
+
+                                </td>
+
+
+
+                            </tr>
+
+                          <!--Table 8:tab 2 : table one row three-->
+
+                        <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshPvtFa[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_num_affected= dlhealthsectordistrict.Table_8.DshPvtFa[0].total_num_affected + dlhealthsectordistrict.Table_8.DshPvtFa[1].total_num_affected">
+
+                                </td>
+                            <td
+
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].male= dlhealthsectordistrict.Table_8.DshPvtFa[0].male + dlhealthsectordistrict.Table_8.DshPvtFa[1].male">
+
+                                </td>
+
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].female= dlhealthsectordistrict.Table_8.DshPvtFa[0].female + dlhealthsectordistrict.Table_8.DshPvtFa[1].female">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_damages= dlhealthsectordistrict.Table_8.DshPvtFa[0].total_damages + dlhealthsectordistrict.Table_8.DshPvtFa[1].total_damages">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y1= dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y1 + dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y1">
+
+                                </td>
+                            <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y2= dlhealthsectordistrict.Table_8.DshPvtFa[0].losses_y2 + dlhealthsectordistrict.Table_8.DshPvtFa[1].losses_y2">
+
+                                </td>
+                             <td
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_losses"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshPvtFa[2].total_losses= dlhealthsectordistrict.Table_8.DshPvtFa[0].total_losses + dlhealthsectordistrict.Table_8.DshPvtFa[1].total_losses">
+
+                                </td>
+
+
 
                             </tr>
 
@@ -293,17 +1909,158 @@
                                 Year 2
                             </td>
                         </tr>
-                        <tr ng-repeat="dshTdlOwship in dlhealthsectordistrict.Table_8.DshTdlOwship" height="20">
+                         <!--Table 8:tab 3 : table one row one-->
 
-                                <td ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership=='TOTAL' " width="264" height="20" class="boldash">
+                        <tr  height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshTdlOwship[0].ownership"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership!='TOTAL'" width="264" height="20" class="tdpa">
+
+                                <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[0].damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[0].damages= dlhealthsectordistrict.Table_8.DshPubOmf[8].total_damages">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dshTdlOwship" ng-if="$index > 0" width="98">
-                                    <input id="textinput" ng-model="dshTdlOwship[key]" name="textinput" type="text" placeholder=""
-                                           class="form-control input-md">
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y1= dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y1">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y2= dlhealthsectordistrict.Table_8.DshPubOmf[8].losses_y2">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[0].total"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[0].total= dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y1 + dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+                         <!--Table 8:tab 3 : table one row two-->
+
+                        <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshTdlOwship[1].ownership"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[1].damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[1].damages= dlhealthsectordistrict.Table_8.DshPvtFa[2].total_damages">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y1= dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y1">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y2= dlhealthsectordistrict.Table_8.DshPvtFa[2].losses_y2">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[1].total"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[1].total= dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y1 + dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y2 ">
+
+                                </td>
+
+                            </tr>
+
+                         <!--Table 8:tab 3 : table one row three-->
+
+                        <tr height="20">
+
+                                <td ng-bind="dlhealthsectordistrict.Table_8.DshTdlOwship[2].ownership"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[2].damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[2].damages=dlhealthsectordistrict.Table_8.DshTdlOwship[0].damages + dlhealthsectordistrict.Table_8.DshTdlOwship[1].damages">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[2].losses_y1=dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y1 + dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y1">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[2].losses_y2=dlhealthsectordistrict.Table_8.DshTdlOwship[0].losses_y2 + dlhealthsectordistrict.Table_8.DshTdlOwship[1].losses_y2">
+
+                                </td>
+                            <td colspan="2"
+                                        width="98">
+                                    <input id="textin"
+                                           ng-model="dlhealthsectordistrict.Table_8.DshTdlOwship[2].total"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md"
+                                           ng-value="dlhealthsectordistrict.Table_8.DshTdlOwship[2].total=dlhealthsectordistrict.Table_8.DshTdlOwship[0].total + dlhealthsectordistrict.Table_8.DshTdlOwship[1].total">
+
                                 </td>
 
                             </tr>

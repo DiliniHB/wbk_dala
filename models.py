@@ -2,14 +2,111 @@
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
-#
-# Also note: You'll have to insert the output of 'django-admin sqlcustom [app_label]'
-# into your database.
 from __future__ import unicode_literals
 
 from django.db import models
+
+
+class Division(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    districtid = models.ForeignKey('District', models.DO_NOTHING, db_column='DistrictId')  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Division'
+
+
+class Effectedarea(models.Model):
+    incidentid = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='IncidentId')  # Field name made lowercase.
+    disasterid = models.ForeignKey('DisasterType', models.DO_NOTHING, db_column='DisasterId')  # Field name made lowercase.
+    provinceid = models.ForeignKey('Province', models.DO_NOTHING, db_column='ProvinceId')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'EffectedArea'
+        unique_together = (('incidentid', 'disasterid', 'provinceid'),)
+
+
+class Gramaniladhari(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    divisionid = models.ForeignKey(Division, models.DO_NOTHING, db_column='DivisionId')  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'GramaNiladhari'
+
+
+class Permissiontype(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'PermissionType'
+
+
+class Province(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Province'
+
+
+class Sector(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    createddate = models.TimeField(db_column='CreatedDate', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Sector'
+
+
+class User(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    roleid = models.ForeignKey('Userrole', models.DO_NOTHING, db_column='RoleId')  # Field name made lowercase.
+    sectorid = models.ForeignKey(Sector, models.DO_NOTHING, db_column='SectorId')  # Field name made lowercase.
+    firstname = models.CharField(db_column='FirstName', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    lastname = models.CharField(db_column='LastName', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    username = models.CharField(db_column='UserName', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    password = models.CharField(db_column='Password', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    email = models.CharField(db_column='Email', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    contactno = models.CharField(db_column='ContactNo', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    nic = models.CharField(db_column='NIC', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    designationid = models.ForeignKey('Userdesignation', models.DO_NOTHING, db_column='DesignationId', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'User'
+
+
+class Userdesignation(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'UserDesignation'
+
+
+class Userrole(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    rolename = models.CharField(db_column='RoleName', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+    description = models.CharField(db_column='Description', max_length=-1, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'UserRole'
 
 
 class AssestType(models.Model):
@@ -31,24 +128,24 @@ class AuthGroup(models.Model):
 
 
 class AuthGroupPermissions(models.Model):
-    group = models.ForeignKey(AuthGroup)
-    permission = models.ForeignKey('AuthPermission')
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_group_permissions'
-        unique_together = (('group_id', 'permission_id'),)
+        unique_together = (('group', 'permission'),)
 
 
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType')
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
     codename = models.CharField(max_length=100)
 
     class Meta:
         managed = False
         db_table = 'auth_permission'
-        unique_together = (('content_type_id', 'codename'),)
+        unique_together = (('content_type', 'codename'),)
 
 
 class AuthUser(models.Model):
@@ -69,23 +166,23 @@ class AuthUser(models.Model):
 
 
 class AuthUserGroups(models.Model):
-    user = models.ForeignKey(AuthUser)
-    group = models.ForeignKey(AuthGroup)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_user_groups'
-        unique_together = (('user_id', 'group_id'),)
+        unique_together = (('user', 'group'),)
 
 
 class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey(AuthUser)
-    permission = models.ForeignKey(AuthPermission)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
-        unique_together = (('user_id', 'permission_id'),)
+        unique_together = (('user', 'permission'),)
 
 
 class BdSessionKeys(models.Model):
@@ -106,7 +203,7 @@ class BhsComDiseases(models.Model):
     female = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     elderly = models.IntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -125,7 +222,7 @@ class BhsOi(models.Model):
     female = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     elderly = models.IntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -144,7 +241,7 @@ class BhsPlc(models.Model):
     female = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     elderly = models.IntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -163,7 +260,7 @@ class BhsVi(models.Model):
     female = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     elderly = models.IntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -186,7 +283,8 @@ class BmfPubMf(models.Model):
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
+    bs_date = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -203,7 +301,8 @@ class BmfPvtMf(models.Model):
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
+    bs_date = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -215,7 +314,7 @@ class BucMarMequipment(models.Model):
     teaching_hospital = models.FloatField(blank=True, null=True)
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -227,14 +326,14 @@ class BucMarMequipment(models.Model):
         db_table = 'buc_mar_mequipment'
 
 
-class BucMarOasset(models.Model):
+class BucMarOassets(models.Model):
     particulars = models.CharField(max_length=255, blank=True, null=True)
     teaching_hospital = models.FloatField(blank=True, null=True)
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -243,7 +342,7 @@ class BucMarOasset(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'buc_mar_oasset'
+        db_table = 'buc_mar_oassets'
 
 
 class BucMarStructure(models.Model):
@@ -253,24 +352,25 @@ class BucMarStructure(models.Model):
     district_general_hospital = models.FloatField(blank=True, null=True)
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
+    bs_date = models.CharField(max_length=12, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'buc_mar_structure'
 
 
-class BucMarSupply(models.Model):
+class BucMarSupplies(models.Model):
     particulars = models.CharField(max_length=255, blank=True, null=True)
     teaching_hospital = models.FloatField(blank=True, null=True)
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -279,7 +379,7 @@ class BucMarSupply(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'buc_mar_supply'
+        db_table = 'buc_mar_supplies'
 
 
 class BucMarcCrpm(models.Model):
@@ -289,7 +389,7 @@ class BucMarcCrpm(models.Model):
     district_general_hospital = models.FloatField(blank=True, null=True)
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -306,7 +406,7 @@ class BucMarcMequipment(models.Model):
     teaching_hospital = models.FloatField(blank=True, null=True)
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -325,7 +425,7 @@ class BucMarcOassets(models.Model):
     district_general_hospital = models.FloatField(blank=True, null=True)
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -344,7 +444,7 @@ class BucMarcStructures(models.Model):
     district_general_hospital = models.FloatField(blank=True, null=True)
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -357,7 +457,6 @@ class BucMarcStructures(models.Model):
 
 
 class BucOmarMequipment(models.Model):
-    id = models.IntegerField(primary_key=True)
     particulars = models.CharField(max_length=255, blank=True, null=True)
     base_hospital = models.FloatField(blank=True, null=True)
     divisional_hospital = models.FloatField(blank=True, null=True)
@@ -366,7 +465,7 @@ class BucOmarMequipment(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -380,7 +479,6 @@ class BucOmarMequipment(models.Model):
 
 
 class BucOmarOassets(models.Model):
-    id = models.IntegerField(primary_key=True)
     particulars = models.CharField(max_length=255, blank=True, null=True)
     base_hospital = models.FloatField(blank=True, null=True)
     divisional_hospital = models.FloatField(blank=True, null=True)
@@ -389,7 +487,7 @@ class BucOmarOassets(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -411,7 +509,7 @@ class BucOmarStructure(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -425,7 +523,6 @@ class BucOmarStructure(models.Model):
 
 
 class BucOmarSupplies(models.Model):
-    id = models.IntegerField(primary_key=True)
     particulars = models.CharField(max_length=255, blank=True, null=True)
     base_hospital = models.FloatField(blank=True, null=True)
     divisional_hospital = models.FloatField(blank=True, null=True)
@@ -434,7 +531,7 @@ class BucOmarSupplies(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -456,7 +553,7 @@ class BucOmarcCrpm(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -470,21 +567,21 @@ class BucOmarcCrpm(models.Model):
 
 
 class BucOmarcMequipment(models.Model):
-    particulars = models.CharField(max_length=255)
-    base_hospital = models.FloatField()
-    divisional_hospital = models.FloatField()
-    rural_hospital = models.FloatField()
-    central_dispensary = models.FloatField()
-    pri_med_cunits = models.FloatField()
-    pri_health_ccenters = models.FloatField()
-    mat_child_health_clinics = models.FloatField()
-    district = models.ForeignKey('District', db_column='district')
-    created_user = models.IntegerField()
-    lmu = models.IntegerField()
-    created_date = models.DateTimeField()
-    lmd = models.DateTimeField()
-    key = models.BigIntegerField()
-    bs_date = models.CharField(max_length=255)
+    particulars = models.CharField(max_length=255, blank=True, null=True)
+    base_hospital = models.FloatField(blank=True, null=True)
+    divisional_hospital = models.FloatField(blank=True, null=True)
+    rural_hospital = models.FloatField(blank=True, null=True)
+    central_dispensary = models.FloatField(blank=True, null=True)
+    pri_med_cunits = models.FloatField(blank=True, null=True)
+    pri_health_ccenters = models.FloatField(blank=True, null=True)
+    mat_child_health_clinics = models.FloatField(blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
+    created_user = models.IntegerField(blank=True, null=True)
+    lmu = models.IntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(blank=True, null=True)
+    lmd = models.DateTimeField(blank=True, null=True)
+    key = models.BigIntegerField(blank=True, null=True)
+    bs_date = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -500,7 +597,7 @@ class BucOmarcOassets(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -522,7 +619,7 @@ class BucOmarcStructure(models.Model):
     pri_med_cunits = models.FloatField(blank=True, null=True)
     pri_health_ccenters = models.FloatField(blank=True, null=True)
     mat_child_health_clinics = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -543,13 +640,13 @@ class DapBefOther(models.Model):
     est_losses_y1 = models.FloatField(blank=True, null=True)
     est_losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -564,13 +661,13 @@ class DapBefPc1(models.Model):
     est_losses_y1 = models.FloatField(blank=True, null=True)
     est_losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -585,13 +682,13 @@ class DapBefPcn(models.Model):
     est_losses_y1 = models.FloatField(blank=True, null=True)
     est_losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -600,16 +697,16 @@ class DapBefPcn(models.Model):
 
 class DapNapTmf(models.Model):
     id = models.AutoField()
-    type_med_fac = models.BigIntegerField(blank=True, null=True)
+    type_med_fac = models.CharField(max_length=255, blank=True, null=True)
     num_affected_fac = models.BigIntegerField(blank=True, null=True)
     male = models.BigIntegerField(blank=True, null=True)
     female = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey('District', db_column='district', blank=True, null=True)
+    district = models.ForeignKey('District', models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
@@ -630,7 +727,7 @@ class DataEntry(models.Model):
 
 class DisasterType(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -638,21 +735,12 @@ class DisasterType(models.Model):
 
 
 class District(models.Model):
-    province = models.ForeignKey('Province')
+    province = models.ForeignKey(Province, models.DO_NOTHING)
     name = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'district'
-
-
-class Division(models.Model):
-    district = models.ForeignKey(District)
-    name = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'division'
 
 
 class DjangoAdminLog(models.Model):
@@ -661,8 +749,8 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.SmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', blank=True, null=True)
-    user = models.ForeignKey(AuthUser)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -709,13 +797,13 @@ class DmfDaMequipment(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -732,13 +820,13 @@ class DmfDaOassets(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -755,13 +843,13 @@ class DmfDaStructure(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -778,13 +866,13 @@ class DmfDaSupplies(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -801,13 +889,13 @@ class DmfDfaNum(models.Model):
     phccs = models.BigIntegerField(blank=True, null=True)
     mchcs = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -824,13 +912,13 @@ class DmfDfaPaf(models.Model):
     phccs = models.BigIntegerField(blank=True, null=True)
     mchcs = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -847,13 +935,13 @@ class DmfLosCud(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -870,13 +958,13 @@ class DmfLosFi(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -893,13 +981,13 @@ class DmfLosHoc(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -916,13 +1004,13 @@ class DmfLosOue(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -939,13 +1027,13 @@ class DmfPdaMequipment(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -962,13 +1050,13 @@ class DmfPdaOassets(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -985,13 +1073,13 @@ class DmfPdaStructure(models.Model):
     phccs = models.FloatField(blank=True, null=True)
     mchcs = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1008,13 +1096,13 @@ class DmfPdfaNum(models.Model):
     phccs = models.BigIntegerField(blank=True, null=True)
     mchcs = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1031,13 +1119,13 @@ class DmfPdfaPaf(models.Model):
     phccs = models.BigIntegerField(blank=True, null=True)
     mchcs = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1052,13 +1140,13 @@ class DmhDfNum(models.Model):
     office = models.BigIntegerField(blank=True, null=True)
     other = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1073,13 +1161,13 @@ class DmhDfPaf(models.Model):
     office = models.BigIntegerField(blank=True, null=True)
     other = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1094,13 +1182,13 @@ class DmhLosCud(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1115,13 +1203,13 @@ class DmhLosFi(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1136,13 +1224,13 @@ class DmhLosHoc(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1157,13 +1245,13 @@ class DmhLosOue(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1176,13 +1264,13 @@ class DmhNdatFacMequipment(models.Model):
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1197,13 +1285,13 @@ class DmhNdatFacOassets(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1218,13 +1306,13 @@ class DmhNdatFacStructure(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1237,13 +1325,13 @@ class DmhNdatFacSupplies(models.Model):
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1256,13 +1344,13 @@ class DmhPdfaMequipment(models.Model):
     provincial_general_hospital = models.FloatField(blank=True, null=True)
     district_general_hospital = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1277,14 +1365,14 @@ class DmhPdfaNum(models.Model):
     office = models.BigIntegerField(blank=True, null=True)
     other = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     bs_date = models.CharField(max_length=255, blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1299,13 +1387,13 @@ class DmhPdfaOassets(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1320,14 +1408,14 @@ class DmhPdfaPaf(models.Model):
     office = models.BigIntegerField(blank=True, null=True)
     other = models.BigIntegerField(blank=True, null=True)
     total = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     bs_date = models.CharField(max_length=255, blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1342,20 +1430,20 @@ class DmhPdfaStructure(models.Model):
     office = models.FloatField(blank=True, null=True)
     other = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'dmh_pdfa_structure'
 
 
-class DshPubOmc(models.Model):
+class DshPubLmh(models.Model):
     facilities_assets = models.CharField(max_length=255, blank=True, null=True)
     total_num_affected = models.BigIntegerField(blank=True, null=True)
     male = models.BigIntegerField(blank=True, null=True)
@@ -1364,20 +1452,20 @@ class DshPubOmc(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'dsh_pub_omc'
+        db_table = 'dsh_pub_lmh'
 
 
-class DshPubTh(models.Model):
+class DshPubMoh(models.Model):
     facilities_assets = models.CharField(max_length=255, blank=True, null=True)
     total_num_affected = models.BigIntegerField(blank=True, null=True)
     male = models.BigIntegerField(blank=True, null=True)
@@ -1386,17 +1474,40 @@ class DshPubTh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'dsh_pub_th'
+        db_table = 'dsh_pub_moh'
+
+
+class DshPubOmf(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
+    created_user = models.IntegerField(blank=True, null=True)
+    lmu = models.IntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(blank=True, null=True)
+    lmd = models.DateTimeField(blank=True, null=True)
+    key = models.BigIntegerField(blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
+    id = models.AutoField()
+
+    class Meta:
+        managed = False
+        db_table = 'dsh_pub_omf'
 
 
 class DshPvtFa(models.Model):
@@ -1408,13 +1519,13 @@ class DshPvtFa(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1427,13 +1538,13 @@ class DshTdlOwship(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1449,13 +1560,13 @@ class DsnPubP1Lmh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1471,13 +1582,13 @@ class DsnPubP1Moh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1493,13 +1604,13 @@ class DsnPubP1Omc(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1515,13 +1626,13 @@ class DsnPubPnLmh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1537,13 +1648,13 @@ class DsnPubPnMoh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1559,13 +1670,13 @@ class DsnPubPnOmc(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1581,13 +1692,13 @@ class DsnPvtP1(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1603,13 +1714,13 @@ class DsnPvtPn(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1622,227 +1733,21 @@ class DsnTdlOwship(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
+    incident = models.ForeignKey('IncidentReport', models.DO_NOTHING, db_column='incident', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'dsn_tdl_owship'
 
 
-class DspPubD1Lmh(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_d1_lmh'
-
-
-class DspPubD1Moh(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_d1_moh'
-
-
-class DspPubD1Omc(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_d1_omc'
-
-
-class DspPubDnLmh(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_dn_lmh'
-
-
-class DspPubDnMoh(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_dn_moh'
-
-
-class DspPubDnOmc(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pub_dn_omc'
-
-
-class DspPvtD1(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pvt_d1'
-
-
-class DspPvtDn(models.Model):
-    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
-    total_num_affected = models.BigIntegerField(blank=True, null=True)
-    male = models.BigIntegerField(blank=True, null=True)
-    female = models.BigIntegerField(blank=True, null=True)
-    total_damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_pvt_dn'
-
-
-class DspTdlOwship(models.Model):
-    ownership = models.CharField(max_length=255, blank=True, null=True)
-    damages = models.FloatField(blank=True, null=True)
-    losses_y1 = models.FloatField(blank=True, null=True)
-    losses_y2 = models.FloatField(blank=True, null=True)
-    total = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
-    created_user = models.IntegerField(blank=True, null=True)
-    lmu = models.IntegerField(blank=True, null=True)
-    created_date = models.DateTimeField(blank=True, null=True)
-    lmd = models.DateTimeField(blank=True, null=True)
-    key = models.BigIntegerField(blank=True, null=True)
-    incident = models.ForeignKey('IncidentReport', db_column='incident', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'dsp_tdl_owship'
-
-
-class EffectedArea(models.Model):
-    incident = models.ForeignKey('IncidentReport')
-    disaster = models.ForeignKey(DisasterType)
-    province = models.ForeignKey('Province')
-
-    class Meta:
-        managed = False
-        db_table = 'effected_area'
-        unique_together = (('incident_id', 'disaster_id', 'province_id'),)
-
-
 class GeoLine(models.Model):
-    assest_type = models.ForeignKey(AssestType, db_column='assest_type', blank=True, null=True)
+    assest_type = models.ForeignKey(AssestType, models.DO_NOTHING, db_column='assest_type', blank=True, null=True)
     geon = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
@@ -1851,7 +1756,7 @@ class GeoLine(models.Model):
 
 
 class GeoPoint(models.Model):
-    assest_type = models.ForeignKey(AssestType, db_column='assest_type', blank=True, null=True)
+    assest_type = models.ForeignKey(AssestType, models.DO_NOTHING, db_column='assest_type', blank=True, null=True)
     geon = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
@@ -1860,7 +1765,7 @@ class GeoPoint(models.Model):
 
 
 class GeoPolygon(models.Model):
-    assest_type = models.ForeignKey(AssestType, db_column='assest_type', blank=True, null=True)
+    assest_type = models.ForeignKey(AssestType, models.DO_NOTHING, db_column='assest_type', blank=True, null=True)
     geon = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
@@ -1868,18 +1773,9 @@ class GeoPolygon(models.Model):
         db_table = 'geo_polygon'
 
 
-class GramaNiladhari(models.Model):
-    division = models.ForeignKey(Division)
-    name = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'grama_niladhari'
-
-
 class IncidentReport(models.Model):
-    disaster_type = models.ForeignKey(DisasterType)
-    description = models.TextField(blank=True, null=True)
+    disaster_type = models.ForeignKey(DisasterType, models.DO_NOTHING)
+    description = models.CharField(max_length=500, blank=True, null=True)
     reported_date_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -1887,35 +1783,8 @@ class IncidentReport(models.Model):
         db_table = 'incident_report'
 
 
-class PermissionType(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'permission_type'
-
-
-class Province(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'province'
-
-
-class Sector(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    created_date = models.TimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'sector'
-
-
 class SectorTabelCol(models.Model):
-    sector_tabel = models.ForeignKey('User')
+    sector_tabel = models.ForeignKey(User, models.DO_NOTHING)
     col_name = models.CharField(max_length=-1, blank=True, null=True)
     value = models.CharField(max_length=-1, blank=True, null=True)
     data_type = models.CharField(max_length=-1, blank=True, null=True)
@@ -1940,66 +1809,10 @@ class SectorTable(models.Model):
         db_table = 'sector_table'
 
 
-class TastypieApiaccess(models.Model):
-    identifier = models.CharField(max_length=255)
-    url = models.CharField(max_length=255)
-    request_method = models.CharField(max_length=10)
-    accessed = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'tastypie_apiaccess'
-
-
-class TastypieApikey(models.Model):
-    key = models.CharField(max_length=128)
-    created = models.DateTimeField()
-    user = models.ForeignKey(AuthUser, unique=True)
-
-    class Meta:
-        managed = False
-        db_table = 'tastypie_apikey'
-
-
-class User(models.Model):
-    role = models.ForeignKey('UserRole')
-    sector = models.ForeignKey(Sector)
-    first_name = models.CharField(max_length=255, blank=True, null=True)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
-    user_name = models.CharField(max_length=255, blank=True, null=True)
-    password = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
-    contact_no = models.CharField(max_length=12, blank=True, null=True)
-    nic = models.CharField(max_length=10, blank=True, null=True)
-    designation = models.ForeignKey('UserDesignation', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'user'
-
-
-class UserDesignation(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'user_designation'
-
-
-class UserRole(models.Model):
-    role_name = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'user_role'
-
-
 class UserRolePermission(models.Model):
-    user_role = models.ForeignKey(UserRole, blank=True, null=True)
-    sector_property = models.ForeignKey(SectorTabelCol, blank=True, null=True)
-    permission_type = models.ForeignKey(PermissionType, blank=True, null=True)
+    user_role = models.ForeignKey(Userrole, models.DO_NOTHING, blank=True, null=True)
+    sector_property = models.ForeignKey(SectorTabelCol, models.DO_NOTHING, blank=True, null=True)
+    permission_type = models.ForeignKey(Permissiontype, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False

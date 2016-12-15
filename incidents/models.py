@@ -11,3 +11,6 @@ class IncidentReport(models.Model):
     class Meta:
         managed = False
         db_table = 'incident_report'
+
+    def __str__(self):
+        return self.description
