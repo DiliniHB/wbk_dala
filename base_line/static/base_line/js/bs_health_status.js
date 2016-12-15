@@ -1,5 +1,5 @@
 
-var bsHealthStatusApp = angular.module('bsHealthStatusApp', []);
+var bsHealthStatusApp = angular.module('bsHealthStatusApp', ['ui.bootstrap', 'popoverToggle']);
 
 bsHealthStatusApp.controller('BsHealthStatusController', function BsHealthStatusController($scope, $http) {
 
