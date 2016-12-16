@@ -41,10 +41,12 @@
                         <tr class="trhead">
                             <td style="padding-left:5px;"> Name of Province</td>
 
-                            <td colspan="7" style="background:#EFEFEF;">
-                                <select id="selectbasic" name="selectbasic" ng-model="$scope.district"
+                            <td colspan="3" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" ng-model="district"
                                         class="form-control"
-                                        style="width:50%;font-weight:400;">
+                                        style="width:100%;font-weight:400;"
+                                        ng-change="changedValue(district)"
+                                >
 
                                     <option value="" selected="true">Select a District</option>
                                     {% for district in districts %}
@@ -52,20 +54,29 @@
                                     <option value={{district.id}}>{{district.name}}
                                         {% endfor %}
                                 </select>
+
                             </td>
                             <td colspan="3" style="padding-right:5px;text-align:right;">
-                                Disaster Type
+                                Incident
                             </td>
                             <td colspan="2" style="background:#EFEFEF;">
-                                <select id="selectbasic" name="selectbasic" class="form-control"
-                                        style="width:50%;font-weight:400;">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
+
+                                <select id="select" name="selectbasic" ng-model="incident"
+                                        class="form-control"
+                                        style="width:100%;font-weight:400;"
+                                        ng-change="changedValue(incident)">
+
+                                    <option value="" selected="true">Select an Incident</option>
+                                    {% for incident in incidents %}
+
+                                    <option value={{incident.id}}>{{incident.disaster_type.name}}
+                                        {{incident.reported_date_time}}
+                                        {% endfor %}
                                 </select>
                             </td>
                         </tr>
 
-                        <tr height="34" class="trheadc">
+                        <tr  height="34" class="trheadc">
                             <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
                                 Facilities and Assets
                             </td>
@@ -141,21 +152,210 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Lmh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh"
-                                height="20">
+                            <!--Table 10 :table one:tab1  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dsnPubP1Lmh.facilities_assets"
-                                    ng-if="dsnPubP1Lmh.facilities_assets=='Total'" width="264" height="20"
-                                    class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnPubP1Lmh.facilities_assets"
-                                    ng-if="dsnPubP1Lmh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Lmh" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Lmh[key]"></span>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_num_affected=dl_data['DspPubD1Lmh'][0].fields.total_num_affected + dl_data['DspPubDnLmh'][0].fields.total_num_affected ">
+
                                 </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].male=dl_data['DspPubD1Lmh'][0].fields.male + dl_data['DspPubDnLmh'][0].fields.male ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].female=dl_data['DspPubD1Lmh'][0].fields.female + dl_data['DspPubDnLmh'][0].fields.female ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_damages=dl_data['DspPubD1Lmh'][0].fields.total_damages + dl_data['DspPubDnLmh'][0].fields.total_damages ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y1=dl_data['DspPubD1Lmh'][0].fields.losses_y1 + dl_data['DspPubDnLmh'][0].fields.losses_y1 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y2=dl_data['DspPubD1Lmh'][0].fields.losses_y2 + dl_data['DspPubDnLmh'][0].fields.losses_y2 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+                            <!--Table 10 :table one:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_num_affected=dl_data['DspPubD1Lmh'][1].fields.total_num_affected + dl_data['DspPubDnLmh'][1].fields.total_num_affected ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].male=dl_data['DspPubD1Lmh'][1].fields.male + dl_data['DspPubDnLmh'][1].fields.male ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].female=dl_data['DspPubD1Lmh'][1].fields.female + dl_data['DspPubDnLmh'][1].fields.female ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_damages=dl_data['DspPubD1Lmh'][1].fields.total_damages + dl_data['DspPubDnLmh'][1].fields.total_damages ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y1=dl_data['DspPubD1Lmh'][1].fields.losses_y1 + dl_data['DspPubDnLmh'][1].fields.losses_y1 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y2=dl_data['DspPubD1Lmh'][1].fields.losses_y2 + dl_data['DspPubDnLmh'][1].fields.losses_y2 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table one:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_num_affected=dl_data['DspPubD1Lmh'][2].fields.total_num_affected + dl_data['DspPubDnLmh'][2].fields.total_num_affected ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].male=dl_data['DspPubD1Lmh'][2].fields.male + dl_data['DspPubDnLmh'][2].fields.male ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].female=dl_data['DspPubD1Lmh'][2].fields.female + dl_data['DspPubDnLmh'][2].fields.female ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_damages=dl_data['DspPubD1Lmh'][2].fields.total_damages + dl_data['DspPubDnLmh'][2].fields.total_damages ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y1=dl_data['DspPubD1Lmh'][2].fields.losses_y1 + dl_data['DspPubDnLmh'][2].fields.losses_y1 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y2=dl_data['DspPubD1Lmh'][2].fields.losses_y2 + dl_data['DspPubDnLmh'][2].fields.losses_y2 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table one:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].male= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].female=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_damages=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_damages ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y1= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y2= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[1].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_losses">
+
+                                </td>
+
 
                             </tr>
 
@@ -178,21 +378,155 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Moh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh"
-                                height="20">
+                            <!--Table 10 :table two:tab1  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dsnPubP1Moh.facilities_assets"
-                                    ng-if="dsnPubP1Moh.facilities_assets=='Total'" width="264" height="20"
-                                    class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnPubP1Moh.facilities_assets"
-                                    ng-if="dsnPubP1Moh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].facilities_assets"
+                                    width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Moh" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Moh[key]"></span>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_num_affected=dl_data['DspPubD1Moh'][0].fields.total_num_affected + dl_data['DspPubDnMoh'][0].fields.total_num_affected">
+
                                 </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].male=dl_data['DspPubD1Moh'][0].fields.male + dl_data['DspPubDnMoh'][0].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].female=dl_data['DspPubD1Moh'][0].fields.female + dl_data['DspPubDnMoh'][0].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_damages=dl_data['DspPubD1Moh'][0].fields.total_damages + dl_data['DspPubDnMoh'][0].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y1=dl_data['DspPubD1Moh'][0].fields.losses_y1 + dl_data['DspPubDnMoh'][0].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y2=dl_data['DspPubD1Moh'][0].fields.losses_y2 + dl_data['DspPubDnMoh'][0].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y2">
+
+                                </td>
+
+                            </tr>
+                            <!--Table 10 :table two:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_num_affected=dl_data['DspPubD1Moh'][1].fields.total_num_affected + dl_data['DspPubDnMoh'][1].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].male=dl_data['DspPubD1Moh'][1].fields.male + dl_data['DspPubDnMoh'][1].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].female=dl_data['DspPubD1Moh'][1].fields.female + dl_data['DspPubDnMoh'][1].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_damages=dl_data['DspPubD1Moh'][1].fields.total_damages + dl_data['DspPubDnMoh'][1].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y1=dl_data['DspPubD1Moh'][1].fields.losses_y1 + dl_data['DspPubDnMoh'][1].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y2=dl_data['DspPubD1Moh'][1].fields.losses_y2 + dl_data['DspPubDnMoh'][1].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y2">
+
+                                </td>
+
+                            </tr>
+                            <!--Table 10 :table two:tab1  three row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_num_affected ">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].male= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].female=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_damages=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y1= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y2= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[1].total_losses">
+
+                                </td>
+
 
                             </tr>
 
@@ -216,22 +550,466 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Omc in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc"
-                                height="20">
 
-                                <td ng-bind="dsnPubP1Omc.facilities_assets"
-                                    ng-if="dsnPubP1Omc.facilities_assets=='Total' || dsnPubP1Omc.facilities_assets=='TOTAL'"
-                                    width="264" height="20"
-                                    class="boldash">
 
-                                </td>
-                                <td ng-bind="dsnPubP1Omc.facilities_assets"
-                                    ng-if="dsnPubP1Omc.facilities_assets!='Total' && dsnPubP1Omc.facilities_assets!='TOTAL'"
+                            <!--Table 10 :table three:tab1  first row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Omc" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Omc[key]"></span>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_num_affected=dl_data['DspPubD1Omc'][0].fields.total_num_affected + dl_data['DspPubDnOmc'][0].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].male=dl_data['DspPubD1Omc'][0].fields.male + dl_data['DspPubDnOmc'][0].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].female=dl_data['DspPubD1Omc'][0].fields.female + dl_data['DspPubDnOmc'][0].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_damages=dl_data['DspPubD1Omc'][0].fields.total_damages + dl_data['DspPubDnOmc'][0].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y1=dl_data['DspPubD1Omc'][0].fields.losses_y1 + dl_data['DspPubDnOmc'][0].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y2=dl_data['DspPubD1Omc'][0].fields.losses_y2 + dl_data['DspPubDnOmc'][0].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+
+                            <!--Table 10 :table three:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_num_affected=dl_data['DspPubD1Omc'][1].fields.total_num_affected + dl_data['DspPubDnOmc'][1].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].male=dl_data['DspPubD1Omc'][1].fields.male + dl_data['DspPubDnOmc'][1].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].female=dl_data['DspPubD1Omc'][1].fields.female + dl_data['DspPubDnOmc'][1].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_damages=dl_data['DspPubD1Omc'][1].fields.total_damages + dl_data['DspPubDnOmc'][1].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y1=dl_data['DspPubD1Omc'][1].fields.losses_y1 + dl_data['DspPubDnOmc'][1].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y2=dl_data['DspPubD1Omc'][1].fields.losses_y2 + dl_data['DspPubDnOmc'][1].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+                            <!--Table 10 :table three:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_num_affected=dl_data['DspPubD1Omc'][2].fields.total_num_affected + dl_data['DspPubDnOmc'][2].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].male=dl_data['DspPubD1Omc'][2].fields.male + dl_data['DspPubDnOmc'][2].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].female=dl_data['DspPubD1Omc'][2].fields.female + dl_data['DspPubDnOmc'][2].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_damages=dl_data['DspPubD1Omc'][2].fields.total_damages + dl_data['DspPubDnOmc'][2].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y1=dl_data['DspPubD1Omc'][2].fields.losses_y1 + dl_data['DspPubDnOmc'][2].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y2=dl_data['DspPubD1Omc'][2].fields.losses_y2 + dl_data['DspPubDnOmc'][2].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y2">
+
+                                </td>
+
+                            </tr>
+                            <!--Table 10 :table three:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_num_affected=dl_data['DspPubD1Omc'][3].fields.total_num_affected + dl_data['DspPubDnOmc'][3].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].male=dl_data['DspPubD1Omc'][3].fields.male + dl_data['DspPubDnOmc'][3].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].female=dl_data['DspPubD1Omc'][3].fields.female + dl_data['DspPubDnOmc'][3].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_damages=dl_data['DspPubD1Omc'][3].fields.total_damages + dl_data['DspPubDnOmc'][3].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y1=dl_data['DspPubD1Omc'][3].fields.losses_y1 + dl_data['DspPubDnOmc'][3].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y2=dl_data['DspPubD1Omc'][3].fields.losses_y2 + dl_data['DspPubDnOmc'][3].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+                            <!--Table 10 :table three:tab1  fifth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_num_affected=dl_data['DspPubD1Omc'][4].fields.total_num_affected + dl_data['DspPubDnOmc'][4].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].male=dl_data['DspPubD1Omc'][4].fields.male + dl_data['DspPubDnOmc'][4].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].female=dl_data['DspPubD1Omc'][4].fields.female + dl_data['DspPubDnOmc'][4].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_damages=dl_data['DspPubD1Omc'][4].fields.total_damages + dl_data['DspPubDnOmc'][4].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y1=dl_data['DspPubD1Omc'][4].fields.losses_y1 + dl_data['DspPubDnOmc'][4].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y2=dl_data['DspPubD1Omc'][4].fields.losses_y2 + dl_data['DspPubDnOmc'][4].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+
+                            <!--Table 10 :table three:tab1  sixth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_num_affected=dl_data['DspPubD1Omc'][5].fields.total_num_affected + dl_data['DspPubDnOmc'][5].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].male=dl_data['DspPubD1Omc'][5].fields.male + dl_data['DspPubDnOmc'][5].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].female=dl_data['DspPubD1Omc'][5].fields.female + dl_data['DspPubDnOmc'][5].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_damages=dl_data['DspPubD1Omc'][5].fields.total_damages + dl_data['DspPubDnOmc'][5].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y1=dl_data['DspPubD1Omc'][5].fields.losses_y1 + dl_data['DspPubDnOmc'][5].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y2=dl_data['DspPubD1Omc'][5].fields.losses_y2 + dl_data['DspPubDnOmc'][5].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+                            <!--Table 10 :table three:tab1  seventh row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_num_affected=dl_data['DspPubD1Omc'][6].fields.total_num_affected + dl_data['DspPubDnOmc'][6].fields.total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].male=dl_data['DspPubD1Omc'][6].fields.male + dl_data['DspPubDnOmc'][6].fields.male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].female=dl_data['DspPubD1Omc'][6].fields.female + dl_data['DspPubDnOmc'][6].fields.female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_damages=dl_data['DspPubD1Omc'][6].fields.total_damages + dl_data['DspPubDnOmc'][6].fields.total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y1=dl_data['DspPubD1Omc'][6].fields.losses_y1 + dl_data['DspPubDnOmc'][6].fields.losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y2=dl_data['DspPubD1Omc'][6].fields.losses_y2 + dl_data['DspPubDnOmc'][6].fields.losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_losses=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y2">
+
+                                </td>
+
+                            </tr>
+
+
+                            <!--Table 10 :table three:tab1  eight row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].male= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].female= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_damages= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y1= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y2= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].losses_y2">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[1].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[2].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[3].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[4].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[5].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[6].total_losses">
+
+                                </td>
+
+                            </tr>
+
+
+                            <!--Table 10 :table three:tab1  ninth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_num_affected">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].male=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].male + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].male">
+
+                                </td>
+                                <td width="98" ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].female=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].female + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_damages=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y1=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y2=dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].losses_y2 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh[3].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh[2].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[7].total_losses">
+
                                 </td>
 
                             </tr>
@@ -275,31 +1053,280 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPubPnLmh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh"
-                                height="20">
 
-                                <td ng-bind="dsnPubPnLmh.facilities_assets"
-                                    ng-if="dsnPubPnLmh.facilities_assets=='Total'"
-                                    width="264" height="20" class="boldash">
+                            <!--Table 10 :table four:tab1  first row-->
+                            <tr height="20">
 
-                                </td>
-                                <td ng-bind="dsnPubPnLmh.facilities_assets"
-                                    ng-if="dsnPubPnLmh.facilities_assets!='Total'"
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnLmh" ng-if="$index > 0 && $index < 7 "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnLmh[key]" name="textinput" type="text"
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_num_affected"
+                                           name="textinput" type="number"
                                            placeholder=""
                                            class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
 
-                                <td nwidth="98">
-                                    <span ng-bind="dsnPubPnLmh.total_losses"></span>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y2">
+
                                 </td>
+
 
                             </tr>
+
+                            <!--Table 10 :table four:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+                            <!--Table 10 :table four:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table four:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_num_affected">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].male= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].male">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].female= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_damages= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_damages">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y1= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y1">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y2= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[1].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[2].total_losses">
+
+                                </td>
+
+
+                            </tr>
+
 
                             <tr height="20" class="trheadc">
                                 <td width="202" height="20">
@@ -321,36 +1348,207 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPubPnMoh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh"
-                                height="20">
+                            <!--Table 10 :table five:tab1  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dsnPubPnMoh.facilities_assets"
-                                    ng-if="dsnPubPnMoh.facilities_assets=='Total'"
-                                    width="264" height="20" class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnPubPnMoh.facilities_assets"
-                                    ng-if="dsnPubPnMoh.facilities_assets!='Total'"
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnMoh"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets!='Total' "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnMoh[key]" name="textinput" type="text"
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_num_affected"
+                                           name="textinput" type="number"
                                            placeholder=""
                                            class="form-control input-md">
+
                                 </td>
                                 <td width="98">
-                                    <span ng-bind="dsnPubPnMoh.total_losses"></span>
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnMoh"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets=='Total' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnMoh[key]"></span>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
 
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y2">
+
+                                </td>
+
+
                             </tr>
+
+                            <!--Table 10 :table five:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table five:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_num_affected= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_num_affected ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].male= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].male">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].female= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_damages= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_damages ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y1= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y1 ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y2= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].losses_y2 ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[1].total_losses">
+
+                                </td>
+
+
+                            </tr>
+
 
                             <tr height="20" class="trheadc">
                                 <td width="202" height="20">
@@ -371,44 +1569,695 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubPnOmc in dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc"
-                                height="20">
 
-                                <td ng-bind="dsnPubPnOmc.facilities_assets"
-                                    ng-if="dsnPubPnOmc.facilities_assets=='Total' || dsnPubPnOmc.facilities_assets=='TOTAL' || dsnPubPnOmc.facilities_assets=='GRAND TOTAL' "
-                                    width="264" height="20" class="boldash">
 
-                                </td>
-                                <td ng-bind="dsnPubPnOmc.facilities_assets"
-                                    ng-if="dsnPubPnOmc.facilities_assets!='Total' && dsnPubPnOmc.facilities_assets!='TOTAL' && dsnPubPnOmc.facilities_assets!='GRAND TOTAL'"
+                            <!--Table 10 :table six:tab1  first row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets!='Total' && dsnPubPnOmc.facilities_assets!='TOTAL' && dsnPubPnOmc.facilities_assets!='GRAND TOTAL' "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnOmc[key]" name="textinput" type="text"
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_num_affected"
+                                           name="textinput" type="number"
                                            placeholder=""
                                            class="form-control input-md">
+
                                 </td>
                                 <td width="98">
-                                    <span ng-bind="dsnPubPnOmc.total_losses"></span>
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='Total' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='TOTAL' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='GRAND TOTAL' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table six:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  fifth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  sixth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  seventh row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  eight row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_num_affected = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_num_affected+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_num_affected">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].male = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].male+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].male">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].female = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].female+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_damages = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_damages+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_damages">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y1+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y1">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y2 = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].losses_y2+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_losses = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[1].total_losses+ dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[2].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[3].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[4].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[5].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[6].total_losses">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  ninth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_num_affected = dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_num_affected +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_num_affected ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].male = dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].male +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].male">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].female = dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].female +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].female ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_damages = dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_damages +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_damages">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y1 =dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y1 +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y1 ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y2 =dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].losses_y2 +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh[3].total_losses +  dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh[2].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[7].total_losses ">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table six:tab1  tenth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_num_affected = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_num_affected ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].male = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].male + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].female = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].female + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].female  ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_damages = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_damages ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y1 ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y2 = dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc[8].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[8].total_losses">
+
+                                </td>
+
 
                             </tr>
 
@@ -470,7 +2319,7 @@
                         <table class="table table-bordered">
                             <tr height="20" class="trheadc">
                                 <td width="202" height="20">
-                                    Province 1
+                                    District 1
                                 </td>
                                 <td width="90">
                                 </td>
@@ -488,31 +2337,180 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPvtP1 in dlhealthsummarydamagenationwide.Table_10.DsnPvtP1"
-                                height="20">
+                            <!--Table 10 :table one:tab2  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dsnPvtP1.facilities_assets"
-                                    ng-if="dsnPvtP1.facilities_assets=='Total'"
-                                    width="264" height="20" class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnPvtP1.facilities_assets"
-                                    ng-if="dsnPvtP1.facilities_assets!='Total'"
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
 
-                                <td ng-repeat="(key, value) in dsnPvtP1"
-                                    ng-if="$index > 0 && $index < 8 "
-                                    width="98">
-                                    <span ng-bind="dsnPvtP1[key]"></span>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_num_affected = dl_data['DspPvtD1'][0].fields.total_num_affected + dl_data['DspPvtDn'][0].fields.total_num_affected ">
+
                                 </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].male = dl_data['DspPvtD1'][0].fields.male + dl_data['DspPvtDn'][0].fields.male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].female = dl_data['DspPvtD1'][0].fields.female + dl_data['DspPvtDn'][0].fields.female  ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_damages= dl_data['DspPvtD1'][0].fields.total_damages + dl_data['DspPvtDn'][0].fields.total_damages ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y1 =  dl_data['DspPvtD1'][0].fields.losses_y1 + dl_data['DspPvtDn'][0].fields.losses_y1">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y2 =dl_data['DspPvtD1'][0].fields.losses_y2 + dl_data['DspPvtDn'][0].fields.losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table one:tab2  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_num_affected = dl_data['DspPvtD1'][1].fields.total_num_affected + dl_data['DspPvtDn'][1].fields.total_num_affected ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].male = dl_data['DspPvtD1'][1].fields.male + dl_data['DspPvtDn'][1].fields.male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].female = dl_data['DspPvtD1'][1].fields.female + dl_data['DspPvtDn'][1].fields.female  ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_damages= dl_data['DspPvtD1'][1].fields.total_damages + dl_data['DspPvtDn'][1].fields.total_damages ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y1 =  dl_data['DspPvtD1'][1].fields.losses_y1 + dl_data['DspPvtDn'][1].fields.losses_y1">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y2 =dl_data['DspPvtD1'][1].fields.losses_y2 + dl_data['DspPvtDn'][1].fields.losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table one:tab2  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_num_affected =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_num_affected">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].male =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].female = dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_damages= dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_damages">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y1">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y2 =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[1].total_losses">
+
+                                </td>
+
 
                             </tr>
 
                             <tr height="20" class="trheadc">
                                 <td width="202" height="20">
-                                    Province N
+                                    District N
                                 </td>
                                 <td width="90">
                                 </td>
@@ -530,39 +2528,264 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPvtPn in dlhealthsummarydamagenationwide.Table_10.DsnPvtPn"
-                                height="20">
+                            <!--Table 10 :table two:tab1  first row-->
+                            <tr height="20">
 
-                                <td ng-bind="dsnPvtPn.facilities_assets"
-                                    ng-if="dsnPvtPn.facilities_assets=='Total' || dsnPvtPn.facilities_assets=='TOTAL'"
-                                    width="264" height="20" class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnPvtPn.facilities_assets"
-                                    ng-if="dsnPvtPn.facilities_assets!='Total' && dsnPvtPn.facilities_assets!='TOTAL'"
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].facilities_assets"
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets!='Total' && dsnPvtPn.facilities_assets!='TOTAL'"
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPvtPn[key]" name="textinput" type="text"
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_num_affected"
+                                           name="textinput" type="number"
                                            placeholder=""
                                            class="form-control input-md">
+
                                 </td>
                                 <td width="98">
-                                    <span ng-bind="dsnPvtPn.total_losses"></span>
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && (dsnPvtPn.facilities_assets=='Total' || dsnPvtPn.facilities_assets=='TOTAL')  "
-                                    width="98">
-                                    <span ng-bind="dsnPvtPn[key]"></span>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
                                 </td>
-                                <!--td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets=='TOTAL'"
-                                    width="98">
-                                    <span ng-bind="dsnPvtPn[key]"></span>
-                                </td-->
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table two:tab1  second row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].facilities_assets"
+                                    width="264" height="20" class="tdpa">
+
+                                </td>
+
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_num_affected"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].male"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].female"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_damages"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y1"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+                                <td width="98">
+
+                                    <input id="textinput"
+                                           ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y2"
+                                           name="textinput" type="number"
+                                           placeholder=""
+                                           class="form-control input-md">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_losses= dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y2">
+
+                                </td>
+
+
+                            </tr>
+
+                            <!--Table 10 :table two:tab2  third row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_num_affected =dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_num_affected">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].male =dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].male + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].female = dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].female + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].female">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_damages= dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_damages">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y1">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y2 =dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].losses_y2">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[0].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[1].total_losses">
+
+                                </td>
+
+
+                            </tr>
+
+
+                            <!--Table 10 :table two:tab2  fourth row-->
+                            <tr height="20">
+
+                                <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].facilities_assets"
+                                    width="264" height="20" class="boldash">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_num_affected"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_num_affected = dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_num_affected + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_num_affected  ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].male"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].male = dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].male + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].male ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].female"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].female = dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].female + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].female ">
+
+                                </td>
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_damages"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_damages=dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_damages + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_damages  ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y1"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y1 =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y1  ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y2"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y2 =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].losses_y2 ">
+
+                                </td>
+
+                                <td width="98"
+                                    ng-model="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_losses"
+
+                                    ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_losses =dlhealthsummarydamagenationwide.Table_10.DsnPvtP1[2].total_losses + dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[2].total_losses ">
+
+                                </td>
 
 
                             </tr>
@@ -606,32 +2829,118 @@
                                 Year 2
                             </td>
                         </tr>
+                        <!--Table 10 :table one:tab3  first row-->
+                        <tr height="20">
+
+                            <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].ownership"
+                                width="264" height="20" class="tdpa">
+
+                            </td>
+
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].damages"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].damages = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].total_damages ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y1"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y1 ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y2"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y2 = dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc[9].losses_y2">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].total"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].total= dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].damages + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y2 ">
+
+                            </td>
+
+
+                        </tr>
+                        <!--Table 10 :table one:tab3  second row-->
+                        <tr height="20">
+
+                            <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].ownership"
+                                width="264" height="20" class="tdpa">
+
+                            </td>
+
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].damages"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].damages = dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].total_damages ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y1"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y1 ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y2"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y2 = dlhealthsummarydamagenationwide.Table_10.DsnPvtPn[3].losses_y2">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].total"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].total= dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].damages + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y1 + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y2 ">
+
+                            </td>
+
+
+                        </tr>
+
+                        <!--Table 10 :table one:tab3  third row-->
+                        <tr height="20">
+
+                            <td ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].ownership"
+                                width="264" height="20" class="boldash">
+
+                            </td>
+
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].damages"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].damages = dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].damages + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].damages ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].losses_y1"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].losses_y1 = dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y1+ dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y1 ">
+
+                            </td>
+                            <td width="98" colspan="2"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].losses_y2"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].losses_y2 = dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].losses_y2 + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].losses_y2">
+
+                            </td>
+                            <td colspan="2" width="98"
+                                ng-model="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].total"
+
+                                ng-bind="dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[2].total= dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[0].total + dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship[1].total  ">
+
+                            </td>
+
+
+                        </tr>
                         </tbody>
                     </table>
 
                     <div style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
-                         <tr ng-repeat="dsnTdlOwship in dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship"
-                                height="20">
 
-                                <td ng-bind="dsnTdlOwship.ownership"
-                                    ng-if="dsnTdlOwship.ownership=='TOTAL'"
-                                    width="264" height="20" class="boldash">
-
-                                </td>
-                                <td ng-bind="dsnTdlOwship.ownership"
-                                    ng-if="dsnTdlOwship.ownership!='TOTAL'"
-                                    width="264" height="20" class="tdpa">
-
-                                </td>
-
-                                <td ng-repeat="(key, value) in dsnTdlOwship"
-                                    ng-if="$index > 0 && $index < 8 "
-                                    width="98">
-                                    <span ng-bind="dsnTdlOwship[key]"></span>
-                                </td>
-
-                            </tr>
                             </tbody>
                         </table>
                         <div class="pull-right">

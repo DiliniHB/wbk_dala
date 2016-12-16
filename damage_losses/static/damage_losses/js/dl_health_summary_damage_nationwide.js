@@ -3,7 +3,9 @@ var app = angular.module('dlHealthSummaryDamageNationwideApp', []);
 app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',function ($scope,$http) {
 
  $scope.district;
- //bind Disasteroption
+ $scope.incident;
+ $scope.dl_data={};
+
     $scope.dlhealthsummarydamagenationwide = {
         'Table_10': {
             'DsnPubP1Lmh': [{
@@ -400,7 +402,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
     }
 
 
-    $scope.SaveData = function() {
+   $scope.SaveData = function() {
         console.log($scope.data);
 
         $http({
@@ -411,6 +413,8 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
                 'table_data': $scope.dlhealthsummarydamagenationwide,
                 'com_data': {
                     'district': $scope.district,
+                    'incident' : $scope.incident,
+                    'is_edit':false
 
                 }
             }),
@@ -423,6 +427,46 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
 
             console.log(response);
         });
+
+    }
+
+
+    // get relevant damage_losses data for calculations
+
+
+    $scope.changedValue = function getDlData()
+    {
+
+
+        if($scope.district && $scope.incident){
+        console.log($scope.district);
+        console.log($scope.incident);
+        $http({
+        method: 'POST',
+        url: '/damage_losses/dl_get_data',
+        contentType: 'application/json; charset=utf-8',
+        data: angular.toJson({
+                'db_tables': ['DspPubD1Lmh','DspPubDnLmh','DspPubDnMoh','DspPubD1Moh','DspPubD1Omc','DspPubDnOmc','DspPvtD1','DspPvtDn'],
+                'com_data': {
+                    'district': $scope.district,
+                    'incident': $scope.incident,
+                    'is_edit': false,
+                }
+            }),
+        dataType: 'json',
+        }).then(function successCallback(response) {
+            var data = response.data;
+            angular.forEach(data, function(value, key) {
+              $scope.dl_data[key] = JSON.parse(value);
+            });
+
+            console.log($scope.dl_data);
+
+        }, function errorCallback(response) {
+
+            console.log(response);
+        });
+        }
 
     }
 

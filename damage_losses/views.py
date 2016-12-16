@@ -1,18 +1,12 @@
 from django.shortcuts import render
-from settings.models import District, BdSessionKeys, Province
+from settings.models import District, Province
 from incidents.models import IncidentReport
-from base_line.models import BucOmarStructure
 import yaml, json
-from django.utils import timezone
 from django.http import HttpResponse
 from django.apps import apps
-from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from datetime import datetime, date
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from django.http import Http404
-from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
-from django.http import JsonResponse
 from django.conf import settings
 
 
@@ -71,8 +65,10 @@ def dl_health_summary_sector_district(request):
 
 def dl_health_summary_damage_nationwide(request):
     districts = District.objects.all()
+    incidents = IncidentReport.objects.all()
     context = {
-        'districts': districts
+        'districts': districts,
+        'incidents': incidents,
     }
     return render(request, 'damage_losses/health_summery_damageloss_national.html', context)
 

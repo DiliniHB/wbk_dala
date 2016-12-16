@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     #'tastypie',
     'settings',
     'users',
-    'reports'
+    'reports',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -87,7 +87,7 @@ DATABASES = {
         'OPTIONS': {
                 'options': '-c search_path=health,public'
             },
-        'NAME': 'dala',
+        'NAME': 'dala_new',
         'USER': 'postgres',
 
     },
@@ -141,7 +141,13 @@ TABLE_PROPERTY_MAPPER = {
          'BhsComDiseases': ['com_disease', 'male', 'female', 'children', 'elderly', 'id'],
          'BhsVi': ['children', 'elderly', 'female', 'male', 'vital_indicators', 'id'],
          'BhsOi': ['unit_measure', 'other_indicators', 'id']
-         }
+         },
+    'Table_2':
+        {
+            'BmfPubMf': ['type_pub_mf', 'number', 'male', 'female', 'id'],
+            'BmfPvtMf': ['type_pvt_mf', 'number', 'male', 'female', 'id']
+
+        }
 }
 
 AUTH_USER_MODEL = 'users.MyUser'
