@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'damage_losses',
     'incidents',
     'dashboard',
-    'settings'
+    'settings' ,
+    'reports'
 ]
 
 MIDDLEWARE_CLASSES = [
