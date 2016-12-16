@@ -46,17 +46,21 @@ def bs_health_status(request):
 
 
 def fetch_districts(user):
-    role = user.user_role.code_name
     districts = District.objects.all()
+    if user.is_superuser:
+        return districts
+    else:
+        role = user.user_role.code_name
+        districts = District.objects.all()
 
-    if role == 'district':
-        district_id = user.district_id
-        districts = District.objects.filter(id=district_id)
-    elif role == 'provincial':
-        province = user.province
-        districts = province.district_set.all()
+        if role == 'district':
+            district_id = user.district_id
+            districts = District.objects.filter(id=district_id)
+        elif role == 'provincial':
+            province = user.province
+            districts = province.district_set.all()
 
-    return districts
+        return districts
 
 
 def bs_health_information_health_status(request):
