@@ -48,3 +48,40 @@ class BdSessionKeys(models.Model):
         db_table = 'bd_session_keys'
 
 
+class Sector(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    created_date = models.TimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sector'
+
+    def __str__(self):
+        return self.name
+
+
+class UserDesignation(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_designation'
+
+    def __str__(self):
+        return self.name
+
+
+class UserRole(models.Model):
+    role_name = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
+    code_name = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'user_role'
+
+    def __str__(self):
+        return self.role_name

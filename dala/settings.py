@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'damage_losses',
     'incidents',
     'dashboard',
-    'settings'
+    'settings',
+    'users',
+    'reports',
+    #'tastypie'
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -146,3 +150,10 @@ TABLE_PROPERTY_MAPPER = {
 
         }
 }
+
+AUTH_USER_MODEL = 'users.MyUser'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

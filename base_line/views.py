@@ -15,6 +15,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
 from django.http import JsonResponse
 from django.conf import settings
+from users.decorators import permission_required
 
 
 # render baseline health table
@@ -34,11 +35,28 @@ def bs_save_baseline_pub_mf():
     baseline_pub_mf.save()
 
 
+@permission_required("district")
 def bs_health_status(request):
+    user = request.user
+    filtered_districts = fetch_districts(user)
     context = {
-        'districts': District.objects.all()
+        'districts': filtered_districts
     }
     return render(request, 'base_line/health_baseline_rdh.html', context)
+
+
+def fetch_districts(user):
+    role = user.user_role.code_name
+    districts = District.objects.all()
+
+    if role == 'district':
+        district_id = user.district_id
+        districts = District.objects.filter(id=district_id)
+    elif role == 'provincial':
+        province = user.province
+        districts = province.district_set.all()
+
+    return districts
 
 
 def bs_health_information_health_status(request):
@@ -276,8 +294,6 @@ def bs_save_data(request):
 @csrf_exempt
 def bs_get_data(request):
     todate = timezone.now()
-    incident = IncidentReport.objects.get(pk=1)
-    incident_date = incident.reported_date_time
     data = (yaml.safe_load(request.body))
     db_tables = data['db_tables']
 
