@@ -290,7 +290,8 @@ app.controller("BsOtherMedFacilitiesUnitCostController", ['$scope','$http',funct
                 'table_data': $scope.bsDataOtherMedicalFacilities,
                 'com_data': {
                     'district': $scope.district,
-                    'bs_date': $scope.baselineDate
+                    'bs_date': $scope.baselineDate,
+                    'is_edit': false
                 }
             }),
             dataType: 'json',

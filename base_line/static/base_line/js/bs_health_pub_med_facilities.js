@@ -107,7 +107,8 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
                 'table_data': $scope.bsDataMedicalFacilities,
                 'com_data': {
                     'district': $scope.district,
-                    'bs_date':$scope.baselineDate
+                    'bs_date':$scope.baselineDate,
+                    'is_edit': false
                 }
             }),
             dataType: 'json',

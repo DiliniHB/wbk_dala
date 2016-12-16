@@ -32,6 +32,9 @@ class DisasterType(models.Model):
         managed = False
         db_table = 'disaster_type'
 
+    def __str__(self):
+        return self.name
+
 
 class BdSessionKeys(models.Model):
     data_type = models.CharField(max_length=120, blank=True, null=True)

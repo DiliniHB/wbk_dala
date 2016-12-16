@@ -1,5 +1,3 @@
 from django.contrib import admin
-from .models import BmfPubMf
 
-
-
+# Register your models here.

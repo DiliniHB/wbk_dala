@@ -209,7 +209,8 @@ app.controller('unitCostMiniHealthSysController', ['$scope', '$http', function($
                 'table_data': $scope.bsUnitCostMiniHealthSys,
                 'com_data':{
                     'district': $scope.district,
-                    'bs_date': $scope.baselineDate
+                    'bs_date': $scope.baselineDate,
+                    'is_edit' : false
                 }
             }),
             dataType: 'json',

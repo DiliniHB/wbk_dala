@@ -613,6 +613,7 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
                 'com_data': {
                     'district': $scope.district,
                     'incident': $scope.incident,
+                    'is_edit' : false
 
                 }
             }),

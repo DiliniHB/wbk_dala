@@ -135,6 +135,7 @@ def bs_save_hs_data_mock(request):
                 model_object.lmd = timezone.now()
                 model_object.district_id = com_data['district']
 
+
                 print 'row', ' --> ', row, '\n', ' object '
                 # for index, property in enumerate(row):
                 for index, property in enumerate(sorted(row)):
@@ -154,7 +155,7 @@ def bs_save_hs_data(request):
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
-    is_edit = bs_data['is_edit']
+    is_edit = com_data['is_edit']
 
     if not is_edit:
 
@@ -246,7 +247,7 @@ def bs_save_data(request):
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
-    is_edit = bs_data['is_edit']
+    is_edit = com_data['is_edit']
 
     if not is_edit:
 
@@ -265,7 +266,7 @@ def bs_save_data(request):
                         # assigning common properties to model object
                         model_object.created_date = todate
                         model_object.lmd = todate
-                        model_object.district_id = com_data['district']
+                        #model_object.district_id = com_data['district']
                         model_object.bs_date = com_data['bs_date']
 
                         print 'row', ' --> ', row, '\n', ' object '
