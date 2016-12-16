@@ -10,7 +10,7 @@ $scope.sum;
 $scope.bs_date;
 $scope.is_edit = false;
 
-$scope.dataHealthStatus = {
+var init_data = {
 'Table_1':{
 'BhsPlc':[
 {
@@ -69,6 +69,8 @@ unit_measure: ""
 ]
 }
 }
+
+$scope.dataHealthStatus = init_data;
 
 $scope.getSum = function()
 {
@@ -148,7 +150,7 @@ $scope.bsHsDataEdit = function()
 $scope.cancelEdit = function()
 {
     $scope.is_edit = false;
-
+    $scope.dataHealthStatus = init_data;
 }
 
 

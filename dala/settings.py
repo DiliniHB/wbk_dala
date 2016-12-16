@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'damage_losses',
     'incidents',
     'dashboard',
-    'settings' ,
-    'reports'
+    'settings',
+    'users',
+    'reports',
+    #'tastypie'
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -139,5 +142,18 @@ TABLE_PROPERTY_MAPPER = {
          'BhsComDiseases': ['com_disease', 'male', 'female', 'children', 'elderly', 'id'],
          'BhsVi': ['children', 'elderly', 'female', 'male', 'vital_indicators', 'id'],
          'BhsOi': ['unit_measure', 'other_indicators', 'id']
-         }
+         },
+    'Table_2':
+        {
+            'BmfPubMf': ['type_pub_mf', 'number', 'male', 'female', 'id'],
+            'BmfPvtMf': ['type_pvt_mf', 'number', 'male', 'female', 'id']
+
+        }
 }
+
+AUTH_USER_MODEL = 'users.MyUser'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)

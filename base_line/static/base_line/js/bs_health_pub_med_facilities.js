@@ -5,9 +5,9 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
 
     $scope.district;
     $scope.baselineDate;
+    $scope.is_edit = false;
 
-
-    $scope.bsDataMedicalFacilities = {
+    var init_data = {
         'Table_2': {
             'BmfPubMf': [{
                 type_pub_mf: 'Teaching Hospital (TH)',
@@ -76,17 +76,17 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
                 female: 0,
             }],
             'BmfPvtMf': [{
-                type_pub_mf: 'Private Clinics',
+                type_pvt_mf: 'Private Clinics',
                 number: 1,
                 male: 1,
                 female: 1,
             },{
-                type_pub_mf: 'Others',
+                type_pvt_mf: 'Others',
                 number: 1,
                 male: 1,
                 female: 1,
             },{
-                type_pub_mf: 'TOTAL',
+                type_pvt_mf: 'TOTAL',
                 number: 0,
                 male: 0,
                 female: 0,
@@ -95,6 +95,7 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
         }
     }
 
+    $scope.bsDataMedicalFacilities = init_data;
 
     $scope.SaveData = function() {
         console.log($scope.data);
@@ -107,14 +108,15 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
                 'table_data': $scope.bsDataMedicalFacilities,
                 'com_data': {
                     'district': $scope.district,
-                    'bs_date':$scope.baselineDate,
-                    'is_edit': false
-                }
+                    'bs_date':$scope.baselineDate},
+                'is_edit': $scope.is_edit
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
 
             console.log(response);
+            $scope.is_edit = false;
+            $scope.bsDataMedicalFacilities = init_data;
 
         }, function errorCallback(response) {
 
@@ -122,6 +124,37 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
         });
 
     }
+
+
+    $scope.bsHsDataEdit = function()
+{
+
+   $scope.is_edit = true;
+
+    $http({
+    method: "POST",
+    url: "/base_line/bs_fetch_edit_data",
+    data: angular.toJson({
+    'table_name': 'Table_2',
+    'com_data': {
+           'district': $scope.district,
+          'bs_date': $scope.baselineDate,
+          } }),
+    }).success(function(data) {
+
+    console.log(data);
+    $scope.bsDataMedicalFacilities = data;
+    })
+
+
+}
+
+
+    $scope.cancelEdit = function()
+{
+     $scope.is_edit = false;
+     $scope.bsDataMedicalFacilities = init_data;
+}
 
 
 

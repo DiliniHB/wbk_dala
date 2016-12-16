@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^api/', include(v1_api.urls)),
     url(r'^base_line/', include('base_line.urls', namespace='base_line')),
     url(r'^damage_losses/', include('damage_losses.urls', namespace='damage_losses')),
+    url(r'^users/', include('users.urls', namespace='users')),
     url(r'^reports/', include('reports.urls', namespace='reports')),
+
 
 ]
