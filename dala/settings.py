@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'damage_losses',
     'incidents',
     'dashboard',
-    'settings'
+    'settings',
+    'users'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -141,3 +142,10 @@ TABLE_PROPERTY_MAPPER = {
          'BhsOi': ['unit_measure', 'other_indicators', 'id']
          }
 }
+
+AUTH_USER_MODEL = 'users.MyUser'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.RemoteUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
