@@ -138,5 +138,11 @@ TABLE_PROPERTY_MAPPER = {
          'BhsComDiseases': ['com_disease', 'male', 'female', 'children', 'elderly', 'id'],
          'BhsVi': ['children', 'elderly', 'female', 'male', 'vital_indicators', 'id'],
          'BhsOi': ['unit_measure', 'other_indicators', 'id']
-         }
+         },
+    'Table_2':
+        {
+            'BmfPubMf': ['type_pub_mf', 'number', 'male', 'female', 'id'],
+            'BmfPvtMf': ['type_pvt_mf', 'number', 'male', 'female', 'id']
+
+        }
 }

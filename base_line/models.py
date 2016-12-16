@@ -93,6 +93,7 @@ class BmfPubMf(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    bs_date = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -110,7 +111,7 @@ class BmfPvtMf(models.Model):
     created_date = models.DateTimeField(blank=True, null=True)
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
-    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
     bs_date = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
