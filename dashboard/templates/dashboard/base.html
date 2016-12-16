@@ -24,7 +24,7 @@
 	<script src='{% static "dashboard/js/jquery.min.js" %}'></script>
     <script src='{% static "dashboard/js/bootstrap.min.js" %}'></script>
     <script src='{% static "dashboard/js/angular/angular.js" %}'></script>
-    <script src='{% static "dashboard/js/app.js" %}'></script>
+   
 
     <script src="{% static 'base_line/js/pub_med_facilities.js' %}"></script>
     <script src="{% static 'base_line/js/bs_health_status.js' %}"></script>
@@ -102,7 +102,7 @@
                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img src="img/default-user-image.png" class="img-avatar" alt="">
+                        <img src="{% static 'dashboard/img/default-user-image.png' %}" class="img-avatar" alt="">
                         <span class="hidden-md-down">admin</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -122,11 +122,12 @@
         </div>
     </header>
 
+
     <div class="sidebar">
  <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html"><i class="icon-speedometer"></i> Dashboard </a>
+                    <a class="nav-link" href="#"><i class="icon-speedometer"></i> Dashboard </a>
                 </li>
 
                 <li class="nav-title">
@@ -136,16 +137,16 @@
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> Baseline Info</a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link" href="health_baseline_rdh.html"> Health Status in a District or RDH</a>
+                            <a class="nav-link" href="{% url 'base_line:bs_health_status' %}"> Health Status in a District or RDH</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_baseline_district.html"> Medical Facilities in a District</a>
+                            <a class="nav-link" href="{% url 'base_line:bs_medical_facilities' %}"> Medical Facilities in a District</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_baseline_unitcost_district.html"> Unit Cost of the Ministry Health System in a District</a>
+                            <a class="nav-link" href="{% url 'base_line:bs_health_info_unit_cost_ministry_health' %}"> Unit Cost of the Ministry Health System in a District</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_baseline_unitcost_othermedi_district.html"> Unit Cost of Other Medical Facilities in a District </a>
+                            <a class="nav-link" href="{% url 'base_line:bs_health_other_medical_facilities_unit_cost' %}"> Unit Cost of Other Medical Facilities in a District </a>
                         </li>
                        
                         <li class="nav-item">
@@ -159,24 +160,24 @@
                     <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> Damages and Loss</a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
-                            <a class="nav-link" href="health_damagelost_ministry_helth.html"> Line Ministry Health System</a>
+                            <a class="nav-link" href="{% url 'damage_losses:health_damagelost_ministry_helth' %}"> Line Ministry Health System</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_damagelost_other_medi.html"> Other Medical Facilities</a>
+                            <a class="nav-link" href="{% url 'damage_losses:dl_health_damagelost_other_medical_facilities' %}"> Other Medical Facilities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_damagelost_private.html"> Assessment of Private Health Facilities</a>
+                            <a class="nav-link" href="{% url 'damage_losses:health_damagelost_private' %}"> Assessment of Private Health Facilities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_summery_damageloss_dis.html"> Summery Health Sector in a District</a>
+                            <a class="nav-link" href="{% url 'damage_losses:dl_health_summary_sector_district' %}"> Summery Health Sector in a District</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_summery_damageloss_province.html"> Summery Health Sector in the Province</a>
+                            <a class="nav-link" href="#"> Summery Health Sector in the Province</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="health_summery_damageloss_national.html"> Summery Health Sector Nationwide</a>
+                            <a class="nav-link" href="{% url 'damage_losses:dl_health_summary_damage_nationwide' %}"> Summery Health Sector Nationwide</a>
                         </li>
-						
+					
 						
                         <li class="nav-item">
                             
@@ -184,7 +185,12 @@
                     </ul>
                 </li>
                
- 
+  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports:index_report' %}"><i class="icon-speedometer"></i> Report </a>
+                </li>
+		 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'reports:index_chart' %}"><i class="icon-speedometer"></i> Chart</a>
+                </li>	
             </ul>
         </nav>
     </div>
@@ -193,11 +199,7 @@
 
 
 
-    <div class="alert alert-danger alert-dismissible" role="alert" id="ieflag" style="display:none">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h1>You are using an outdated browser that is not supported by GeoNode.</h1>
-      <p>Please use a <strong>modern browser</strong> like Mozilla Firefox, Google Chrome or Safari.</p>
-    </div>
+    
 
   
     {% block content %}
@@ -291,7 +293,7 @@
   });
 
 </script>
-
+ <script src='{% static "dashboard/js/app.js" %}'></script>
 </body>
 
 </html>
