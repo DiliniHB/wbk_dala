@@ -4,9 +4,10 @@ app.controller("BsOtherMedFacilitiesUnitCostController", ['$scope','$http',funct
 
     $scope.district;
     $scope.baselineDate;
+    $scope.is_edit = false;
 
 
-    $scope.bsDataOtherMedicalFacilities = {
+    var init_data = {
         'Table_4': {
             'BucOmarStructure': [{
                 particulars: '1 Floor Structure',
@@ -280,6 +281,8 @@ app.controller("BsOtherMedFacilitiesUnitCostController", ['$scope','$http',funct
         }
     }
 
+    $scope.bsDataOtherMedicalFacilities = init_data;
+
      $scope.SaveData = function() {
 
         $http({
@@ -291,8 +294,9 @@ app.controller("BsOtherMedFacilitiesUnitCostController", ['$scope','$http',funct
                 'com_data': {
                     'district': $scope.district,
                     'bs_date': $scope.baselineDate,
-                    'is_edit': false
-                }
+
+                },
+                'is_edit': $scope.is_edit
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -305,5 +309,38 @@ app.controller("BsOtherMedFacilitiesUnitCostController", ['$scope','$http',funct
         });
 
     }
+
+
+    $scope.bsHsDataEdit = function()
+{
+
+   $scope.is_edit = true;
+
+    $http({
+    method: "POST",
+    url: "/base_line/bs_fetch_edit_data",
+    data: angular.toJson({
+    'table_name': 'Table_4',
+    'com_data': {
+           'district': $scope.district,
+           'bs_date': $scope.baselineDate,
+          } }),
+    }).success(function(data) {
+
+    console.log(data);
+    $scope.bsDataOtherMedicalFacilities = data;
+    })
+
+
+}
+
+
+    $scope.cancelEdit = function()
+{
+     $scope.is_edit = false;
+     $scope.bsDataOtherMedicalFacilities = init_data;
+}
+
+
 
 }])

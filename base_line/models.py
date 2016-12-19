@@ -460,3 +460,5 @@ class BucMarcOassets(models.Model):
 
 
 
+
+
