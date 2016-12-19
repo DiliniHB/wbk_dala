@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'damage_losses',
     'incidents',
     'dashboard',
+    #'tastypie',
     'settings',
     'users',
     'reports',
-    # 'tastypie'
 
 ]
 

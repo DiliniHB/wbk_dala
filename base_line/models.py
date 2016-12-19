@@ -297,7 +297,6 @@ class BucOmarcStructure(models.Model):
         db_table = 'buc_omarc_structure'
 
 
-
 class BdSessionKeys(models.Model):
     data_type = models.CharField(max_length=120, blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)

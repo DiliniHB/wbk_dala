@@ -17,5 +17,4 @@ urlpatterns = [
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^reports/', include('reports.urls', namespace='reports')),
 
-
 ]
