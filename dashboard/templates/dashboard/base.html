@@ -22,6 +22,7 @@
     <link href="{% static 'dashboard/css/datepicker.css' %}" rel="stylesheet">
 	
 	<script src='{% static "dashboard/js/jquery.min.js" %}'></script>
+	<script src='{% static "dashboard/js/jquery.nicescroll.min.js" %}'></script>
     <script src='{% static "dashboard/js/bootstrap.min.js" %}'></script>
     <script src='{% static "dashboard/js/angular/angular.js" %}'></script>
    
@@ -62,7 +63,14 @@
 
 });
     </script>
-
+<script>
+  $(document).ready(function() {
+  
+    var nicesx = $("#boxscroll").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+    
+  });
+  
+</script>
 
 </head>
      

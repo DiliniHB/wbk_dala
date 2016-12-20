@@ -1,5 +1,27 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
+
+<script>
+$( document ).ready(function() {
+$('#s1').on('click', function(){
+    $('#li1').removeClass('active');
+    $('#li2').addClass('active');
+});
+$('#s2').on('click', function(){
+    $('#li2').removeClass('active');
+    $('#li3').addClass('active');
+});
+$('#s3').on('click', function(){
+    $('#li3').removeClass('active');
+    $('#li4').addClass('active');
+});
+$('#s4').on('click', function(){
+    $('#li4').removeClass('active');
+    $('#li5').addClass('active');
+});
+});
+</script>
+
 <!-- Main content -->
 <main class="main" ng-app="dlHealthSummaryDamageNationwideApp"
       ng-controller="DlHealthSummaryDamageNationwideController">
@@ -22,9 +44,9 @@
 
         <div>
             <ul class='nav nav-wizard'>
-                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
+                <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li id="li2"><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li id="li3"><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
 
 
             </ul>
@@ -32,16 +54,16 @@
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
                         <colgroup>
                             <col width="202"/>
                             <col width="90" span="7"/>
                         </colgroup>
                         <tbody>
-                        <tr class="trhead">
-                            <td style="padding-left:5px;"> Name of Province</td>
+                        <tr class="trhead" >
+                            <td width="202" style="padding-left:5px;"> Name of Province</td>
 
-                            <td colspan="3" style="background:#EFEFEF;">
+                            <td colspan="2" style="background:#EFEFEF;">
                                 <select id="selectbasic" name="selectbasic" ng-model="district"
                                         class="form-control"
                                         style="width:100%;font-weight:400;"
@@ -113,8 +135,9 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style="height:400px;overflow:auto;">
+                    <div style="height:400px;overflow:auto;" id="boxscroll">
                         <table class="table table-bordered">
+				
                             <tr height="20" class="trhead">
                                 <td width="202" height="20" class="trhead">
                                     Province 1
@@ -2265,7 +2288,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
+                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
                             Informations</a>
                     </div>
 
@@ -2794,7 +2817,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step3' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Total Damages
+                        <a href='#step3' id="s2" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Total Damages
                             and Losses Informations</a>
 
                     </div>
