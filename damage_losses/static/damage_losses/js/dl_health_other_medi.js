@@ -4,70 +4,73 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
 
  $scope.district;
  $scope.incident;
- //bind Disasteroption
-    $scope.dlDataHealthDamagelostOtherMedicalFacilities = {
+ $scope.bs_data={};
+ $scope.dl_data={};
+ $scope.is_edit = false;
+
+    var init_data = {
         'Table_6': {
             'DmfDfaNum': [{
                 num_des_facilities: 'Number of Destroyed Facilities',
-                base_hospital : 1,
-                divisional_hospital: 2,
-                rural_hospital : 3,
-                central_dispensary: 4,
-                pmcus : 5,
-                phccs: 6,
-                mchcs : 7,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             }],
             'DmfDfaPaf': [{
                 num_patients_affected: 'Male',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 num_patients_affected: 'Female',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             }],
             'DmfDaStructure': [{
                 asset: '1 Floor Structure',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: '2-3 Floors Structure',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: 'More Than 3 Floors Structure',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Value of Destroyed Structure',
@@ -82,34 +85,34 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
             }],
             'DmfDaSupplies': [{
                 asset: 'Medicines',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: 'Medical Supplies',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: 'Others',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: 'Value of Destroyed Supplies',
                 base_hospital : 0,
@@ -123,43 +126,43 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
             }],
             'DmfDaMequipment': [{
                 asset: 'CT Scan',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'X-ray Machine',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
+                total: 0,
             },{
                 asset: 'MRI Machine',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Other Equipment (Specify)',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Value of Destroyed Medical Equipment',
@@ -174,63 +177,53 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
             }],
             'DmfDaOassets': [{
                 asset: 'Computers',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Vehicles',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Furniture',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
-                total: 0,
-            },{
-                asset: 'Other Equipment (Specify)',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Office Equipment',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Others',
-                base_hospital : 1,
-                divisional_hospital: 1,
-                rural_hospital : 1,
-                central_dispensary: 1,
-                pmcus : 1,
-                phccs: 1,
-                mchcs : 1,
+                base_hospital : 0,
+                divisional_hospital: 0,
+                rural_hospital : 0,
+                central_dispensary: 0,
+                pmcus : 0,
+                phccs: 0,
+                mchcs : 0,
                 total: 0,
             },{
                 asset: 'Value of Destroyed Other Assets',
@@ -600,7 +593,7 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
         }
     }
 
-
+  $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
     $scope.SaveData = function() {
 
 
@@ -613,9 +606,9 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
                 'com_data': {
                     'district': $scope.district,
                     'incident': $scope.incident,
-                    'is_edit' : false
 
-                }
+                },
+                'is_edit' : $scope.is_edit
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -630,8 +623,72 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
     }
 
 
+    // get relevant base-line data for calculations
+    function getBsData() {
+        $http({
+            method: 'POST',
+            url: '/base_line/bs_get_data',
+            contentType: 'application/json; charset=utf-8',
+            data: angular.toJson({
+              'db_tables': ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets'],
+            }),
+            dataType: 'json',
+        }).then(function successCallback(response) {
+            var data = response.data;
+            angular.forEach(data, function(value, key) {
+              $scope.bs_data[key] = JSON.parse(value);
+            });
+
+            console.log($scope.bs_data);
+
+        }, function errorCallback(response) {
+
+            console.log(response);
+        });
+    }
 
 
- }])
+    $scope.init = function init() {
+      getBsData();
+    }
+
+ // edit relevant damage_losses data
+
+
+    $scope.dlDataEdit = function()
+{
+
+   $scope.is_edit = true;
+
+    $http({
+    method: "POST",
+    url: '/damage_losses/dl_fetch_edit_data',
+    data: angular.toJson({
+    'table_name':  'Table_6',
+    'com_data': {
+           'district': $scope.district,
+            'incident': $scope.incident,
+          },
+           'is_edit':$scope.is_edit
+           }),
+    }).success(function(data) {
+
+    console.log(data);
+
+
+    $scope.dlDataHealthDamagelostOtherMedicalFacilities = data;
+    })
+
+
+}
+
+
+    $scope.cancelEdit = function()
+{
+     $scope.is_edit = false;
+     $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
+}
+
+}])
 
 

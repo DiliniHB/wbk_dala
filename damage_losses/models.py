@@ -5,7 +5,6 @@ from settings.models import District
 from incidents.models import IncidentReport
 
 
-
 class DmfLosCud(models.Model):
     type_of_losses = models.CharField(max_length=255, blank=True, null=True)
     base_hospital = models.FloatField(blank=True, null=True)

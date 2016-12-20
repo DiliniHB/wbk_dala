@@ -80,7 +80,7 @@ def dl_save_data(request):
     dl_table_data = bs_data['table_data']
     com_data = bs_data['com_data']
     todate = timezone.now()
-    is_edit = com_data['is_edit']
+    is_edit = bs_data['is_edit']
 
     if not is_edit:
         try:
@@ -98,7 +98,7 @@ def dl_save_data(request):
                         # assigning common properties to model object
                         model_object.created_date = todate
                         model_object.lmd = todate
-                        #model_object.district_id = com_data['district']
+                        model_object.district_id = com_data['district']
                         model_object.incident_id = com_data['incident']
 
                         print 'row', ' --> ', row, '\n', ' object '
@@ -177,10 +177,11 @@ def dl_save_edit_data(table_data, com_data):
 
             for row in table_data[interface_table][db_table]:
 
-                model_class = apps.get_model('base_line', db_table)
-                model_object = model_class.objects.filter(incident=incident, district=district, id=row['id'])
-                model_object.update(**row)
+                model_class = apps.get_model('damage_losses', db_table)
+                print(row['id'])
+                #model_object = model_class.objects.filter(incident=incident, district=district, id=row['id'])
+                #model_object.update(**row)
 
-                print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
+                #print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
 
 

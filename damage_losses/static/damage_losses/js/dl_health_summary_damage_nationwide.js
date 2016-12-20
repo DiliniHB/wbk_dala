@@ -5,8 +5,9 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
  $scope.district;
  $scope.incident;
  $scope.dl_data={};
+ $scope.is_edit = false;
 
-    $scope.dlhealthsummarydamagenationwide = {
+    var init_data = {
         'Table_10': {
             'DsnPubP1Lmh': [{
                 facilities_assets : 'Teaching Hospitals',
@@ -402,6 +403,8 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
     }
 
 
+  $scope.dlhealthsummarydamagenationwide = init_data;
+
    $scope.SaveData = function() {
         console.log($scope.data);
 
@@ -414,9 +417,8 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
                 'com_data': {
                     'district': $scope.district,
                     'incident' : $scope.incident,
-                    'is_edit':false
-
-                }
+                },
+                'is_edit':$scope.is_edit
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -450,7 +452,6 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
                 'com_data': {
                     'district': $scope.district,
                     'incident': $scope.incident,
-                    'is_edit': false,
                 }
             }),
         dataType: 'json',
@@ -470,9 +471,46 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
 
     }
 
+  // edit relevant damage_losses data
+
+
+    $scope.dlDataEdit = function()
+{
+
+   $scope.is_edit = true;
+
+    $http({
+    method: "POST",
+    url: '/damage_losses/dl_fetch_edit_data',
+    data: angular.toJson({
+    'table_name':  'Table_10',
+    'com_data': {
+           'district': $scope.district,
+            'incident': $scope.incident,
+          },
+           'is_edit':$scope.is_edit
+           }),
+    }).success(function(data) {
+
+    console.log(data);
+
+
+    $scope.dlhealthsummarydamagenationwide = data;
+    })
+
+
+}
+
+
+    $scope.cancelEdit = function()
+{
+     $scope.is_edit = false;
+     $scope.dlhealthsummarydamagenationwide = init_data;
+}
 
 
 
- }])
+}])
+
 
 
