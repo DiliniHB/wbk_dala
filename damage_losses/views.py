@@ -178,10 +178,10 @@ def dl_save_edit_data(table_data, com_data):
             for row in table_data[interface_table][db_table]:
 
                 model_class = apps.get_model('damage_losses', db_table)
-                print(row['id'])
-                #model_object = model_class.objects.filter(incident=incident, district=district, id=row['id'])
-                #model_object.update(**row)
+                #print(row['id'])
+                model_object = model_class.objects.filter(incident=incident, district=district, id=row['id'])
+                model_object.update(**row)
 
-                #print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
+                print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
 
 

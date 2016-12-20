@@ -30,7 +30,7 @@
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                    <table class="table table-bordered" ng-form name="form_health_baseline_unitcost_othermedi_district" style="width:98.3%;background:#E4E5E6;" >
                         <colgroup>
                             <col width="264"/>
                             <col width="98" span="7"/>
@@ -43,23 +43,29 @@
                             <td colspan="2" style="background:#EFEFEF;">
 
                                 <!--Binding Districts to dropdown-->
-                                <select id="selectbasic" name="selectbasic" ng-model="district"
-                                        ng-change="selectedDisaster(dataOtherMedicalFacilities.disasterSelect_4)"
-                                        class="form-control"
-                                        style="font-weight:400;">
+                                <select id="selectbasic" name="district" ng-model='district' class="form-control"
+                                        style="font-weight:400;" required>
+
                                     <option value="" selected="true">Select a District</option>
                                     {% for district in districts %}
+
                                     <option value={{district.id}}>{{district.name}}
                                         {% endfor %}
                                 </select>
+                                <span ng-show="submitted && form_health_baseline_unitcost_othermedi_district.district.$error.required">
+                                Please select District
+                                </span>
 
                             </td>
                             <td colspan="3" style="padding-right:5px;text-align:right;">
                                 Year/Month
                             </td>
                             <td colspan="2" style="background:#EFEFEF;font-weight:normal;">
-                                <input name="textinput" type="text" placeholder="" id="datepicker"
-                                       class="form-control input-md" ng-model="baselineDate">
+                                <input name="baselineDate" type="text" placeholder="" id="datepicker"
+                                       class="form-control input-md" ng-model="baselineDate" required>
+                                <span ng-show="submitted && form_health_baseline_unitcost_othermedi_district.baselineDate.$error.required">
+                                    Please select Date
+                                   </span>
                             </td>
                         </tr>
 
@@ -291,7 +297,8 @@
                                            type="number"
                                            placeholder=""
                                            class="form-control input-md">
-                                </td><td
+                                </td>
+                                <td
                                         width="98">
                                     <input id="text" ng-model="bucOmarMequipment.mat_child_health_clinics" name="textinput"
                                            type="number"
@@ -685,9 +692,9 @@
                         <div class="pull-right">
                             <br>
                         <button type="button" class="btn btn-info">Clear</button>
-                        <button type="button" ng-click="bsHsDataEdit()" ng-if="!is_edit" class="btn btn-success">Edit</button>
+                        <button type="button" ng-click="bsHsDataEdit(form_health_baseline_unitcost_othermedi_district)" ng-if="!is_edit" class="btn btn-success">Edit</button>
                         <button type="button" ng-click="cancelEdit()" ng-if="is_edit" class="btn btn-warning">Cancel Edit</button>
-                        <button type="button"ng-disabled="form_pop_lat_census.$invalid" ng-click="SaveData()" class="btn btn-success">Submit</button>
+                        <button type="button"ng-disabled="form_pop_lat_census.$invalid" ng-click="saveBsData(form_health_baseline_unitcost_othermedi_district)" class="btn btn-success">Submit</button>
                         </div>
 
                     </div>
