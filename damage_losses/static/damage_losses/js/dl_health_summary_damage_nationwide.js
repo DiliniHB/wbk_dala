@@ -6,6 +6,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
  $scope.incident;
  $scope.dl_data={};
  $scope.is_edit = false;
+ $scope.submitted = false;
 
     var init_data = {
         'Table_10': {
@@ -405,8 +406,13 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
 
   $scope.dlhealthsummarydamagenationwide = init_data;
 
-   $scope.SaveData = function() {
+   $scope.saveDlData = function(form) {
         console.log($scope.data);
+
+    $scope.submitted = true;
+
+    if(form.$valid){
+
 
         $http({
             method: 'POST',
@@ -431,6 +437,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
         });
 
     }
+    }
 
 
     // get relevant damage_losses data for calculations
@@ -439,6 +446,10 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
     $scope.changedValue = function getDlData()
     {
 
+        if($scope.incident){
+
+        getDistrictData();
+        }
 
         if($scope.district && $scope.incident){
         console.log($scope.district);
@@ -450,7 +461,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
         data: angular.toJson({
                 'db_tables': ['DspPubD1Lmh','DspPubDnLmh','DspPubDnMoh','DspPubD1Moh','DspPubD1Omc','DspPubDnOmc','DspPvtD1','DspPvtDn'],
                 'com_data': {
-                    'district': $scope.district,
+                    'district': $scope.district.Id,
                     'incident': $scope.incident,
                 }
             }),
@@ -474,10 +485,13 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
   // edit relevant damage_losses data
 
 
-    $scope.dlDataEdit = function()
+    $scope.dlDataEdit = function(form)
 {
 
    $scope.is_edit = true;
+    $scope.submitted = true;
+
+    if(form.$valid){
 
     $http({
     method: "POST",
@@ -497,6 +511,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
 
     $scope.dlhealthsummarydamagenationwide = data;
     })
+    }
 
 
 }
@@ -508,6 +523,26 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
      $scope.dlhealthsummarydamagenationwide = init_data;
 }
 
+
+
+    function getDistrictData()
+    {
+
+
+    $scope.Districts  = [
+
+            {  Id: 1,
+                Name: 'Colombo'
+            }, {
+                Id: 2,
+                Name: 'Gampaha'
+            }, {
+                Id: 3,
+                Name: 'Kaluthara'
+            }
+              ]
+
+  }
 
 
 }])
