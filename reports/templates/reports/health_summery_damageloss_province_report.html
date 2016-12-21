@@ -1,1557 +1,718 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
-    <!-- Main content -->
-    <main class="main">
+<!-- Main content -->
+<main class="main" ng-app="dlHsProvinceApp" ng-controller="DlHsProvinceController">
 
-        <!-- Breadcrumb -->
-        <ol class="breadcrumb">
-            
-            <li class="breadcrumb-item"><a href="#">Admin</a>
-            </li>
-			 <li class="breadcrumb-item"><a href="#">Health Sector</a>
-            </li>
-           
-<li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 9: Summary of Damage and Losses in the Health Sector in the Province</span></li>
-           
-        </ol>
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item"><a href="#">Health Sector</a>
+        </li>
+
+        <li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 9: Summary of Damage and Losses in the Health Sector in the Province</span>
+        </li>
+
+    </ol>
 
 
-        <div class="container-fluid">
-  <div class="card">
-                            <div class="card-header">
-                                <strong>Search</strong>
-                                
-                            </div>
-                            <div class="card-block">
-                                
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <strong>Search</strong>
 
-                               
+            </div>
+            <div class="card-block">
 
-                                <div class="row">
-								
-								
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccmonth">Province  &nbsp;&nbsp;<label for="checkbox1">
-                                                    <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
-                                                </label></label>
-                                        <select class="form-control" id="ccmonth" style="margin-top:-7px;">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
+                <div class="row">
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccyear">District</label>
-                                        <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
 
-                                    <div class="col-sm-3">
+                    <div class="form-group col-sm-3">
+                        <label for="ccmonth">Province &nbsp;&nbsp;<label for="checkbox1">
+                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
+                        </label></label>
+                        <select id="ccyear" ng-model="province" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for province in provinces %}
+                            <option value="{{ province.id }}">{{ province.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                                        <div class="form-group">
-                                            <label for="cvv">Disaster Type</label>
-                                            <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                        </div>
+                    <div class="form-group col-sm-3">
+                        <label for="ccyear">District</label>
+                       <select id="ccyear" ng-model="district" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for district in districts %}
+                            <option value="{{ district.id }}">{{ district.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                                    </div>
-									
-									 
-									<div class="col-sm-1">
+                    <div class="col-sm-3">
 
-                                        <div class="form-group">
-                                            
-                                          <button type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i class="fa fa-search"></i> Search</button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <!--/row-->
-                            </div>
-                        </div>  
-        
-            <div>
-         <ul class='nav nav-wizard'>
-				    <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-				    <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                    <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
-                   
-				    
-				   
-				  </ul>
-				
-					<div id="myTabContent" class="tab-content">
-						<div class="tab-pane active" id="step1">
-                            
-                            	<table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
-    <colgroup>
-        <col width="202"/>
-        <col width="90" span="7"/>
-    </colgroup>
-    <tbody>
-        <tr class="trhead">
-<td style="padding-left:5px;"> Name of Province </td>
-
-<td colspan="7" style="background:#EFEFEF;">
- <select id="selectbasic" name="selectbasic" class="form-control" style="width:50%;font-weight:400;">
-      <option value="1">Option one</option>
-      <option value="2">Option two</option>
-    </select>
- </td>
-</tr>	
-        
-        <tr height="34" class="trheadc">
-            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
-                Facilities and Assets
-            </td>
-            <td rowspan="2" width="90" style="text-align:center;">
-                Total Number Affected
-            </td>
-            <td colspan="2" width="180">
-                Total Number of Patients Affected
-            </td>
-            <td rowspan="2" width="90">
-                Total Damages (LKR)
-            </td>
-            <td colspan="2" width="180" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="90">
-                Total Losses (LKR)
-            </td>
-        </tr>
-        <tr height="20" class="trsubc">
-            <td width="90" height="20">
-                Male
-            </td>
-            <td width="90">
-                Female
-            </td>
-            <td width="90">
-                Year 1
-            </td>
-            <td width="90">
-                Year 2
-            </td>
-        </tr>
-                                </tbody>
-                                </table>
-                                <div style="height:400px;overflow:auto;">	
-                                <table class="table table-bordered">
-        <tr height="20" class="trhead">
-            <td width="202" height="20" class="trhead">
-                District 1
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20" class="trhead">
-            <td width="202" height="20" class="trheadc">
-                Line Ministry Health System
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Teaching Hospitals
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Provincial General Hospitals
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                District General Hospitals
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                MOH
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Offices
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong> Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                Other medical facilities
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Base Hospital
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Divisional Hospital
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Rural Hospital
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Central Dispensary
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                PMCUs
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                PHCCs
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                MCHCs
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>       TOTAL </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trhead">
-            <td width="202" height="20">
-                District N
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                Line Ministry Health System
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Teaching Hospitals
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Provincial General Hospitals
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                District General Hospitals
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                MOH
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Offices
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                Other Medical Facilities
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Base Hospital
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Divisional Hospital
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Rural Hospital
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Central Dispensary
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                PMCUs
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                PHCCs
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                MCHCs
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>     Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong> TOTAL </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>  GRAND TOTAL </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-                                    </tbody>
-                                    </table>
-                             <br>
-                            <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector Informations</a>
+                        <div class="form-group">
+                            <label for="cvv">Disaster Type</label>
+                            <select id="ccyear" ng-model="incident" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for incident in incidents %}
+                            <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
+                            {% endfor %}
+                        </select>
                         </div>
-                            
+
+                    </div>
+
+
+                    <div class="col-sm-1">
+
+                        <div class="form-group">
+
+                            <button ng-click="filterData()"  type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i
+                                    class="fa fa-search"></i> Search
+                            </button>
                         </div>
-                        
-                        <div class="tab-pane" id="step2"> 
-                            
-                            <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
-    <colgroup>
-        <col width="264"/>
-        <col width="98" span="6"/>
-    </colgroup>
-    <tbody>
-                            
-        <tr height="34" class="trheadc">
-            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
-                Facilities and Assets
-            </td>
-            <td rowspan="2" width="90">
-                Total Number Affected
-            </td>
-            <td colspan="2" width="180" style="text-align:center;">
-                Total Number of Patients Affected
-            </td>
-            <td rowspan="2" width="90">
-                Total Damages (LKR)
-            </td>
-            <td colspan="2" width="180" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="90">
-                Total Losses (LKR)
-            </td>
-        </tr>
-        <tr height="20" class="trsubc">
-            <td width="90" height="20">
-                Male
-            </td>
-            <td width="90">
-                Female
-            </td>
-            <td width="90">
-                Year 1
-            </td>
-            <td width="90">
-                Year 2
-            </td>
-        </tr>
-                                </tbody>
-                            </table>
-        <div style="height:400px;overflow:auto;">	
-                                <table class="table table-bordered">
-        <tr height="20" class="trheadc">
-            <td width="202" height="20">
-                District 1
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Private Clinics
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-              <strong>  Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20" class="trheadc" >
-            <td width="202" height="20">
-                District N
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-            <td width="90">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Private Clinics
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-             <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md">
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong> Total </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                <strong>    TOTAL </strong>
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-                                    </tbody>
-            </table>
-                             <br>
-                            <a href='#step3' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Total Damages and Losses Informations</a>
-                            
-                                </div>  
-                        </div>
-                        
-                        <div class="tab-pane" id="step3"> 
-                            <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
-    <colgroup>
-        <col width="202"/>
-        <col width="90" span="7"/>
-    </colgroup>
-    <tbody>
-                              
-        <tr height="20" class="trheadc">
-            <td rowspan="2" width="202" height="40" style="text-align:left;padding-left:5px;">
-                Ownership
-            </td>
-            <td colspan="2" rowspan="2" width="180">
-                Damages (LKR)
-            </td>
-            <td colspan="4" width="360" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="90">
-                Total (LKR)
-            </td>
-        </tr>
-        <tr height="20" style="background:#E4E5E6;" class="trsubc">
-            <td colspan="2" width="180" height="20">
-                Year 1
-            </td>
-            <td colspan="2" width="180">
-                Year 2
-            </td>
-        </tr>
-                                </tbody>
-                            </table>
-                            
-                             <div style="height:400px;overflow:auto;">	
-                                <table class="table table-bordered">
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Public Sector
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-                Private Sector
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="202" height="20" class="tdpa">
-              <strong>  TOTAL </strong>
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td colspan="2" width="180">
-                -
-            </td>
-            <td width="90">
-                -
-            </td>
-        </tr>
-    </tbody>
-</table>
-                             <div class="pull-right" >
-<br>
-<button type="button" class="btn btn-info">Clear</button>
-<button type="button" class="btn btn-success">Submit</button>
-</div>	
-         
-        </div>
-                        </div>
-                        
-                        
+
+                    </div>
+
+                </div>
+                <!--/row-->
             </div>
         </div>
-            
-            
-            
-            
-            
-            
-            
-        
 
-                    </div>    
+        <div>
+            <ul class='nav nav-wizard'>
+                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
 
+
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="step1">
+
+                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+                        <tr class="trhead">
+                            <td style="padding-left:5px;"> Name of Province</td>
+
+                            <td colspan="7" style="background:#EFEFEF;">
+                                <select id="selectbasic" name="selectbasic" class="form-control"
+                                        style="width:50%;font-weight:400;">
+                                    <option value="1">Option one</option>
+                                    <option value="2">Option two</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr height="34" class="trheadc">
+                            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="90" style="text-align:center;">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="180">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="90" height="20">
+                                Male
+                            </td>
+                            <td width="90">
+                                Female
+                            </td>
+                            <td width="90">
+                                Year 1
+                            </td>
+                            <td width="90">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20" class="trhead">
+                                    District 1
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20" class="trheadc">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubD1Lmh in dlHsProvince.Table_9.DspPubD1Lmh" height="20">
+                                <td ng-bind="dspPubD1Lmh.facilities_assets" ng-if="dspPubD1Lmh.facilities_assets == 'Total'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.facilities_assets" ng-if="dspPubD1Lmh.facilities_assets != 'Total'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Lmh.total_losses" width="90">
+
+                                </td>
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    MOH
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubD1Moh in dlHsProvince.Table_9.DspPubD1Moh" height="20">
+                                 <td ng-bind="dspPubD1Moh.facilities_assets" ng-if="dspPubD1Moh.facilities_assets == 'Total'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.facilities_assets" ng-if="dspPubD1Moh.facilities_assets != 'Total'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Moh.total_losses" width="90">
+
+                                </td>
+                            </tr>
+
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Other medical facilities
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubD1Omc in dlHsProvince.Table_9.DspPubD1Omc" height="20">
+                                <td ng-bind="dspPubD1Omc.facilities_assets" ng-if="dspPubD1Omc.facilities_assets == 'Total' || dspPubD1Omc.facilities_assets == 'TOTAL'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.facilities_assets" ng-if="dspPubD1Omc.facilities_assets != 'Total' && dspPubD1Omc.facilities_assets != 'TOTAL'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubD1Omc.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            <tr height="20" class="trhead">
+                                <td width="202" height="20">
+                                    District N
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubDnLmh in dlHsProvince.Table_9.DspPubDnLmh" height="20">
+                                <td ng-bind="dspPubDnLmh.facilities_assets" ng-if="dspPubDnLmh.facilities_assets == 'Total'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.facilities_assets" ng-if="dspPubDnLmh.facilities_assets != 'Total'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnLmh.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    MOH
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubDnMoh in dlHsProvince.Table_9.DspPubDnMoh" height="20">
+                                <td ng-bind="dspPubDnMoh.facilities_assets" ng-if="dspPubDnMoh.facilities_assets == 'Total'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.facilities_assets" ng-if="dspPubDnMoh.facilities_assets != 'Total'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnMoh.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    Other Medical Facilities
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPubDnOmc in dlHsProvince.Table_9.DspPubDnOmc" height="20">
+                                <td ng-bind="dspPubDnOmc.facilities_assets" ng-if="dspPubDnOmc.facilities_assets == 'Total' || dspPubDnOmc.facilities_assets == 'TOTAL'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.facilities_assets" ng-if="dspPubDnOmc.facilities_assets != 'Total' && dspPubDnOmc.facilities_assets != 'TOTAL'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPubDnOmc.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector
+                            Informations</a>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="step2">
+
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="6"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="34" class="trheadc">
+                            <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="180" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="90" height="20">
+                                Male
+                            </td>
+                            <td width="90">
+                                Female
+                            </td>
+                            <td width="90">
+                                Year 1
+                            </td>
+                            <td width="90">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    District 1
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPvtD1 in dlHsProvince.Table_9.DspPvtD1" height="20">
+                                <td ng-bind="dspPvtD1.facilities_assets" ng-if="dspPvtD1.facilities_assets == 'Total'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.facilities_assets" ng-if="dspPvtD1.facilities_assets != 'Total'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            <tr height="20" class="trheadc">
+                                <td width="202" height="20">
+                                    District N
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                                <td width="90">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dspPvtDn in dlHsProvince.Table_9.DspPvtDn" height="20">
+                                <td ng-bind="dspPvtDn.facilities_assets" ng-if="dspPvtDn.facilities_assets == 'Total' || dspPvtDn.facilities_assets == 'TOTAL'" width="202" height="20" class="boldash tdpa">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.facilities_assets" ng-if="dspPvtDn.facilities_assets != 'Total' && dspPvtDn.facilities_assets != 'TOTAL'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.total_num_affected" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.male" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.female" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.total_damages" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.losses_y1" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.losses_y2" width="90">
+
+                                </td>
+                                <td ng-bind="dspPvtDn.total_losses" width="90">
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <a href='#step3' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Total Damages
+                            and Losses Informations</a>
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="step3">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="202" height="40" style="text-align:left;padding-left:5px;">
+                                Ownership
+                            </td>
+                            <td colspan="2" rowspan="2" width="180">
+                                Damages (LKR)
+                            </td>
+                            <td colspan="4" width="360" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="90">
+                                Total (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" style="background:#E4E5E6;" class="trsubc">
+                            <td colspan="2" width="180" height="20">
+                                Year 1
+                            </td>
+                            <td colspan="2" width="180">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr ng-repeat="dspTdlOwship in dlHsProvince.Table_9.DspTdlOwship" height="20">
+                                <td ng-bind="dspTdlOwship.ownership" ng-if="dspTdlOwship.ownership == 'TOTAL'" width="202" height="20" class="boldash">
+
+                                </td>
+                                <td ng-bind="dspTdlOwship.ownership" ng-if="dspTdlOwship.ownership != 'TOTAL'" width="202" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dspTdlOwship.damages" colspan="2" width="180">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.losses_y1" colspan="2" width="180">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.losses_y2" colspan="2" width="180">
+
+                                </td>
+                                <td ng-bind="dspPvtD1.total" width="90">
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pull-right">
+                            <br>
+                            <button type="button" class="btn btn-info">Clear</button>
+                            <button type="button" ng-click="submit()" class="btn btn-success">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
         </div>
-        <!-- /.conainer-fluid -->
-    </main>
-  {% endblock content %}
+
+
+    </div>
+
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+{% endblock content %}

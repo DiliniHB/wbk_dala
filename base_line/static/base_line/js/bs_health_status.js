@@ -9,32 +9,33 @@ $scope.number2;
 $scope.sum;
 $scope.bs_date;
 $scope.is_edit = false;
+$scope.submitted = false;
 
 var init_data = {
 'Table_1':{
 'BhsPlc':[
 {
-male: 5,
-female: 3,
-children: 5,
-elderly: 7,
+male: null,
+female: null,
+children: null,
+elderly: null,
 }
 ],
 'BhsComDiseases':
 [
 {
 com_disease: 'Diarrhea',
-male: 5,
-female: 6,
-children: 7,
-elderly: 8,
+male: null,
+female: null,
+children: null,
+elderly: null,
 },
 {
 com_disease: 'Dengue',
-male: 5,
-female: 6,
-children: 7,
-elderly: 8,
+male: null,
+female: null,
+children: null,
+elderly: null,
 }
 ]
 ,
@@ -42,17 +43,17 @@ elderly: 8,
 [
 {
 vital_indicators: 'Under-5 Mortality Rate',
-male: 3,
-female: 3,
-children: 3,
-elderly: 3,
+male: null,
+female: null,
+children: null,
+elderly: null,
 },
 {
 vital_indicators: 'Mortality Rate',
-male: 3,
-female: 3,
-children: 3,
-elderly: 3,
+male: null,
+female: null,
+children: null,
+elderly: null,
 }
 ]
 ,
@@ -60,11 +61,11 @@ elderly: 3,
 [
 {
 other_indicators: 'Crude Birth Rate',
-unit_measure: 1
+unit_measure: null
 },
 {
 other_indicators: 'Maternal Mortality Rate',
-unit_measure: ""
+unit_measure: null
 }
 ]
 }
@@ -77,10 +78,11 @@ $scope.getSum = function()
 alert($scope.sum);
 }
 
-$scope.hSDataSubmit = function()
+$scope.hSDataSubmit = function(form)
 {
-console.log(($scope.dataHealthStatus));
+$scope.submitted = true;
 
+if(form.$valid){
  $http({
     method: "POST",
     url: "/base_line/bs_save_data",
@@ -89,9 +91,10 @@ console.log(($scope.dataHealthStatus));
     }).success(function(data) {
 
     console.log(data);
-
+    console.log(($scope.dataHealthStatus));
 
  })
+ }
 
 }
 
@@ -102,25 +105,25 @@ $scope.insertDisease = function(table)
     if(table == 'BhsOi'){
     new_row = {
     other_indicators: '',
-    unit_measure: 5
+    unit_measure: null
     }
     }
     else if(table == 'BhsComDiseases'){
     new_row = {
     com_disease: '',
-    male: 5,
-    female: 6,
-    children: 7,
-    elderly: 8,
+    male: null,
+    female: null,
+    children: null,
+    elderly: null,
     }
     }
     else if(table == 'BhsVi'){
     new_row = {
     vital_indicators: '',
-    male: 3,
-    female: 3,
-    children: 3,
-    elderly: 3,
+    male: null,
+    female: null,
+    children: null,
+    elderly: null,
     }
     }
 
@@ -128,11 +131,11 @@ $scope.insertDisease = function(table)
 
 }
 
-$scope.bsHsDataEdit = function()
+$scope.bsHsDataEdit = function(form)
 {
-
+$scope.submitted = true;
+ if(form.$valid){
    $scope.is_edit = true;
-
     $http({
     method: "POST",
     url: "/base_line/bs_fetch_edit_data",
@@ -143,7 +146,7 @@ $scope.bsHsDataEdit = function()
     console.log(data);
     $scope.dataHealthStatus = data;
     })
-
+}
 
 }
 

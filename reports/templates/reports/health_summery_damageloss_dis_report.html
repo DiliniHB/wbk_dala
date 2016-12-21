@@ -1,7 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
 <!-- Main content -->
-<main class="main" ng-app="dlHealthSectorDistrictApp" ng-controller="DlHealthSectorDistrictController">
+<main class="main" ng-app="dlHsDistrictApp" ng-controller="DlHsDistrictController">
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
@@ -17,833 +17,428 @@
     </ol>
 
 
-     <div class="container-fluid">
+    <div class="container-fluid">
 
-          <div class="card">
-                            <div class="card-header">
-                                <strong>Search</strong>
-                                
-                            </div>
-                            <div class="card-block">
-                                
+        <div class="card">
+            <div class="card-header">
+                <strong>Search</strong>
 
-                               
+            </div>
+            <div class="card-block">
 
-                                <div class="row">
-								
-								
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccmonth">Province  &nbsp;&nbsp;<label for="checkbox1">
-                                                    <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
-                                                </label></label>
-                                        <select class="form-control" id="ccmonth" style="margin-top:-7px;">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="ccyear">District</label>
+                        <select id="ccyear" ng-model="district" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for district in districts %}
+                            <option value="{{ district.id }}">{{ district.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccyear">District</label>
-                                        <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
+                    <div class="col-sm-3">
 
-                                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="cvv">Disaster Type</label>
+                            <select id="ccyear" ng-model="incident" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for incident in incidents %}
+                            <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
 
-                                        <div class="form-group">
-                                            <label for="cvv">Disaster Type</label>
-                                            <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                        </div>
+                    </div>
 
-                                    </div>
-									
-									 
-									<div class="col-sm-1">
 
-                                        <div class="form-group">
-                                            
-                                          <button type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i class="fa fa-search"></i> Search</button>
-                                        </div>
+                    <div class="col-sm-1">
 
-                                    </div>
+                        <div class="form-group">
 
-                                </div>
-                                <!--/row-->
-                            </div>
-                        </div>  
+                            <button ng-click="filterData()" type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i
+                                    class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--/row-->
+            </div>
+        </div>
         <div>
-			    <ul class='nav nav-wizard'>
-				    <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-				    <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                    <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
-                
-				  </ul>
-				
-					<div id="myTabContent" class="tab-content">
-						<div class="tab-pane active" id="step1">
-                            	 <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
-    <colgroup>
-        <col width="264"/>
-        <col width="98" span="7"/>
-    </colgroup>
-    <tbody>
-       
-       
-        <tr height="20" class="trheadc">
-            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
-                Facilities and Assets
-            </td>
-            <td rowspan="2" width="98">
-                Total Number Affected
-            </td>
-            <td colspan="2" width="196" style="text-align:center;">
-                Total Number of Patients Affected
-            </td>
-            <td rowspan="2" width="98">
-                Total Damages (LKR)
-            </td>
-            <td colspan="2" width="196" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="98">
-                Total Losses (LKR)
-            </td>
-        </tr>
-        <tr height="20" class="trsubc">
-            <td width="98" height="20">
-                Male
-            </td>
-            <td width="98">
-                Female
-            </td>
-            <td width="98">
-                Year 1
-            </td>
-            <td width="98">
-                Year 2
-            </td>
-        </tr>
-                            </tbody>
-                                </table>
-                                <div style="height:400px;overflow:auto;">		
-                                <table class="table table-bordered">
-        <tr height="20" class="trhead" >
-            <td width="264" height="20" style="padding-left:5px;">
-                Line Ministry Health System
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Teaching Hospitals
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Provincial General Hospitals
-            </td>
-            <td width="98">
-            
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                District General Hospitals
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20" class="trhead">
-            <td width="264" height="20" >
-                MOH
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Offices
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                <strong>  Total </strong>
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20" class="trheadc">
-            <td width="264" height="20">
-                Other Medical Facilities
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-            <td width="98">
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Base Hospital
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Divisional Hospital
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Rural Hospital
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Central Dispensary
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                PMCUs
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                PHCCs
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                MCHCs
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-             <strong>  Total </strong> 
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                <strong>  TOTAL </strong>
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-                                    </table>
-                                     <br>
-                            <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector Informations</a>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="tab-pane" id="step2" style="height:350px;">
-                            <table class="table table-bordered" style="width:98.3%;">
-    <colgroup>
-        <col width="202"/>
-        <col width="90" span="7"/>
-    </colgroup>
-    <tbody>
-                            
-        <tr height="20" class="trheadc">
-            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
-                Facilities and Assets
-            </td>
-            <td rowspan="2" width="98">
-                Total Number Affected
-            </td>
-            <td colspan="2" width="196" style="text-align:center;">
-                Total Number of Patients Affected
-            </td>
-            <td rowspan="2" width="98">
-                Total Damages (LKR)
-            </td>
-            <td colspan="2" width="196" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="98">
-                Total Losses (LKR)
-            </td>
-        </tr>
-        <tr height="20" class="trsubc">
-            <td width="98" height="20">
-                Male
-            </td>
-            <td width="98">
-                Female
-            </td>
-            <td width="98">
-                Year 1
-            </td>
-            <td width="98">
-                Year 2
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Private Clinics
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Others
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                <strong>  TOTAL </strong>
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-                                </tbody>
-                            </table>
-                             <br>
-                            <a href="#step3" id="3" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span class="glyphicon glyphicon-arrow-right"></span> View Total Damages and Losses Informations</a>
-                            
-                        </div>
-                        
-                        
-                        <div class="tab-pane" id="step3" style="height:350px;">
-                       <table class="table table-bordered" style="width:98.3%;">
-    <colgroup>
-        <col width="202"/>
-        <col width="90" span="7"/>
-    </colgroup>
-    <tbody>     
-                             
-       
-        <tr height="20" class="trheadc">
-            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
-                Ownership
-            </td>
-            <td colspan="2" rowspan="2" width="196">
-                Damages (LKR)
-            </td>
-            <td colspan="4" width="392" style="text-align:center;">
-                Losses (LKR)
-            </td>
-            <td rowspan="2" width="98">
-                Total (LKR)
-            </td>
-        </tr>
-        <tr height="20" class="trsubc">
-            <td colspan="2" width="196" height="20">
-                Year 1
-            </td>
-            <td colspan="2" width="196">
-                Year 2
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Public Sector
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                Private Sector
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-        <tr height="20">
-            <td width="264" height="20" class="tdpa">
-                <strong>    TOTAL </strong>
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td colspan="2" width="196">
-                
-            </td>
-            <td width="98">
-                
-            </td>
-        </tr>
-    </tbody>
-</table>
-                             <div class="pull-right" style="margin-right:15px;">
-<br>
-<button type="button" class="btn btn-info">Clear</button>
-<button type="button" class="btn btn-success">Submit</button>
-</div>	
-                            
-                        </div>
-                        
-                        
-            </div>
-            </div>
-            
-            
- 
+            <ul class='nav nav-wizard'>
+                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
 
-                    </div>    
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="step1">
+                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                        <colgroup>
+                            <col width="264"/>
+                            <col width="98" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="98" height="20">
+                                Male
+                            </td>
+                            <td width="98">
+                                Female
+                            </td>
+                            <td width="98">
+                                Year 1
+                            </td>
+                            <td width="98">
+                                Year 2
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="height:400px;overflow:auto;">
+                        <table class="table table-bordered">
+                            <tr height="20" class="trhead">
+                                <td width="264" height="20" style="padding-left:5px;">
+                                    Line Ministry Health System
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dshPubLmh in dlhealthsectordistrict.Table_8.DshPubLmh" height="20">
+                                <td ng-bind="dshPubLmh.facilities_assets" ng-if="dshPubLmh.facilities_assets != 'Total'" ng-model="dshPubLmh.facilities_assets" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.facilities_assets" class="boldash" ng-if="dshPubLmh.facilities_assets=='Total'" ng-model="dshPubLmh.facilities_assets" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.total_num_affected" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.male" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.female" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.total_damages" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.losses_y1" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.losses_y2" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubLmh.total_losses" width="98">
+
+                                </td>
+                            </tr>
+
+
+
+                            <tr height="20" class="trhead">
+                                <td width="264" height="20">
+                                    MOH
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dshPubMoh in dlhealthsectordistrict.Table_8.DshPubMoh" height="20">
+                                <td ng-bind="dshPubMoh.facilities_assets" ng-if="dshPubMoh.facilities_assets=='Total'" class="boldash" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.facilities_assets" ng-if="dshPubMoh.facilities_assets != 'Total'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.total_num_affected" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.male" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.female" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.total_damages" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.losses_y1" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.losses_y2" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubMoh.total_losses" width="98">
+
+                                </td>
+                            </tr>
+
+
+                            <tr height="20" class="trheadc">
+                                <td width="264" height="20">
+                                    Other Medical Facilities
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                                <td width="98"></td>
+                                <td width="98">
+                                </td>
+                                <td width="98">
+                                </td>
+                            </tr>
+                            <tr ng-repeat="dshPubOmf in dlhealthsectordistrict.Table_8.DshPubOmf" height="20">
+
+                                <td ng-bind="dshPubOmf.facilities_assets" ng-if="dshPubOmf.facilities_assets=='Total'  || dshPubOmf.facilities_assets=='TOTAL'" class="boldash" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.facilities_assets" ng-if="dshPubOmf.facilities_assets != 'Total' && dshPubOmf.facilities_assets != 'TOTAL'" width="264" height="20" class="tdpa">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.total_num_affected" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.male" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.female" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.total_damages" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.losses_y1" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.losses_y2" width="98">
+
+                                </td>
+                                <td ng-bind="dshPubOmf.total_losses" width="98">
+
+                                </td>
+
+                            </tr>
+
+
+
+
+
+                        </table>
+                        <br>
+                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector
+                            Informations</a>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane" id="step2" style="height:350px;">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Facilities and Assets
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Number Affected
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Total Number of Patients Affected
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Damages (LKR)
+                            </td>
+                            <td colspan="2" width="196" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total Losses (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td width="98" height="20">
+                                Male
+                            </td>
+                            <td width="98">
+                                Female
+                            </td>
+                            <td width="98">
+                                Year 1
+                            </td>
+                            <td width="98">
+                                Year 2
+                            </td>
+                        </tr>
+                        <tr ng-repeat="dshPvtFa in dlhealthsectordistrict.Table_8.DshPvtFa" height="20">
+                            <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets == 'TOTAL'" class="boldash" width="264" height="20" class="tdpa">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.facilities_assets" ng-if="dshPvtFa.facilities_assets != 'TOTAL'"  width="264" height="20" class="tdpa">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.total_num_affected" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.male" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.female" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.total_damages" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.losses_y1" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.losses_y2" width="98">
+
+                            </td>
+                            <td ng-bind="dshPvtFa.total_losses" width="98">
+
+                            </td>
+
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                    <br>
+                    <a href="#step3" id="3" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                            class="glyphicon glyphicon-arrow-right"></span> View Total Damages and Losses
+                        Informations</a>
+
+                </div>
+
+
+                <div class="tab-pane" id="step3" style="height:350px;">
+                    <table class="table table-bordered" style="width:98.3%;">
+                        <colgroup>
+                            <col width="202"/>
+                            <col width="90" span="7"/>
+                        </colgroup>
+                        <tbody>
+
+
+                        <tr height="20" class="trheadc">
+                            <td rowspan="2" width="264" height="40" style="text-align:left;padding-left:5px;">
+                                Ownership
+                            </td>
+                            <td colspan="2" rowspan="2" width="196">
+                                Damages (LKR)
+                            </td>
+                            <td colspan="4" width="392" style="text-align:center;">
+                                Losses (LKR)
+                            </td>
+                            <td rowspan="2" width="98">
+                                Total (LKR)
+                            </td>
+                        </tr>
+                        <tr height="20" class="trsubc">
+                            <td colspan="2" width="196" height="20">
+                                Year 1
+                            </td>
+                            <td colspan="2" width="196">
+                                Year 2
+                            </td>
+                        </tr>
+                        <tr ng-repeat="dshTdlOwship in dlhealthsectordistrict.Table_8.DshTdlOwship" height="20">
+                            <td width="264" ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership != 'TOTAL'" height="20" class="tdpa">
+
+                            </td>
+                            <td width="264" ng-bind="dshTdlOwship.ownership" ng-if="dshTdlOwship.ownership == 'TOTAL'" height="20" class="tdpa boldash">
+
+                            </td>
+                            <td ng-bind="dshTdlOwship.damages" colspan="2" width="196">
+
+                            </td>
+                            <td ng-bind="dshTdlOwship.losses_y1" colspan="2" width="196">
+
+                            </td>
+                            <td ng-bind="dshTdlOwship.losses_y2" colspan="2" width="196">
+
+                            </td>
+                            <td ng-bind="dshTdlOwship.total" width="98">
+
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="pull-right" style="margin-right:15px;">
+                        <br>
+                        <button type="button" class="btn btn-info">Clear</button>
+                        <button type="button" class="btn btn-success">Submit</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
 
     </div>
     <!-- /.conainer-fluid -->

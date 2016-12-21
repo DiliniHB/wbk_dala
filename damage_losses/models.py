@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from settings.models import District
+from settings.models import District, Province
 from incidents.models import IncidentReport
 
 
@@ -360,7 +360,7 @@ class DshPubLmh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -382,7 +382,7 @@ class DshPubMoh(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -404,7 +404,7 @@ class DshPubOmf(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    district = models.ForeignKey(District, models.DO_NOTHING, db_column='district', blank=True, null=True)
+    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
     created_user = models.IntegerField(blank=True, null=True)
     lmu = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(blank=True, null=True)
@@ -1077,6 +1077,7 @@ class DspPubD1Lmh(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1099,6 +1100,7 @@ class DspPubDnLmh(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport,  db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1121,6 +1123,7 @@ class DspPubD1Moh(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1144,6 +1147,7 @@ class DspPubDnMoh(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1166,6 +1170,7 @@ class DspPubD1Omc(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1188,11 +1193,11 @@ class DspPubDnOmc(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'dsp_pub_dn_omc'
-
 
 
 class DspPvtD1(models.Model):
@@ -1211,6 +1216,7 @@ class DspPvtD1(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1233,10 +1239,229 @@ class DspPvtDn(models.Model):
     lmd = models.DateTimeField(blank=True, null=True)
     key = models.BigIntegerField(blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'dsp_pvt_dn'
 
 
+class DspTdlOwship(models.Model):
+    ownership = models.CharField(max_length=255, blank=True, null=True)
+    damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total = models.FloatField(blank=True, null=True)
+    district = models.ForeignKey(District, db_column='district', blank=True, null=True)
+    created_user = models.IntegerField(blank=True, null=True)
+    lmu = models.IntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(blank=True, null=True)
+    lmd = models.DateTimeField(blank=True, null=True)
+    key = models.BigIntegerField(blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'dsp_tdl_owship'
+
+
+class DshPubLmhProvince(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsh_pub_lmh_province'
+
+
+class DshPubOmfProvince(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsh_pub_omf_province'
+
+
+class DshPvtFaProvince(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsh_pvt_fa_province'
+
+
+class DshTdlOwshipProvince(models.Model):
+    ownership = models.CharField(max_length=255, blank=True, null=True)
+    damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsh_tdl_owship_province'
+
+
+class DspPubD1LmhNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_d1_lmh_national'
+
+
+class DspPubD1MohNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_d1_moh_national'
+
+
+class DspPubD1OmcNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_d1_omc_national'
+
+
+class DspPubDnLmhNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_dn_lmh_national'
+
+
+class DspPubDnMohNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_dn_moh_national'
+
+
+class DspPubDnOmcNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pub_dn_omc_national'
+
+
+class DspPvtD1National(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pvt_d1_national'
+
+
+class DspPvtDnNational(models.Model):
+    facilities_assets = models.CharField(max_length=255, blank=True, null=True)
+    total_num_affected = models.BigIntegerField(blank=True, null=True)
+    male = models.BigIntegerField(blank=True, null=True)
+    female = models.BigIntegerField(blank=True, null=True)
+    total_damages = models.FloatField(blank=True, null=True)
+    losses_y1 = models.FloatField(blank=True, null=True)
+    losses_y2 = models.FloatField(blank=True, null=True)
+    total_losses = models.FloatField(blank=True, null=True)
+    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
+    incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dsp_pvt_dn_national'
