@@ -1,13 +1,22 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
 {% block content %}
+<script>
+  $(document).ready(function() {
 
+   var nicesx = $("#boxscroll1").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   var nicesx = $("#boxscroll2").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   
+    
+  });
+  
+</script>
 <main class="main" ng-app="bsOtherMedFacilitiesUnitCostApp" ng-controller="BsOtherMedFacilitiesUnitCostController">
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
 
-        <li class="breadcrumb-item"><a href="#">Admin</a>
+        <li  class="breadcrumb-item"><a href="#">Admin</a>
         </li>
         <li class="breadcrumb-item"><a href="#">Health Sector</a>
         </li>
@@ -22,21 +31,38 @@
 
         <div>
             <ul class='nav nav-wizard'>
-                <li class="active"><a href='#step1' data-toggle="tab">Step 1 - Average Replacement Cost</a></li>
-                <li><a href='#step2' data-toggle="tab">Step 2 - Average Repair Cost</a></li>
+                <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 - Average Replacement Cost</a></li>
+                <li id="li2"><a href='#step2' data-toggle="tab">2 - Average Repair Cost</a></li>
 
             </ul>
 
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" ng-form name="form_health_baseline_unitcost_othermedi_district" style="width:98.3%;background:#E4E5E6;" >
+                    <table class="table table-bordered" ng-form name="form_health_baseline_unitcost_othermedi_district" style="width:100%;background:#E4E5E6;" >
                         <colgroup>
                             <col width="264"/>
                             <col width="98" span="7"/>
                         </colgroup>
                         <tbody>
+<tr style="background:#fff;border:1px solid #fff;text-align:center;">
+<td style="background:#fff;border:1px solid #fff;text-align:center;">
 
+</td>
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+ <span class="arrow_box" ng-show="submitted && form_health_baseline_unitcost_othermedi_district.district.$error.required">
+                                Please select District
+                                </span>
+</td>
+
+<td colspan="3" style="background:#fff;border:1px solid #fff;text-align:center;">
+</td>
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+ <span class="arrow_box" ng-show="submitted && form_health_baseline_unitcost_othermedi_district.baselineDate.$error.required">
+                                    Please select Date
+                                   </span>
+</td>
+</tr>
                         <tr class="trhead">
                             <td style="padding-left:5px;"> Name of District</td>
 
@@ -52,9 +78,7 @@
                                     <option value={{district.id}}>{{district.name}}
                                         {% endfor %}
                                 </select>
-                                <span ng-show="submitted && form_health_baseline_unitcost_othermedi_district.district.$error.required">
-                                Please select District
-                                </span>
+                               
 
                             </td>
                             <td colspan="3" style="padding-right:5px;text-align:right;">
@@ -63,9 +87,7 @@
                             <td colspan="2" style="background:#EFEFEF;font-weight:normal;">
                                 <input name="baselineDate" type="text" placeholder="" id="datepicker"
                                        class="form-control input-md" ng-model="baselineDate" required>
-                                <span ng-show="submitted && form_health_baseline_unitcost_othermedi_district.baselineDate.$error.required">
-                                    Please select Date
-                                   </span>
+                               
                             </td>
                         </tr>
 
@@ -102,7 +124,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style="height:400px;overflow:auto;">
+                    <div id="boxscroll1" style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
 
 
@@ -378,7 +400,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href="#step2" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                        <a href="#step2" id="s1" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
                                 class="glyphicon glyphicon-arrow-right"></span> Fill Average Repair Cost
                             Informations</a>
                     </div>
@@ -388,7 +410,7 @@
 
                 <div class="tab-pane" id="step2">
 
-                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
                         <colgroup>
                             <col width="264"/>
                             <col width="98" span="7"/>
@@ -428,7 +450,8 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style="height:400px;overflow:auto;">
+
+                    <div id="boxscroll2" style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
 
 

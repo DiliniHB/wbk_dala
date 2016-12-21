@@ -63,15 +63,28 @@
 
 });
     </script>
-<script>
-  $(document).ready(function() {
-  
-    var nicesx = $("#boxscroll").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
-    
-  });
-  
-</script>
 
+
+<script>
+$( document ).ready(function() {
+$('#s1').on('click', function(){
+    $('#li1').removeClass('active');
+    $('#li2').addClass('active');
+});
+$('#s2').on('click', function(){
+    $('#li2').removeClass('active');
+    $('#li3').addClass('active');
+});
+$('#s3').on('click', function(){
+    $('#li3').removeClass('active');
+    $('#li4').addClass('active');
+});
+$('#s4').on('click', function(){
+    $('#li4').removeClass('active');
+    $('#li5').addClass('active');
+});
+});
+</script>
 </head>
      
 
