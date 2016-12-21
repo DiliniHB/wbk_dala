@@ -7901,6 +7901,7 @@ span.round-tab:hover {
 	border: 1px solid #f50505;
 	font-size:12px;
 	margin:0 auto;
+	top:-8px;
         border-radius:5px;
 }
 .arrow_box:after, .arrow_box:before {
@@ -7929,4 +7930,29 @@ span.round-tab:hover {
 
 .bless {background:#fff;border:1px solid #fff;text-align:center;}
 
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
 

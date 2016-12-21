@@ -1,5 +1,15 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
+<script>
+  $(document).ready(function() {
+
+   var nicesx = $("#boxscroll1").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   
+   
+    
+  });
+  
+</script>
 <!-- Main content -->
 <main class="main" ng-app="dlHsProvinceApp" ng-controller="DlHsProvinceController">
 
@@ -33,7 +43,7 @@
                         <label for="ccmonth">Province &nbsp;&nbsp;<label for="checkbox1">
                             <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
                         </label></label>
-                        <select id="ccyear" ng-model="province" class="form-control">
+                        <select style="position:relative;top:-7px;" id="ccyear" ng-model="province" class="form-control">
                             <option value="">-- Select --</option>
                             {% for province in provinces %}
                             <option value="{{ province.id }}">{{ province.name }}</option>
@@ -84,9 +94,9 @@
 
         <div>
             <ul class='nav nav-wizard'>
-                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
+                <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li id="li2"><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li id="li3"><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
 
 
             </ul>
@@ -94,23 +104,13 @@
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
                         <colgroup>
                             <col width="202"/>
                             <col width="90" span="7"/>
                         </colgroup>
                         <tbody>
-                        <tr class="trhead">
-                            <td style="padding-left:5px;"> Name of Province</td>
-
-                            <td colspan="7" style="background:#EFEFEF;">
-                                <select id="selectbasic" name="selectbasic" class="form-control"
-                                        style="width:50%;font-weight:400;">
-                                    <option value="1">Option one</option>
-                                    <option value="2">Option two</option>
-                                </select>
-                            </td>
-                        </tr>
+                       
 
                         <tr height="34" class="trheadc">
                             <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
@@ -148,7 +148,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style="height:400px;overflow:auto;">
+                    <div id="boxscroll1" style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
                             <tr height="20" class="trhead">
                                 <td width="202" height="20" class="trhead">
@@ -481,7 +481,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector
+                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector
                             Informations</a>
                     </div>
 
@@ -633,7 +633,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step3' data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Total Damages
+                        <a href='#step3' id="s2" data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Total Damages
                             and Losses Informations</a>
 
                     </div>
@@ -696,11 +696,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div class="pull-right">
-                            <br>
-                            <button type="button" class="btn btn-info">Clear</button>
-                            <button type="button" ng-click="submit()" class="btn btn-success">Submit</button>
-                        </div>
+                       
 
                     </div>
                 </div>

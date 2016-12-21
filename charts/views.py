@@ -8,6 +8,8 @@ from django.conf import settings
 import yaml
 import json
 
+def index_chart(request):   
+    return render(request, 'charts/index_chart.html')
 
 def chart_tabel8(request):
     districts = District.objects.all()
