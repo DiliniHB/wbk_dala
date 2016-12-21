@@ -152,8 +152,7 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
             data: angular.toJson({
                 'table_data': $scope.dlHealthDamagelostPrivateSys,
                 'com_data':{
-                    'district': $scope.district,
-                    'dl_date': $scope.dlDate,
+                    'district': $scope.district.Id,
                     'incident': $scope.incident,
 
                 },
@@ -182,7 +181,7 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
         data: angular.toJson({
         'table_name':  'Table_7',
         'com_data': {
-               'district': $scope.district,
+               'district': $scope.district.Id,
                 'incident': $scope.incident,
               },
 //               'is_edit':$scope.is_edit
