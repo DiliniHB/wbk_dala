@@ -2,11 +2,14 @@ var app = angular.module('dsHealthDamagelostOtherMediApp', []);
 
 app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',function ($scope,$http) {
 
- $scope.district;
+$scope.district;
  $scope.incident;
  $scope.bs_data={};
  $scope.dl_data={};
  $scope.is_edit = false;
+ $scope.submitted = false;
+ $scope.Districts=[];
+
 
     var init_data = {
         'Table_6': {
@@ -593,10 +596,11 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
         }
     }
 
-  $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
-    $scope.SaveData = function() {
+    $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
+    $scope.saveDlData = function(form) {
 
-
+    $scope.submitted = true;
+       if(form.$valid){
         $http({
             method: 'POST',
             url:'/damage_losses/dl_save_data',
@@ -619,6 +623,7 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
 
             console.log(response);
         });
+        }
 
     }
 
@@ -655,10 +660,13 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
  // edit relevant damage_losses data
 
 
-    $scope.dlDataEdit = function()
+    $scope.dlDataEdit = function(form)
 {
 
    $scope.is_edit = true;
+   $scope.submitted = true;
+
+    if(form.$valid){
 
     $http({
     method: "POST",
@@ -678,6 +686,7 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
 
     $scope.dlDataHealthDamagelostOtherMedicalFacilities = data;
     })
+    }
 
 
 }
@@ -688,6 +697,28 @@ app.controller("DsHealthDamagelostOtherMediController", ['$scope','$http',functi
      $scope.is_edit = false;
      $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
 }
+
+ $scope.changeIncident = function getDistrictData()
+    {
+
+
+    $scope.Districts  = [
+
+            {  Id: 1,
+                Name: 'Colombo'
+            }, {
+                Id: 2,
+                Name: 'Gampaha'
+            }, {
+                Id: 3,
+                Name: 'Kaluthara'
+            }
+              ]
+
+  }
+
+
+
 
 }])
 
