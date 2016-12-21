@@ -22,13 +22,14 @@
     <link href="{% static 'dashboard/css/datepicker.css' %}" rel="stylesheet">
 	
 	<script src='{% static "dashboard/js/jquery.min.js" %}'></script>
+	<script src='{% static "dashboard/js/jquery.nicescroll.min.js" %}'></script>
     <script src='{% static "dashboard/js/bootstrap.min.js" %}'></script>
     <script src='{% static "dashboard/js/angular/angular.js" %}'></script>
    
 
     <script src="{% static 'base_line/js/pub_med_facilities.js' %}"></script>
     <script src="{% static 'base_line/js/bs_health_status.js' %}"></script>
-    <script src="{% static 'damage_losses/js/dl_health_damagelost_other_medi.js' %}"></script>
+    <!--<script src="{% static 'damage_losses/js/dl_health_damagelost_other_medi.js' %}"></script>-->
 
     <!-- Sachie -->
     <script src="{% static 'base_line/js/bs_health_pub_med_facilities.js' %}"></script>
@@ -76,6 +77,26 @@
     </script>
 
 
+<script>
+$( document ).ready(function() {
+$('#s1').on('click', function(){
+    $('#li1').removeClass('active');
+    $('#li2').addClass('active');
+});
+$('#s2').on('click', function(){
+    $('#li2').removeClass('active');
+    $('#li3').addClass('active');
+});
+$('#s3').on('click', function(){
+    $('#li3').removeClass('active');
+    $('#li4').addClass('active');
+});
+$('#s4').on('click', function(){
+    $('#li4').removeClass('active');
+    $('#li5').addClass('active');
+});
+});
+</script>
 </head>
      
 

@@ -5,202 +5,204 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
  $scope.district;
  $scope.incident;
  $scope.dl_data={};
+ $scope.submitted = false;
+  $scope.Districts=[];
  //bind Disasteroption
     $scope.dlhealthsectordistrict = {
         'Table_8': {
             'DshPubLmh': [{
                 facilities_assets : 'Teaching Hospitals',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Provincial General Hospitals',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'District General Hospitals',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Total',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 }],
                 'DshPubMoh': [{
                 facilities_assets : 'Offices',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Others',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Total',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 }],
                 'DshPubOmf': [{
                 facilities_assets : 'Base Hospital',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Divisional Hospital',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Rural Hospital',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Central Dispensary',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'PMCUs',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'PHCCs',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'MCHCs',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Total',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'TOTAL',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 }],
                 'DshPvtFa': [{
                 facilities_assets : 'Private Clinics',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'Others',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 },{
                 facilities_assets : 'TOTAL',
-                total_num_affected :0,
-                male :0,
-                female :0,
-                total_damages :0,
-                losses_y1 :0,
-                losses_y2  :0,
-                total_losses :0,
+                total_num_affected :null,
+                male :null,
+                female :null,
+                total_damages :null,
+                losses_y1 :null,
+                losses_y2  :null,
+                total_losses :null,
                 }],
                 'DshTdlOwship': [{
                 ownership : 'Public Sector',
-                damages :0,
-                losses_y1 :0,
-                losses_y2 :0,
-                total :0,
+                damages :null,
+                losses_y1 :null,
+                losses_y2 :null,
+                total :null,
                 },{
                 ownership : 'Private Sector',
-                damages :0,
-                losses_y1 :0,
-                losses_y2 :0,
-                total :0,
+                damages :null,
+                losses_y1 :null,
+                losses_y2 :null,
+                total :null,
                 },{
                 ownership : 'TOTAL',
-                damages :0,
-                losses_y1 :0,
-                losses_y2 :0,
-                total :0,
+                damages :null,
+                losses_y1 :null,
+                losses_y2 :null,
+                total :null,
                 }
 
                 ]
@@ -212,8 +214,11 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
 
 
 
-   $scope.SaveData = function() {
+   $scope.saveDlData = function(form) {
         console.log($scope.data);
+         $scope.submitted = true;
+
+    if(form.$valid){
 
         $http({
             method: 'POST',
@@ -224,9 +229,9 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
                 'com_data': {
                     'district': $scope.district,
                     'incident' : $scope.incident,
-                    'is_edit':false
 
-                }
+
+                }, 'is_edit':$scope.is_edit
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -237,6 +242,7 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
 
             console.log(response);
         });
+        }
 
     }
 
@@ -244,13 +250,18 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
     // get relevant damage_losses data for calculations
 
 
-    $scope.changedValue = function getDlData()
+    $scope.changedValue = function getDlData(form)
     {
 
+        if($scope.incident){
+
+        getDistrictData();
+        }
 
         if($scope.district && $scope.incident){
         console.log($scope.district);
         console.log($scope.incident);
+
         $http({
         method: 'POST',
         url: '/damage_losses/dl_get_data',
@@ -258,7 +269,7 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
         data: angular.toJson({
                 'db_tables': ['DmhDfNum','DmhDfPaf','DmhPdfaNum','DmhPdfaPaf','DmhPdfaOassets','DmhLosFi','DmhLosCud','DmhLosHoc','DmhLosOue','DmfDfaNum','DmfDfaPaf','DmfPdfaNum','DmfPdfaPaf','DmfPdaOassets','DmfLosFi','DmfLosCud','DmfLosHoc','DmfLosOue','DapNapTmf','DapBefPc1','DapBefPcn','DapBefOther'],
                 'com_data': {
-                    'district': $scope.district,
+                    'district': $scope.district.Id,
                     'incident': $scope.incident,
                     'is_edit': false,
                 }
@@ -278,7 +289,27 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
         });
         }
 
+
     }
+
+    function getDistrictData()
+    {
+
+
+    $scope.Districts  = [
+
+            {  Id: 1,
+                Name: 'Colombo'
+            }, {
+                Id: 2,
+                Name: 'Gampaha'
+            }, {
+                Id: 3,
+                Name: 'Kaluthara'
+            }
+              ]
+
+  }
 
 
 

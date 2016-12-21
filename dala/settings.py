@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'z(-pb7d!3-efta70vsay=by7=*ng#=9vayn@dc)9b8ddcg%54&'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -80,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dala.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -95,9 +92,7 @@ DATABASES = {
 
     },
 
-
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -117,7 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -130,7 +124,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -182,6 +175,43 @@ TABLE_PROPERTY_MAPPER = {
                          'losses_y1', 'losses_y2', 'total_losses', 'id'],
          'DspTdlOwship': [ 'ownership', 'damages', 'losses_y1', 'losses_y2', 'total']
          },
+    'Table_4':
+        {
+            'BucOmarStructure': ['particulars', 'base_hospital', 'divisional_hospital',
+                                 'rural_hospital',
+                                 'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                                 'mat_child_health_clinics', 'id'],
+            'BucOmarSupplies': ['particulars', 'base_hospital', 'divisional_hospital',
+                                'rural_hospital',
+                                'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                                'mat_child_health_clinics', 'id'],
+            'BucOmarMequipment': ['particulars', 'base_hospital', 'divisional_hospital',
+                                  'rural_hospital',
+                                  'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                                  'mat_child_health_clinics', 'id'],
+            'BucOmarOassets': ['particulars', 'base_hospital', 'divisional_hospital',
+                               'rural_hospital',
+                               'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                               'mat_child_health_clinics', 'id'],
+            'BucOmarcCrpm': ['particulars', 'base_hospital', 'divisional_hospital',
+                             'rural_hospital',
+                             'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                             'mat_child_health_clinics', 'id'],
+            'BucOmarcStructure': ['particulars', 'base_hospital', 'divisional_hospital',
+                                  'rural_hospital',
+                                  'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                                  'mat_child_health_clinics', 'id'],
+            'BucOmarcMequipment': ['particulars', 'base_hospital', 'divisional_hospital',
+                                   'rural_hospital',
+                                   'central_dispensary', 'pri_med_cunits',
+                                   'pri_health_ccenters',
+                                   'mat_child_health_clinics', 'id'],
+            'BucOmarcOassets': ['particulars', 'base_hospital', 'divisional_hospital',
+                                'rural_hospital',
+                                'central_dispensary', 'pri_med_cunits', 'pri_health_ccenters',
+                                'mat_child_health_clinics', 'id']
+
+        },
     'Table_10':
         {
             'DsnPubPnLmh': ['facilities_assets', 'total_num_affected', 'male', 'female',
@@ -218,7 +248,158 @@ TABLE_PROPERTY_MAPPER = {
                              'losses_y2',
                              'total', 'id']
 
+        },
+    'Table_6':
+        {
+            'DmfDfaNum': ['num_des_facilities',
+                          'base_hospital',
+                          'divisional_hospital',
+                          'rural_hospital',
+                          'central_dispensary',
+                          'pmcus',
+                          'phccs',
+                          'mchcs',
+                          'total', 'id'],
+            'DmfDfaPaf': ['num_patients_affected',
+                          'base_hospital',
+                          'divisional_hospital',
+                          'rural_hospital',
+                          'central_dispensary',
+                          'pmcus',
+                          'phccs',
+                          'mchcs',
+                          'total', 'id'],
+            'DmfDaStructure': ['asset',
+                               'base_hospital',
+                               'divisional_hospital',
+                               'rural_hospital',
+                               'central_dispensary',
+                               'pmcus',
+                               'phccs',
+                               'mchcs',
+                               'total', 'id'],
+            'DmfDaSupplies': ['asset',
+                              'base_hospital',
+                              'divisional_hospital',
+                              'rural_hospital',
+                              'central_dispensary',
+                              'pmcus',
+                              'phccs',
+                              'mchcs',
+                              'total', 'id'],
+
+            'DmfDaMequipment': ['asset',
+                                'base_hospital',
+                                'divisional_hospital',
+                                'rural_hospital',
+                                'central_dispensary',
+                                'pmcus',
+                                'phccs',
+                                'mchcs',
+                                'total', 'id'],
+
+            'DmfDaOassets': ['asset',
+                             'base_hospital',
+                             'divisional_hospital',
+                             'rural_hospital',
+                             'central_dispensary',
+                             'pmcus',
+                             'phccs',
+                             'mchcs',
+                             'total', 'id'],
+
+            'DmfPdfaNum': ['num_pdamaged_facilities',
+                           'base_hospital',
+                           'divisional_hospital',
+                           'rural_hospital',
+                           'central_dispensary',
+                           'pmcus',
+                           'phccs',
+                           'mchcs',
+                           'total', 'id'],
+
+            'DmfPdfaPaf': ['num_patients_affected',
+                           'base_hospital',
+                           'divisional_hospital',
+                           'rural_hospital',
+                           'central_dispensary',
+                           'pmcus',
+                           'phccs',
+                           'mchcs',
+                           'total', 'id'],
+
+            'DmfPdaStructure': ['asset',
+                                'base_hospital',
+                                'divisional_hospital',
+                                'rural_hospital',
+                                'central_dispensary',
+                                'pmcus',
+                                'phccs',
+                                'mchcs',
+                                'total', 'id'],
+
+            'DmfPdaMequipment': ['asset',
+                                 'base_hospital',
+                                 'divisional_hospital',
+                                 'rural_hospital',
+                                 'central_dispensary',
+                                 'pmcus',
+                                 'phccs',
+                                 'mchcs',
+                                 'total', 'id'],
+
+            'DmfPdaOassets': ['asset',
+                              'base_hospital',
+                              'divisional_hospital',
+                              'rural_hospital',
+                              'central_dispensary',
+                              'pmcus',
+                              'phccs',
+                              'mchcs',
+                              'total', 'id'],
+
+            'DmfLosFi': ['type_of_losses',
+                         'base_hospital',
+                         'divisional_hospital',
+                         'rural_hospital',
+                         'central_dispensary',
+                         'pmcus',
+                         'phccs',
+                         'mchcs',
+                         'total', 'id'],
+
+            'DmfLosCud': ['type_of_losses',
+                          'base_hospital',
+                          'divisional_hospital',
+                          'rural_hospital',
+                          'central_dispensary',
+                          'pmcus',
+                          'phccs',
+                          'mchcs',
+                          'total', 'id'],
+
+            'DmfLosHoc': ['type_of_losses',
+                          'base_hospital',
+                          'divisional_hospital',
+                          'rural_hospital',
+                          'central_dispensary',
+                          'pmcus',
+                          'phccs',
+                          'mchcs',
+                          'total', 'id'],
+
+            'DmfLosOue': ['type_of_losses',
+                          'base_hospital',
+                          'divisional_hospital',
+                          'rural_hospital',
+                          'central_dispensary',
+                          'pmcus',
+                          'phccs',
+                          'mchcs',
+                          'total', 'id']
+
         }
+
 }
 
 AUTH_USER_MODEL = 'users.MyUser'

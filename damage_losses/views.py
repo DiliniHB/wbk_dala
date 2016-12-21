@@ -104,6 +104,7 @@ def dl_save_data(request):
                             print 'Table 10'
                         else:
                             model_object.district_id = com_data['district']
+                        model_object.district_id = com_data['district']
                         model_object.incident_id = com_data['incident']
 
                         print 'row', ' --> ', row, '\n', ' object '
@@ -193,5 +194,3 @@ def dl_save_edit_data(table_data, com_data):
                 model_object.update(**row)
 
                 print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
-
-
