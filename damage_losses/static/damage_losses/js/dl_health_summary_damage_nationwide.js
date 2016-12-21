@@ -456,7 +456,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
         contentType: 'application/json; charset=utf-8',
         data: angular.toJson({
 //                'db_tables': ['DspPubD1Lmh','DspPubDnLmh','DspPubDnMoh','DspPubD1Moh','DspPubD1Omc','DspPubDnOmc','DspPvtD1','DspPvtDn'],
-                'table_name': 'Table_9',
+                'table_name': 'Table_10',
                 'db_tables': ['DspPubD1LmhNational','DspPubDnLmhNational','DspPubDnMohNational','DspPubD1MohNational','DspPubD1OmcNational','DspPubDnOmcNational','DspPvtD1National','DspPvtDnNational'],
                 'com_data': {
 

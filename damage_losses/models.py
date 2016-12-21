@@ -1340,7 +1340,6 @@ class DspPubD1LmhNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1357,7 +1356,6 @@ class DspPubD1MohNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1374,7 +1372,6 @@ class DspPubD1OmcNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1391,7 +1388,6 @@ class DspPubDnLmhNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1408,7 +1404,6 @@ class DspPubDnMohNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1425,7 +1420,6 @@ class DspPubDnOmcNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1442,7 +1436,6 @@ class DspPvtD1National(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
@@ -1459,7 +1452,6 @@ class DspPvtDnNational(models.Model):
     losses_y1 = models.FloatField(blank=True, null=True)
     losses_y2 = models.FloatField(blank=True, null=True)
     total_losses = models.FloatField(blank=True, null=True)
-    province = models.ForeignKey(Province, db_column='province', blank=True, null=True)
     incident = models.ForeignKey(IncidentReport, db_column='incident', blank=True, null=True)
 
     class Meta:
