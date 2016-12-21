@@ -8,7 +8,8 @@ import yaml
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.apps import apps
 import collections
-from datetime import datetime, date
+#from datetime import datetime, date
+import datetime
 from django.utils import timezone
 from django.http import Http404
 from django.core.serializers.json import DjangoJSONEncoder
@@ -16,11 +17,13 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.conf import settings
 from users.decorators import permission_required
+#from db_tools import Datediff
 
 
 # render baseline health table
 def bs_medical_facilities(request):
     districts = District.objects.all()
+
     context = {
         'districts': districts
     }
@@ -38,29 +41,50 @@ def bs_save_baseline_pub_mf():
 @permission_required("district")
 def bs_health_status(request):
     user = request.user
-    filtered_districts = fetch_districts(user)
+    fetch_data = fetch_districts(user)
+    filtered_districts = fetch_data['districts']
+    filtered_incidents = fetch_data['incidents']
     context = {
-        'districts': filtered_districts
+        'districts': filtered_districts,
+        'incidents': filtered_incidents
     }
     return render(request, 'base_line/health_baseline_rdh.html', context)
 
 
 def fetch_districts(user):
     districts = District.objects.all()
+    incidents = IncidentReport.objects.all()
     if user.is_superuser:
-        return districts
+        return {'districts': districts, 'incidents': incidents}
     else:
         role = user.user_role.code_name
-        districts = District.objects.all()
 
         if role == 'district':
             district_id = user.district_id
             districts = District.objects.filter(id=district_id)
+            incidents = IncidentReport.objects.filter(effectedarea__district=district_id)
         elif role == 'provincial':
             province = user.province
             districts = province.district_set.all()
+            incidents = IncidentReport.objects.filter(effectedarea__district__province=province).distinct()
+        incidents = IncidentReport.objects.all()
+        return {'districts': districts, 'incidents': incidents}
 
-        return districts
+
+def fetch_incidents(user):
+    incidents = IncidentReport.objects.all()
+    if user.is_superuser:
+        return incidents
+    else:
+        incidents = IncidentReport.objects.filter(effectedarea__district=1)
+
+    return incidents
+
+
+def fetch_district_incident(incident_id):
+    incident = IncidentReport.objects.get(pk=incident_id)
+    affected_district = incident.effectedarea_set.all().distinct()
+    return affected_district
 
 
 def bs_health_information_health_status(request):
@@ -250,44 +274,50 @@ def bs_save_data(request):
     bs_data = (yaml.safe_load(request.body))
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
+    district = com_data['district']
+    bs_date = com_data['bs_date']
     todate = timezone.now()
     is_edit = bs_data['is_edit']
 
     if not is_edit:
 
-        try:
-            for interface_table in bs_table_hs_data:
-                print 'interface table', ' -->', interface_table, '\n'
-                for db_table in bs_table_hs_data[interface_table]:
+        for interface_table in bs_table_hs_data:
+            print 'interface table', ' -->', interface_table, '\n'
+            for db_table in bs_table_hs_data[interface_table]:
 
-                    print 'db table', ' -->', db_table, '\n'
+                print 'db table', ' -->', db_table, '\n'
 
-                    for row in bs_table_hs_data[interface_table][db_table]:
+                for row in bs_table_hs_data[interface_table][db_table]:
 
-                        model_class = apps.get_model('base_line', db_table)
-                        model_object = model_class()
+                    model_class = apps.get_model('base_line', db_table)
+                    model_object = model_class()
 
-                        # assigning common properties to model object
-                        model_object.created_date = todate
-                        model_object.lmd = todate
-                        model_object.district_id = com_data['district']
-                        model_object.bs_date = com_data['bs_date']
+                    # assigning common properties to model object
+                    model_object.created_date = todate
+                    model_object.lmd = todate
+                    model_object.district_id = district
+                    model_object.bs_date = bs_date
 
-                        print 'row', ' --> ', row, '\n', ' object '
+                    print 'row', ' --> ', row, '\n', ' object '
 
-                        for property in row:
-                            setattr(model_object, property, row[property])
+                    for property in row:
+                        setattr(model_object, property, row[property])
 
-                            print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
-                            model_object.save()
+                        print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
+                        model_object.save()
 
-            record_exist = BdSessionKeys.objects.filter(bs_date=com_data['bs_date'])
-            if not record_exist:
-                bd_session = BdSessionKeys(bs_date=com_data['bs_date'], date=todate, data_type='base_line')
-                bd_session.save()
+        record_exist = BdSessionKeys.objects.filter(bs_date=com_data['bs_date'], table_name=interface_table,
+                                                    district=district)
+        if not record_exist:
+            # get bs full date
+            split_date = bs_date.split('/')
+            bs_month = split_date[0]
+            bs_year = split_date[1]
+            bs_full_date = datetime.date(int(bs_year), int(bs_month), 1)
 
-        except Exception as e:
-            return HttpResponse(e)
+            bd_session = BdSessionKeys(bs_date=com_data['bs_date'], table_name=interface_table,
+                                       date=todate, district_id=district, data_type='base_line', full_bs_date=bs_full_date)
+            bd_session.save()
 
     else:
         bs_save_edit_data(bs_table_hs_data, com_data)
@@ -299,8 +329,14 @@ def bs_save_data(request):
 def bs_get_data(request):
     todate = timezone.now()
     data = (yaml.safe_load(request.body))
+    com_data = data['com_data']
+    district = data['district']
+    incident_id = com_data['incident']
+    incident = IncidentReport.objects.get(pk=incident_id)
+    incident_date = incident.reported_date_time
     db_tables = data['db_tables']
 
+    # get closest data based on district incident date and table number
     bs_session = BdSessionKeys.objects.values('bs_date').latest('date')
     bs_date = bs_session['bs_date']
 

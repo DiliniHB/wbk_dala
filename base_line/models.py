@@ -25,7 +25,7 @@ class BhsPlc(models.Model):
 
 class BhsComDiseases(models.Model):
     com_disease = models.CharField(max_length=255, blank=True, null=True)
-    male = models.IntegerField(blank=True, null=True)
+    male = models.IntegerField(default=0, blank=True, null=True)
     female = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     elderly = models.IntegerField(blank=True, null=True)
@@ -303,6 +303,8 @@ class BdSessionKeys(models.Model):
     date = models.DateTimeField(blank=True, null=True)
     user = models.IntegerField(blank=True, null=True)
     bs_date = models.CharField(max_length=255, blank=True, null=True)
+    table_name = models.CharField(max_length=255, blank=True, null=True)
+    full_bs_date = models.DateField(blank=True, null=True)
 
     class Meta:
         managed = False

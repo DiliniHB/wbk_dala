@@ -1,8 +1,8 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
 <!-- Main content -->
-<main class="main" ng-app="dlHealthSummaryDamageNationwideApp"
-      ng-controller="DlHealthSummaryDamageNationwideController">
+<main class="main" ng-app="dlHsNationalApp"
+      ng-controller="DlHsNationalController">
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
@@ -20,67 +20,69 @@
 
     <div class="container-fluid">
 
-  <div class="card">
-                            <div class="card-header">
-                                <strong>Search</strong>
-                                
-                            </div>
-                            <div class="card-block">
-                                
+        <div class="card">
+            <div class="card-header">
+                <strong>Search</strong>
 
-                               
+            </div>
+            <div class="card-block">
 
-                                <div class="row">
-								
-								
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccmonth">Province  &nbsp;&nbsp;<label for="checkbox1">
-                                                    <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
-                                                </label></label>
-                                        <select class="form-control" id="ccmonth" style="margin-top:-7px;">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
+                <div class="row">
 
-                                    <div class="form-group col-sm-3">
-                                        <label for="ccyear">District</label>
-                                        <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                    </div>
 
-                                    <div class="col-sm-3">
+                    <div class="form-group col-sm-3">
+                        <label for="ccmonth">Province &nbsp;&nbsp;<label for="checkbox1">
+                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
+                        </label></label>
+                        <select id="ccyear" ng-model="district" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for province in provinces %}
+                            <option value="{{ province.id }}">{{ province.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                                        <div class="form-group">
-                                            <label for="cvv">Disaster Type</label>
-                                            <select class="form-control" id="ccyear">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            
-                                        </select>
-                                        </div>
+                    <div class="form-group col-sm-3">
+                        <label for="ccyear">District</label>
+                        <select id="ccyear" ng-model="district" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for district in districts %}
+                            <option value="{{ district.id }}">{{ district.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                                    </div>
-									
-									 
-									<div class="col-sm-1">
+                    <div class="col-sm-3">
 
-                                        <div class="form-group">
-                                            
-                                          <button type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i class="fa fa-search"></i> Search</button>
-                                        </div>
+                        <div class="form-group">
+                            <label for="cvv">Disaster Type</label>
+                             <select id="ccyear" ng-model="incident" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for incident in incidents %}
+                            <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
 
-                                    </div>
+                    </div>
 
-                                </div>
-                                <!--/row-->
-                            </div>
-                        </div>  
+
+                    <div class="col-sm-1">
+
+                        <div class="form-group">
+
+                            <button ng-click="filterData()"  type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i
+                                    class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--/row-->
+            </div>
+        </div>
         <div>
 
             <ul class='nav nav-wizard'>
@@ -104,16 +106,7 @@
                             <td style="padding-left:5px;"> Name of Province</td>
 
                             <td colspan="7" style="background:#EFEFEF;">
-                                <select id="selectbasic" name="selectbasic" ng-model="$scope.district"
-                                        class="form-control"
-                                        style="width:50%;font-weight:400;">
 
-                                    <option value="" selected="true">Select a District</option>
-                                    {% for district in districts %}
-
-                                    <option value={{district.id}}>{{district.name}}
-                                        {% endfor %}
-                                </select>
                             </td>
                             <td colspan="3" style="padding-right:5px;text-align:right;">
                                 Disaster Type
@@ -203,7 +196,7 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Lmh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Lmh"
+                            <tr ng-repeat="dsnPubP1Lmh in dlHsNational.Table_10.DsnPubP1Lmh"
                                 height="20">
 
                                 <td ng-bind="dsnPubP1Lmh.facilities_assets"
@@ -215,8 +208,19 @@
                                     ng-if="dsnPubP1Lmh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Lmh" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Lmh[key]"></span>
+                                <td  ng-bind="dsnPubP1Lmh.total_num_affected" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Lmh.total_losses" width="98">
                                 </td>
 
                             </tr>
@@ -240,7 +244,7 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Moh in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Moh"
+                            <tr ng-repeat="dsnPubP1Moh in dlHsNational.Table_10.DsnPubP1Moh"
                                 height="20">
 
                                 <td ng-bind="dsnPubP1Moh.facilities_assets"
@@ -252,8 +256,19 @@
                                     ng-if="dsnPubP1Moh.facilities_assets!='Total'" width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Moh" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Moh[key]"></span>
+                                <td  ng-bind="dsnPubP1Moh.total_num_affected" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Moh.total_losses" width="98">
                                 </td>
 
                             </tr>
@@ -278,7 +293,7 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubP1Omc in dlhealthsummarydamagenationwide.Table_10.DsnPubP1Omc"
+                            <tr ng-repeat="dsnPubP1Omc in dlHsNational.Table_10.DsnPubP1Omc"
                                 height="20">
 
                                 <td ng-bind="dsnPubP1Omc.facilities_assets"
@@ -292,8 +307,19 @@
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubP1Omc" ng-if="$index > 0" width="98">
-                                    <span ng-bind="dsnPubP1Omc[key]"></span>
+                                <td  ng-bind="dsnPubP1Omc.total_num_affected" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubP1Omc.total_losses" width="98">
                                 </td>
 
                             </tr>
@@ -337,7 +363,7 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPubPnLmh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnLmh"
+                            <tr ng-repeat="dsnPubPnLmh in dlHsNational.Table_10.DsnPubPnLmh"
                                 height="20">
 
                                 <td ng-bind="dsnPubPnLmh.facilities_assets"
@@ -350,15 +376,19 @@
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnLmh" ng-if="$index > 0 && $index < 7 "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnLmh[key]" name="textinput" type="text"
-                                           placeholder=""
-                                           class="form-control input-md">
+                               <td  ng-bind="dsnPubPnLmh.total_num_affected" width="98">
                                 </td>
-
-                                <td nwidth="98">
-                                    <span ng-bind="dsnPubPnLmh.total_losses"></span>
+                                <td  ng-bind="dsnPubPnLmh.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnLmh.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnLmh.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnLmh.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnLmh.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnLmh.total_losses" width="98">
                                 </td>
 
                             </tr>
@@ -383,7 +413,7 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPubPnMoh in dlhealthsummarydamagenationwide.Table_10.DsnPubPnMoh"
+                            <tr ng-repeat="dsnPubPnMoh in dlHsNational.Table_10.DsnPubPnMoh"
                                 height="20">
 
                                 <td ng-bind="dsnPubPnMoh.facilities_assets"
@@ -396,20 +426,19 @@
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnMoh"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets!='Total' "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnMoh[key]" name="textinput" type="text"
-                                           placeholder=""
-                                           class="form-control input-md">
+                                <td  ng-bind="dsnPubPnMoh.total_num_affected" width="98">
                                 </td>
-                                <td width="98">
-                                    <span ng-bind="dsnPubPnMoh.total_losses"></span>
+                                <td  ng-bind="dsnPubPnMoh.male" width="98">
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnMoh"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnMoh.facilities_assets=='Total' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnMoh[key]"></span>
+                                <td  ng-bind="dsnPubPnMoh.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnMoh.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnMoh.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnMoh.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnMoh.total_losses" width="98">
                                 </td>
 
                             </tr>
@@ -433,7 +462,7 @@
                                 <td width="90">
                                 </td>
                             </tr>
-                            <tr ng-repeat="dsnPubPnOmc in dlhealthsummarydamagenationwide.Table_10.DsnPubPnOmc"
+                            <tr ng-repeat="dsnPubPnOmc in dlHsNational.Table_10.DsnPubPnOmc"
                                 height="20">
 
                                 <td ng-bind="dsnPubPnOmc.facilities_assets"
@@ -446,30 +475,21 @@
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets!='Total' && dsnPubPnOmc.facilities_assets!='TOTAL' && dsnPubPnOmc.facilities_assets!='GRAND TOTAL' "
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPubPnOmc[key]" name="textinput" type="text"
-                                           placeholder=""
-                                           class="form-control input-md">
-                                </td>
+
                                 <td width="98">
                                     <span ng-bind="dsnPubPnOmc.total_losses"></span>
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='Total' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td  ng-bind="dsnPubPnOmc.total_num_affected" width="98">
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='TOTAL' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td  ng-bind="dsnPubPnOmc.male" width="98">
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPubPnOmc"
-                                    ng-if="$index > 0 && $index < 7 && dsnPubPnOmc.facilities_assets=='GRAND TOTAL' "
-                                    width="98">
-                                    <span ng-bind="dsnPubPnOmc[key]"></span>
+                                <td  ng-bind="dsnPubPnOmc.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnOmc.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnOmc.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPubPnOmc.losses_y2" width="98">
                                 </td>
 
                             </tr>
@@ -550,7 +570,7 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPvtP1 in dlhealthsummarydamagenationwide.Table_10.DsnPvtP1"
+                            <tr ng-repeat="dsnPvtP1 in dlHsNational.Table_10.DsnPvtP1"
                                 height="20">
 
                                 <td ng-bind="dsnPvtP1.facilities_assets"
@@ -564,10 +584,20 @@
 
                                 </td>
 
-                                <td ng-repeat="(key, value) in dsnPvtP1"
-                                    ng-if="$index > 0 && $index < 8 "
-                                    width="98">
-                                    <span ng-bind="dsnPvtP1[key]"></span>
+                               <td width="98">
+                                    <span ng-bind="dsnPvtP1.total_losses"></span>
+                                </td>
+                                <td  ng-bind="dsnPvtP1.total_num_affected" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtP1.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtP1.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtP1.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtP1.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtP1.losses_y2" width="98">
                                 </td>
 
                             </tr>
@@ -592,7 +622,7 @@
                                 </td>
                             </tr>
 
-                            <tr ng-repeat="dsnPvtPn in dlhealthsummarydamagenationwide.Table_10.DsnPvtPn"
+                            <tr ng-repeat="dsnPvtPn in dlHsNational.Table_10.DsnPvtPn"
                                 height="20">
 
                                 <td ng-bind="dsnPvtPn.facilities_assets"
@@ -605,27 +635,21 @@
                                     width="264" height="20" class="tdpa">
 
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets!='Total' && dsnPvtPn.facilities_assets!='TOTAL'"
-                                    width="98">
-                                    <input id="textinput" ng-model="dsnPvtPn[key]" name="textinput" type="text"
-                                           placeholder=""
-                                           class="form-control input-md">
-                                </td>
-                                <td width="98">
+                               <td width="98">
                                     <span ng-bind="dsnPvtPn.total_losses"></span>
                                 </td>
-                                <td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && (dsnPvtPn.facilities_assets=='Total' || dsnPvtPn.facilities_assets=='TOTAL')  "
-                                    width="98">
-                                    <span ng-bind="dsnPvtPn[key]"></span>
+                                <td  ng-bind="dsnPvtPn.total_num_affected" width="98">
                                 </td>
-                                <!--td ng-repeat="(key, value) in dsnPvtPn"
-                                    ng-if="$index > 0 && $index < 7 && dsnPvtPn.facilities_assets=='TOTAL'"
-                                    width="98">
-                                    <span ng-bind="dsnPvtPn[key]"></span>
-                                </td-->
-
+                                <td  ng-bind="dsnPvtPn.male" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtPn.female" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtPn.total_damages" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtPn.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnPvtPn.losses_y2" width="98">
+                                </td>
 
                             </tr>
 
@@ -673,7 +697,7 @@
 
                     <div style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
-                         <tr ng-repeat="dsnTdlOwship in dlhealthsummarydamagenationwide.Table_10.DsnTdlOwship"
+                            <tr ng-repeat="dsnTdlOwship in dlHsNational.Table_10.DsnTdlOwship"
                                 height="20">
 
                                 <td ng-bind="dsnTdlOwship.ownership"
@@ -687,11 +711,15 @@
 
                                 </td>
 
-                                <td ng-repeat="(key, value) in dsnTdlOwship"
-                                    ng-if="$index > 0 && $index < 8 "
-                                    width="98">
-                                    <span ng-bind="dsnTdlOwship[key]"></span>
+                                 <td  ng-bind="dsnTdlOwship.damages" width="98">
                                 </td>
+                                <td  ng-bind="dsnTdlOwship.losses_y1" width="98">
+                                </td>
+                                <td  ng-bind="dsnTdlOwship.losses_y2" width="98">
+                                </td>
+                                <td  ng-bind="dsnTdlOwship.total" width="98">
+                                </td>
+
 
                             </tr>
                             </tbody>

@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^damage_losses/', include('damage_losses.urls', namespace='damage_losses')),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^reports/', include('reports.urls', namespace='reports')),
+    url(r'^charts/', include('charts.urls', namespace='charts')),
 
 ]
