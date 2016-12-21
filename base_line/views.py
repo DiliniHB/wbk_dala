@@ -330,7 +330,7 @@ def bs_get_data(request):
     todate = timezone.now()
     data = (yaml.safe_load(request.body))
     com_data = data['com_data']
-    district = data['district']
+    district = com_data['district']
     incident_id = com_data['incident']
     incident = IncidentReport.objects.get(pk=incident_id)
     incident_date = incident.reported_date_time

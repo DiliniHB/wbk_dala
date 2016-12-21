@@ -138,16 +138,27 @@ def dl_save_data(request):
 @csrf_exempt
 def dl_get_data(request):
     data = (yaml.safe_load(request.body))
+    table_name = data['table_name']
     com_data = data['com_data']
     incident_id = com_data['incident']
-    district = com_data['district']
     db_tables = data['db_tables']
 
     dl_mtable_data = {}
+    filter_fields = {}
+
+    if table_name == 'Table_9':
+        admin_area = com_data['province']
+        filter_fields = {'incident': incident_id, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident_id}
+    else:
+        admin_area = com_data['district']
+        filter_fields = {'incident': incident_id, 'district': admin_area}
 
     for db_table in db_tables:
         model_class = apps.get_model('damage_losses', db_table)
-        dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident_id, district=district).order_by('id'))
+        #dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident_id, district=district).order_by('id'))
+        dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(**filter_fields).order_by('id'))
 
     return HttpResponse(
         json.dumps(dl_mtable_data),
@@ -164,9 +175,13 @@ def dl_fetch_edit_data(request):
     incident = com_data['incident']
     tables = settings.TABLE_PROPERTY_MAPPER[table_name]
 
+    filter_fields = {}
+
     if table_name == 'Table_9':
         admin_area = com_data['province']
         filter_fields = {'incident': incident, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident}
     else:
         admin_area = com_data['district']
         filter_fields = {'incident': incident, 'district': admin_area}
