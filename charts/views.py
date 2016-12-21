@@ -48,11 +48,21 @@ def dl_fetch_chart_data(request):
     table_name = data['table_name']
     com_data = data['com_data']
     incident = com_data['incident']
-    district = com_data['district']
     chart_details = data['chart_stacked_data']
     tables = settings.TABLE_PROPERTY_MAPPER[table_name]
 
     bs_mtable_data = {table_name: {}}
+
+    filter_fields = {}
+
+    if table_name == 'Table_9':
+        admin_area = com_data['province']
+        filter_fields = {'incident': incident, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident}
+    else:
+        admin_area = com_data['district']
+        filter_fields = {'incident': incident, 'district': admin_area}
 
     for chart_model in chart_details:
         print chart_model
@@ -60,12 +70,14 @@ def dl_fetch_chart_data(request):
         for chart_type in chart_details[chart_model]:
             print chart_type
             bs_mtable_data[table_name][chart_model][chart_type] = {}
+            print bs_mtable_data
             for stacked_key in chart_details[chart_model][chart_type]:
-                bs_mtable_data[table_name][chart_model][chart_type][stacked_key] = {}
+                print bs_mtable_data
+                #bs_mtable_data[table_name][chart_model][chart_type][stacked_key] = {}
                 print chart_details[chart_model][chart_type][stacked_key]
                 table_fields = chart_details[chart_model][chart_type][stacked_key]
                 model_class = apps.get_model('damage_losses', chart_model)
-                chart_data = list(model_class.objects.filter(incident=incident, district=district).values_list(*table_fields))
+                chart_data = list(model_class.objects.filter(**filter_fields).values_list(*table_fields))
 
                 #bs_mtable_data[table_name] = {chart_model: {chart_type: {stacked_key: chart_data}}}
                 bs_mtable_data[table_name][chart_model][chart_type][stacked_key] = chart_data

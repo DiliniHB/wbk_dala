@@ -66,6 +66,8 @@ def dl_fetch_report_data(request):
     if table_name == 'Table_9':
         admin_area = com_data['province']
         filter_fields = {'incident': incident, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident}
     else:
         admin_area = com_data['district']
         filter_fields = {'incident': incident, 'district': admin_area}

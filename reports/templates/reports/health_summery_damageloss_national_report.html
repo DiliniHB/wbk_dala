@@ -28,41 +28,50 @@
             <div class="card-block">
 
 
-                <div class="row">
+                <div class="row" ng-form name="report_sum_dl_national">
 
 
-                    <div class="form-group col-sm-3">
+                    <!--div class="form-group col-sm-3">
                         <label for="ccmonth">Province &nbsp;&nbsp;<label for="checkbox1">
                             <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> All
                         </label></label>
-                        <select id="ccyear" ng-model="district" class="form-control">
+                        <select id="ccyear" name="province" ng-model="district" class="form-control">
                             <option value="">-- Select --</option>
                             {% for province in provinces %}
                             <option value="{{ province.id }}">{{ province.name }}</option>
                             {% endfor %}
                         </select>
+                         <span ng-show="submitted && report_sum_dl_national.province.$error.required">
+                                       Please select Province
+                                 </span>
                     </div>
 
-                    <div class="form-group col-sm-3">
+                    <!--div class="form-group col-sm-3">
                         <label for="ccyear">District</label>
-                        <select id="ccyear" ng-model="district" class="form-control">
+                        <select id="ccyear" name="district" ng-model="district" class="form-control">
                             <option value="">-- Select --</option>
                             {% for district in districts %}
                             <option value="{{ district.id }}">{{ district.name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                        <span ng-show="submitted && report_sum_dl_national.incident.$error.required">
+                                       Please select Incident
+                                 </span>
+                    </div-->
 
                     <div class="col-sm-3">
 
                         <div class="form-group">
                             <label for="cvv">Disaster Type</label>
-                             <select id="ccyear" ng-model="incident" class="form-control">
+                             <select id="ccyear" name="incident" ng-model="incident" class="form-control" required>
                             <option value="">-- Select --</option>
                             {% for incident in incidents %}
                             <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
                             {% endfor %}
                         </select>
+                             <span ng-show="submitted && report_sum_dl_national.incident.$error.required">
+                                       Please select Incident
+                                 </span>
                         </div>
 
                     </div>
@@ -72,7 +81,7 @@
 
                         <div class="form-group">
 
-                            <button ng-click="filterData()"  type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i
+                            <button ng-click="filterData(report_sum_dl_national)"  type="button" class="btn btn-sm btn-primary" style="padding:7px;margin-top:28px;"><i
                                     class="fa fa-search"></i> Search
                             </button>
                         </div>

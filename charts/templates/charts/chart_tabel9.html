@@ -50,33 +50,37 @@ a:hover {text-decoration:none;}
             <div class="card-block">
 
 
-                <div class="row">
+                <div class="row" ng-form name="chart_sum_dl_province">
 
 
 
 
                     <div class="form-group col-sm-3">
                         <label for="ccyear">Province</label>
-                         <select id="ccyear" ng-model="province" class="form-control">
+                         <select id="ccyear" name="province" ng-model="province" class="form-control" required>
                             <option value="">-- Select --</option>
                             {% for province in provinces %}
                             <option value="{{ province.id }}">{{ province.name }}</option>
                             {% endfor %}
                         </select>
+                        <span ng-show="submitted && chart_sum_dl_province.province.$error.required">
+                             Please select District
+                        </span>
                     </div>
 
                     <div class="col-sm-3">
 
                         <div class="form-group">
                             <label for="cvv">Disaster Type</label>
-                            <select id="ccyear" ng-model="incident" class="form-control">
-                                <option value="">-- Select --</option>
-                                {% for incident in incidents %}
-                                <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{
-                                    incident.disaster_type }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <select id="ccyear" ng-model="incident" name="incident" class="form-control" required>
+                            <option value="">-- Select --</option>
+                            {% for incident in incidents %}
+                            <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
+                            {% endfor %}
+                        </select>
+                            <span ng-show="submitted && chart_sum_dl_province.incident.$error.required">
+                                       Please select Incident
+                            </span>
                         </div>
 
                     </div>
@@ -86,7 +90,7 @@ a:hover {text-decoration:none;}
 
                         <div class="form-group">
 
-                            <button ng-click="generateCharts()" type="button" class="btn btn-sm btn-primary"
+                            <button ng-click="generateCharts(chart_sum_dl_province)" type="button" class="btn btn-sm btn-primary"
                                     style="padding:7px;margin-top:28px;"><i
                                     class="fa fa-search"></i> Search
                             </button>
@@ -103,6 +107,7 @@ a:hover {text-decoration:none;}
             <div class="card-columns col-2">
                 <div class="card">
                     <div class="card-header">
+                        Damage and Losses
                         Public Sector - Line Ministry Health System
 
                     </div>
@@ -161,7 +166,104 @@ a:hover {text-decoration:none;}
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-header">
+                        Total number of health facilities and assets affected
+                        Public Sector - Line Ministry Health System
 
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPubDnLmhTotAfc' api="api6"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card">
+                    <div class="card-header">
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPubDnMohTotAfc' api="api7"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - Other Medical Facilities
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPubDnOmcTotAfc' api="api8"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Private Sector
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPvtDnTotAfc' api="api9"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Total number of patients affected
+                        Public Sector - Line Ministry Health System
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPubDnLmhTotPaAfc' api="api10"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPubDnMohTotPaAfc' api="api11"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - Other Medical Facilities
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPubDnOmcTotPaAfc' api="api12"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Private Sector
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPvtDnTotPaAfc' api="api13"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
