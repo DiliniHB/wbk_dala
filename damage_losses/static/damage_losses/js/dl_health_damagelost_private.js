@@ -3,8 +3,13 @@ var app = angular.module('dlHealthDamagelostPrivateApp', [])
 app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', function($scope, $http) {
     $scope.district;
     $scope.dlDate;
+    $scope.incident;
+    $scope.submitted = false;
+    $scope.Districts=[];
 
-    $scope.dlHealthDamagelostPrivateSys = {
+    $scope.is_edit = false;
+
+    var init_data = {
         'Table_7': {
             //tab 1
             'DapNapTmf' : [{
@@ -134,8 +139,12 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
         }
     }
 
-    $scope.saveDlHealthDamagelostPrivate = function() {
+    $scope.dlHealthDamagelostPrivateSys = init_data;
+
+    $scope.saveDlHealthDamagelostPrivate = function(form) {
         console.log($scope.data);
+        $scope.submitted = true;
+       if(form.$valid){
         $http({
             method : 'POST',
             url : '/damage_losses/dl_save_data',
@@ -143,10 +152,11 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
             data: angular.toJson({
                 'table_data': $scope.dlHealthDamagelostPrivateSys,
                 'com_data':{
-                    'district': 3,
-                    'incident': 9
+                    'district': $scope.district,
+                    'dl_date': $scope.dlDate,
+                    'incident': $scope.incident,
                 },
-                'is_edit':false
+                'is_edit': $scope.is_edit
             }),
             dataType: 'json',
         }).then(function mySucces(response) {
@@ -156,5 +166,56 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
                 //if data sent to server side method unsuccessfull
                 console.log(response);
         });
+        }
     }
+
+    $scope.dlDataEdit = function(form){
+        $scope.is_edit = true;
+        $scope.submitted = true;
+
+    if(form.$valid){
+
+        $http({
+        method: "POST",
+        url: '/damage_losses/dl_fetch_edit_data',
+        data: angular.toJson({
+        'table_name':  'Table_7',
+        'com_data': {
+               'district': $scope.district,
+                'incident': $scope.incident,
+              },
+//               'is_edit':$scope.is_edit
+               }),
+        }).success(function(data) {
+
+        console.log(data);
+
+        $scope.dlHealthDamagelostPrivateSys = data;
+        })
+        }
+    }
+
+    $scope.cancelEdit = function() {
+         $scope.is_edit = false;
+         $scope.dlHealthDamagelostPrivateSys = init_data;
+    }
+
+    $scope.changeIncident = function getDistrictData()
+    {
+
+
+    $scope.Districts  = [
+
+            {  Id: 1,
+                Name: 'Colombo'
+            }, {
+                Id: 2,
+                Name: 'Gampaha'
+            }, {
+                Id: 3,
+                Name: 'Kaluthara'
+            }
+              ]
+
+  }
 }])

@@ -32,12 +32,23 @@ def health_damagelost_ministry_helth(request):
     return render(request, 'damage_losses/health_damagelost_ministry_helth.html', context)
 
 
+# def health_damagelost_private(request):
+#     districts = District.objects.all()
+#     provinces = Province.objects.all()
+#     context = {
+#         'districts': districts,
+#         'provinces': provinces,
+#     }
+#     return render(request, 'damage_losses/health_damagelost_private.html', context)
+
 def health_damagelost_private(request):
     districts = District.objects.all()
     provinces = Province.objects.all()
+    incidents = IncidentReport.objects.all()
     context = {
         'districts': districts,
         'provinces': provinces,
+        'incidents': incidents,
     }
     return render(request, 'damage_losses/health_damagelost_private.html', context)
 
