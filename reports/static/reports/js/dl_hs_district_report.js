@@ -224,6 +224,22 @@ if(form.$valid){
 }
 }
 
+$scope.districts = [];
+$scope.fetchDistricts = function fetchDistricts(incident_id)
+{
+    $http({
+    method: "POST",
+    url: "/damage_losses/fetch_incident_districts",
+    data: angular.toJson({'incident': $scope.incident }),
+    }).success(function(data) {
+        $scope.districts = data;
+        $scope.district = "";
+        console.log(data);
+
+    })
+
+}
+
  }])
 
 

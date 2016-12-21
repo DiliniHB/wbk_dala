@@ -90,8 +90,8 @@ if(form.$valid){
           'bs_date': $scope.bs_date}, 'is_edit': $scope.is_edit }),
     }).success(function(data) {
 
-    console.log(data);
-    console.log(($scope.dataHealthStatus));
+     $scope.dataHealthStatus = init_data;
+     $scope.is_edit = false;
 
  })
  }
@@ -154,6 +154,16 @@ $scope.cancelEdit = function()
 {
     $scope.is_edit = false;
     $scope.dataHealthStatus = init_data;
+}
+
+$scope.removeItem = function removeItem(table, index)
+{
+if(table == 'BhsComDiseases')
+    $scope.dataHealthStatus.Table_1.BhsComDiseases.splice(index,1);
+else if(table == 'BhsVi')
+    $scope.dataHealthStatus.Table_1.BhsVi.splice(index,1);
+else if(table == 'BhsOi')
+    $scope.dataHealthStatus.Table_1.BhsOi.splice(index,1);
 }
 
 

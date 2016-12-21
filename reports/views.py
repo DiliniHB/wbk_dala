@@ -7,12 +7,15 @@ from django.apps import apps
 from django.conf import settings
 import json
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from users.decorators import super_user_permission
 
 
+@super_user_permission()
 def index_report(request):   
     return render(request, 'reports/index_report.html')
 
 
+@super_user_permission()
 def index_chart(request):   
     return render(request, 'reports/index_chart.html')
 

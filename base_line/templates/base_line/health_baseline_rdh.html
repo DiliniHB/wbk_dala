@@ -194,7 +194,8 @@
                                 </td>
                                 <td width="98" ng-if="$index > 1">
                                     {% verbatim %}
-                                  <button id="delete" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>  <input style="width:90%;float:right;" name="comDisease_{{$index}}" ng-model="comDisease.com_disease"
+                                  <button id="delete" ng-click="removeItem('BhsComDiseases', $index)" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>
+                                    <input style="width:90%;float:right;" name="comDisease_{{$index}}" ng-model="comDisease.com_disease"
                                            popover="This field is required"
                                            popover-toggle="form_pop_lat_census['comDisease_' + $index].$dirty && !form_pop_lat_census['comDisease_' + $index].$valid"
                                            popover-placement="top" required
@@ -256,7 +257,8 @@
                                 </td>
                                 <td width="98" ng-if="$index > 1">
                                     {% verbatim %}
-                                 <button id="delete" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>   <input style="width:90%;float:right;" ng-model="vitalIndicator.vital_indicators"
+                                 <button id="delete" ng-click="removeItem('BhsVi', $index)" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>
+                                    <input style="width:90%;float:right;" ng-model="vitalIndicator.vital_indicators"
                                            popover="This field is required" required
                                            popover-toggle="form_pop_lat_census['vitalIndicator_' + $index].$dirty && !form_pop_lat_census['vitalIndicator_' + $index].$valid"
                                            name="vitalIndicator_{{$index}}" type="text" placeholder=""
@@ -316,7 +318,8 @@
                                 </td>
                                 <td width="264" height="20" ng-if="$index > 1">
                                     {% verbatim %}
-                                 <button id="delete" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>   <input style="width:90%;float:right;" ng-model="otherIndicator.other_indicators"
+                                 <button id="delete" ng-click="removeItem('BhsOi', $index)" class="btn btn-sm btn-danger btn-circle" ><i class="fa fa-minus"></i></button>
+                                    <input style="width:90%;float:right;" ng-model="otherIndicator.other_indicators"
                                            name="otherIndicator_{{$index}}" type="text" placeholder=""
                                            popover="This field is required"
                                            popover-toggle="form_pop_lat_census['otherIndicator_' + $index].$dirty && !form_pop_lat_census['otherIndicator_' + $index].$valid"

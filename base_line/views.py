@@ -73,12 +73,6 @@ def fetch_incidents(user):
     return incidents
 
 
-def fetch_district_incident(incident_id):
-    incident = IncidentReport.objects.get(pk=incident_id)
-    affected_district = incident.effectedarea_set.all().distinct()
-    return affected_district
-
-
 def bs_health_information_health_status(request):
     districts = District.objects.all()
     context = {

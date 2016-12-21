@@ -449,6 +449,22 @@ $scope.submit = function submit()
 
 }
 
+$scope.provinces = [];
+$scope.fetchProvinces = function fetchProvinces(incident_id)
+{
+    $http({
+    method: "POST",
+    url: "/damage_losses/fetch_incident_provinces",
+    data: angular.toJson({'incident': $scope.incident }),
+    }).success(function(data) {
+        $scope.provinces = data;
+        $scope.province = "";
+        console.log(data);
+
+    })
+
+}
+
  }])
 
 
