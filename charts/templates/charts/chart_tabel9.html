@@ -1,0 +1,173 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<style>
+a:hover {text-decoration:none;}
+.chart {
+    background: #eee;
+    padding: 3px;
+}
+
+.chart div {
+  width: 0;
+  transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -webkit-transition: all 1s ease-out;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 5px;
+  color: white;
+  box-shadow: 2px 2px 2px #666;
+}
+
+</style>
+
+<!-- Main content -->
+<main class="main" ng-app="dlHsProvinceChartApp" ng-controller="DlHsProvinceChartController">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item"><a href="#">Admin</a>
+        </li>
+        <li class="breadcrumb-item active">Health Sector</li>
+
+
+    </ol>
+
+
+    <div class="container-fluid">
+
+        <div class="card">
+            <div class="card-header">
+                <strong>Search</strong>
+
+            </div>
+            <div class="card-block">
+
+
+                <div class="row">
+
+
+
+
+                    <div class="form-group col-sm-3">
+                        <label for="ccyear">Province</label>
+                         <select id="ccyear" ng-model="province" class="form-control">
+                            <option value="">-- Select --</option>
+                            {% for province in provinces %}
+                            <option value="{{ province.id }}">{{ province.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-sm-3">
+
+                        <div class="form-group">
+                            <label for="cvv">Disaster Type</label>
+                            <select id="ccyear" ng-model="incident" class="form-control">
+                                <option value="">-- Select --</option>
+                                {% for incident in incidents %}
+                                <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{
+                                    incident.disaster_type }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-2">
+
+                        <div class="form-group">
+
+                            <button ng-click="generateCharts()" type="button" class="btn btn-sm btn-primary"
+                                    style="padding:7px;margin-top:28px;"><i
+                                    class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--/row-->
+            </div>
+        </div>
+
+        <div class="animated fadeIn">
+            <div class="card-columns col-2">
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - Line Ministry Health System
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                              <nvd3 id="line_chart" options='options' data='dspPubDnLmhDl' api="api1"
+                                    config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                             <nvd3 id="line_chart" options='options' data='dspPubDnMohDl' api="api2"
+                                      config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Public Sector - Other Medical Facilities
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                           <nvd3 id="line_chart" options='options' data='dspPubDnOmcDl' api="api3"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Private Sector
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPvtDn' api="api4"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div><div class="card">
+                    <div class="card-header">
+                        Ownership
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                                <nvd3 id="line_chart" options='options' data='dspTdlOwship' api="api5"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- /.conainer-fluid -->
+    <!-- /.conainer-fluid -->
+</main>
+{% endblock content %}
