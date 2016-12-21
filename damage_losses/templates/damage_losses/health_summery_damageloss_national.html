@@ -10,6 +10,7 @@
     
   });
   
+
 </script>
 
 <!-- Main content -->
@@ -23,7 +24,7 @@
         </li>
         <li class="breadcrumb-item"><a href="#">Health Sector</a>
         </li>
-        
+
         <li class="breadcrumb-item active"><span class="label label-success" style="font-size:14px;">Table 10: Summary of Damage and Losses in the Health Sector Nationwide</span>
         </li>
 
@@ -44,36 +45,37 @@
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;" ng-form name="form_health_summary_damageloss_nationals">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;" ng-form
+                           name="form_health_summary_damageloss_nationals">
                         <colgroup>
                             <col width="202"/>
                             <col width="90" span="7"/>
                         </colgroup>
                         <tbody>
 
-<tr style="background:#fff;border:1px solid #fff;text-align:center;">
-<td style="background:#fff;border:1px solid #fff;text-align:center;">
+                        <tr style="background:#fff;border:1px solid #fff;text-align:center;">
+                            <td style="background:#fff;border:1px solid #fff;text-align:center;">
 
-</td>
-<td colspan="3" style="background:#fff;border:1px solid #fff;text-align:center;">
+                            </td>
+                            <td colspan="3" style="background:#fff;border:1px solid #fff;text-align:center;">
  <span class="arrow_box" ng-show="submitted && form_health_summary_damageloss_nationals.incident.$error.required">
                                 Please select Incident
                                 </span>
-</td>
+                            </td>
 
-<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
-</td>
-<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
-  <span class="arrow_box" ng-show="submitted && form_health_summary_damageloss_nationals.district.$error.required">
-                                Please select District
-                                </span>
-</td>
-</tr>
-			
+                            <td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+                            </td>
+                            <!--<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">-->
+  <!--<span class="arrow_box" ng-show="submitted && form_health_summary_damageloss_nationals.district.$error.required">-->
+                                <!--Please select District-->
+                                <!--</span>-->
+                            <!--</td>-->
+                        </tr>
 
-                        <tr class="trhead" >
 
-                            <td  style="padding-left:5px;">
+                        <tr class="trhead">
+
+                            <td style="padding-left:5px;">
                                 Incident
                             </td>
                             <td colspan="3" style="background:#EFEFEF;">
@@ -92,35 +94,63 @@
                                     {% endfor %}
 
                                 </select>
-                               
+
                             </td>
+                            <!--<td colspan="2" width="202" style="padding-left:5px;"> Name of Province</td>-->
 
-                            <td colspan="2" width="202" style="padding-left:5px;"> Name of Province</td>
+                            <!--<td colspan="2" style="background:#EFEFEF;">-->
+                            <!--&lt;!&ndash;<select id="selectbasic" name="district" ng-model="district"&ndash;&gt;-->
+                            <!--&lt;!&ndash;class="form-control"&ndash;&gt;-->
+                            <!--&lt;!&ndash;style="width:100%;font-weight:400;"&ndash;&gt;-->
+                            <!--&lt;!&ndash;ng-change="changedValue(district)" required>&ndash;&gt;-->
 
-                            <td colspan="2" style="background:#EFEFEF;">
-                               <!--<select id="selectbasic" name="district" ng-model="district"-->
-                                        <!--class="form-control"-->
-                                        <!--style="width:100%;font-weight:400;"-->
-                                        <!--ng-change="changedValue(district)" required>-->
+                            <!--&lt;!&ndash;<option value="" selected="true">Select a District</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;{% for district in districts %}&ndash;&gt;-->
 
-                                    <!--<option value="" selected="true">Select a District</option>-->
-                                    <!--{% for district in districts %}-->
+                            <!--&lt;!&ndash;<option value={{district.id}}>{{district.name}}</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;{% endfor %}&ndash;&gt;-->
 
-                                    <!--<option value={{district.id}}>{{district.name}}</option>-->
-                                        <!--{% endfor %}-->
+                            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<select ng-model="district" name="district"&ndash;&gt;-->
+                            <!--&lt;!&ndash;ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"&ndash;&gt;-->
+                            <!--&lt;!&ndash;required >&ndash;&gt;-->
+                            <!--&lt;!&ndash;<option value="">Select District</option>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span ng-show="submitted && form_health_summary_damageloss_nationals.district.$error.required">&ndash;&gt;-->
+                            <!--&lt;!&ndash;Please select District&ndash;&gt;-->
+                            <!--&lt;!&ndash;</span>&ndash;&gt;-->
 
+                            <!--</td>-->
+
+                            <!--<td colspan="2" width="202" style="padding-left:5px;"> Name of Province</td>-->
+
+                            <!--<td colspan="2" style="background:#EFEFEF;">-->
+                                <!--&lt;!&ndash;<select id="selectbasic" name="district" ng-model="district"&ndash;&gt;-->
+                                <!--&lt;!&ndash;class="form-control"&ndash;&gt;-->
+                                <!--&lt;!&ndash;style="width:100%;font-weight:400;"&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-change="changedValue(district)" required>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<option value="" selected="true">Select a District</option>&ndash;&gt;-->
+                                <!--&lt;!&ndash;{% for district in districts %}&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<option value={{district.id}}>{{district.name}}</option>&ndash;&gt;-->
+                                <!--&lt;!&ndash;{% endfor %}&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                <!--<select class="form-control" style="width:100%;font-weight:400;" ng-model="district"-->
+                                        <!--name="district"-->
+                                        <!--ng-options="district.Name for district in Districts track by district.Id "-->
+                                        <!--ng-change="changedValue()"-->
+                                        <!--required>-->
+                                    <!--<option value="">Select District</option>-->
                                 <!--</select>-->
-                                <select class="form-control" style="width:100%;font-weight:400;" ng-model="district" name="district"
-                                        ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"
-                                        required >
-                                       <option value="">Select District</option>
-                                </select>
-                               
 
-                            </td>
+
+                            <!--</td>-->
+
                         </tr>
 
-                        <tr  height="34" class="trheadc">
+                        <tr height="34" class="trheadc">
                             <td rowspan="2" width="244" height="54" style="text-align:left;padding-left:5px;">
                                 Facilities and Assets
                             </td>
@@ -158,7 +188,7 @@
                     </table>
                     <div style="height:400px;overflow:auto;" id="boxscroll1">
                         <table class="table table-bordered">
-				
+
                             <tr height="20" class="trhead">
                                 <td width="202" height="20" class="trhead">
                                     Province 1
@@ -2309,7 +2339,8 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
+                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private
+                            Sector
                             Informations</a>
                     </div>
 
@@ -2838,7 +2869,8 @@
                             </tbody>
                         </table>
                         <br>
-                        <a href='#step3' id="s2" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Total Damages
+                        <a href='#step3' id="s2" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Total
+                            Damages
                             and Losses Informations</a>
 
                     </div>
@@ -2994,13 +3026,14 @@
                             <!--button type="button" class="btn btn-success" ng-click="SaveData()">Submit</button-->
                             <!--new-->
 
-                            <button type="button" ng-click="dlDataEdit(form_health_summary_damageloss_nationals)" ng-if="!is_edit" class="btn btn-success">
+                            <button type="button" ng-click="dlDataEdit(form_health_summary_damageloss_nationals)"
+                                    ng-if="!is_edit" class="btn btn-success">
                                 Edit
                             </button>
                             <button type="button" ng-click="cancelEdit()" ng-if="is_edit" class="btn btn-warning">Cancel
                                 Edit
                             </button>
-                            <button type="button"  ng-click="saveDlData(form_health_summary_damageloss_nationals)"
+                            <button type="button" ng-click="saveDlData(form_health_summary_damageloss_nationals)"
                                     class="btn btn-success">Submit
                             </button>
                         </div>

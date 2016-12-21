@@ -5,6 +5,7 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
  $scope.district;
  $scope.incident;
  $scope.dl_data={};
+ $scope.is_edit=false;
  $scope.submitted = false;
   $scope.Districts=[];
  //bind Disasteroption
@@ -227,7 +228,7 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
             data: angular.toJson({
                 'table_data': $scope.dlhealthsectordistrict,
                 'com_data': {
-                    'district': $scope.district,
+                    'district': $scope.district.Id,
                     'incident' : $scope.incident,
 
 
@@ -271,8 +272,10 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
                 'com_data': {
                     'district': $scope.district.Id,
                     'incident': $scope.incident,
-                    'is_edit': false,
+
                 }
+
+
             }),
         dataType: 'json',
         }).then(function successCallback(response) {

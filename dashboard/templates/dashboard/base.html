@@ -160,7 +160,7 @@ $('#s4').on('click', function(){
  <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="icon-speedometer"></i> Dashboard </a>
+                    <a class="nav-link"href="{% url 'dashboard:index' %}"><i class="icon-speedometer"></i> Dashboard </a>
                 </li>
 
                 <li class="nav-title">
@@ -173,7 +173,7 @@ $('#s4').on('click', function(){
                             <a class="nav-link" href="{% url 'base_line:bs_health_status' %}"> Health Status in a District or RDH</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'base_line:bs_medical_facilities' %}"> Medical Facilities in a District</a>
+                            <a class="nav-link" href="{% url 'base_line:bs_health_medical_facilities' %}"> Medical Facilities in a District</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'base_line:bs_health_info_unit_cost_ministry_health' %}"> Unit Cost of the Ministry Health System in a District</a>
@@ -222,7 +222,7 @@ $('#s4').on('click', function(){
                     <a class="nav-link" href="{% url 'reports:index_report' %}"><i class="icon-speedometer"></i> Report </a>
                 </li>
 		 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'reports:index_chart' %}"><i class="icon-speedometer"></i> Chart</a>
+                    <a class="nav-link" href="{% url 'charts:index_chart' %}"><i class="icon-speedometer"></i> Chart</a>
                 </li>	
             </ul>
         </nav>

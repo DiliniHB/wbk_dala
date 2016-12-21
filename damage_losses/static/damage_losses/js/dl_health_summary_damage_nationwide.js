@@ -2,7 +2,7 @@ var app = angular.module('dlHealthSummaryDamageNationwideApp', []);
 
 app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',function ($scope,$http) {
 
- $scope.district;
+
  $scope.incident;
  $scope.dl_data={};
  $scope.is_edit = false;
@@ -421,7 +421,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
             data: angular.toJson({
                 'table_data': $scope.dlhealthsummarydamagenationwide,
                 'com_data': {
-                    'district': $scope.district,
+
                     'incident' : $scope.incident,
                 },
                 'is_edit':$scope.is_edit
@@ -446,12 +446,8 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
     $scope.changedValue = function getDlData()
     {
 
+
         if($scope.incident){
-
-        getDistrictData();
-        }
-
-        if($scope.district && $scope.incident){
         console.log($scope.district);
         console.log($scope.incident);
         $http({
@@ -459,9 +455,11 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
         url: '/damage_losses/dl_get_data',
         contentType: 'application/json; charset=utf-8',
         data: angular.toJson({
-                'db_tables': ['DspPubD1Lmh','DspPubDnLmh','DspPubDnMoh','DspPubD1Moh','DspPubD1Omc','DspPubDnOmc','DspPvtD1','DspPvtDn'],
+//                'db_tables': ['DspPubD1Lmh','DspPubDnLmh','DspPubDnMoh','DspPubD1Moh','DspPubD1Omc','DspPubDnOmc','DspPvtD1','DspPvtDn'],
+                'table_name': 'Table_10',
+                'db_tables': ['DspPubD1LmhNational','DspPubDnLmhNational','DspPubDnMohNational','DspPubD1MohNational','DspPubD1OmcNational','DspPubDnOmcNational','DspPvtD1National','DspPvtDnNational'],
                 'com_data': {
-                    'district': $scope.district.Id,
+
                     'incident': $scope.incident,
                 }
             }),
@@ -497,9 +495,9 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
     method: "POST",
     url: '/damage_losses/dl_fetch_edit_data',
     data: angular.toJson({
-    'table_name':  'Table_1null',
+    'table_name':  'Table_10',
     'com_data': {
-           'district': $scope.district,
+
             'incident': $scope.incident,
           },
            'is_edit':$scope.is_edit
@@ -525,24 +523,6 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
 
 
 
-    function getDistrictData()
-    {
-
-
-    $scope.Districts  = [
-
-            {  Id: 1,
-                Name: 'Colombo'
-            }, {
-                Id: 2,
-                Name: 'Gampaha'
-            }, {
-                Id: 3,
-                Name: 'Kaluthara'
-            }
-              ]
-
-  }
 
 
 }])

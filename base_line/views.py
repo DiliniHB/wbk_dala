@@ -8,7 +8,7 @@ import yaml
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.apps import apps
 import collections
-#from datetime import datetime, date
+# from datetime import datetime, date
 import datetime
 from django.utils import timezone
 from django.http import Http404
@@ -17,17 +17,9 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.conf import settings
 from users.decorators import permission_required
-#from db_tools import Datediff
 
 
-# render baseline health table
-def bs_medical_facilities(request):
-    districts = District.objects.all()
-
-    context = {
-        'districts': districts
-    }
-    return render(request, 'base_line/health_baseline_district.html', context)
+# from db_tools import Datediff
 
 
 # test method to save data to be integrated to API
@@ -96,10 +88,12 @@ def bs_health_information_health_status(request):
 
 
 # render baseline health table
+@permission_required("district")
 def bs_health_medical_facilities(request):
-    districts = District.objects.all()
+    fetch_data = fetch_districts(request.user)
+    districts = fetch_data['districts']
     context = {
-        'districts': districts
+    'districts': districts
     }
     return render(request, 'base_line/health_baseline_district.html', context)
 
@@ -113,15 +107,17 @@ def bs_health_info_unit_cost_ministry_health(request):
 
 
 # render baseline health unit cost table
+@permission_required("district")
 def bs_health_other_medical_facilities_unit_cost(request):
-    districts = District.objects.all()
+    fetch_data = fetch_districts(request.user)
+    districts = fetch_data['districts']
     context = {
         'districts': districts
     }
     return render(request, 'base_line/health_baseline_unitcost_othermedi_district.html', context)
 
 
-#dileepa
+# dileepa
 def medical_facilities(request):
     return render(request, 'base_line/health_baseline_district.html')
 
@@ -140,12 +136,12 @@ def ministry_health_system(request):
 @csrf_exempt
 def bs_save_hs_data_mock(request):
     bs_data = (yaml.safe_load(request.body))
-   
+
     bs_table_hs_data = bs_data['table_data']
     com_data = bs_data['com_data']
 
-    #bs_hs_data = json.loads('{"BhsPlc":[{"popMl_1":"345","popFm_1":"","popChUnder12_1":"","popElOver60_1":""}],"BhsComDiseases":[{"diarrheaComDMl_1":"dfg","diarrheaComDFm_1":"","diarrheaComChildren_1":"","diarrheaComElderly_1":""},{"dengueComDMl_1":"","dengueComDFm_1":"","dengueComDChildren_1":"","dengueComDElderly_1":""},{"othEnrComDMl_1":"","othEnrComDFm_1":"","othEnrComDChildren_1":"","othEnrComDElderly_1":""}],"BhsVi":[{"under5MrtRateViMl_1":"dfgh","under5MrtRateViFm_1":"","under5MrtRateViChildren_1":"","under5MrtRateViElderly_1":""},{"mrtRateViMl_1":"","mrtRateViFm_1":"","mrtRateViChildren_1":"","mrtRateViElderly_1":""},{"othEnrViMl_1":"","othEnrViFm_1":"","othEnrViChildren_1":"","othEnrViElderly_1":""}],"BhsOi":[{"crudeBirthRateOi_1":"sdf","maternalMrtRateOi_1":"","othsEnrOi_1":""}]}')
-    #bs_hs_data = (yaml.safe_load('{"Table_1":{"BhsPlc":[{"popMl_1":5,"popFm_1":3,"popChUnder12_1":5,"popElOver60_1":7}],"BhsComDiseases":[{"commonDisease":"Diarrhea","diarrheaComDMl_1":5,"diarrheaComDFm_1":6,"diarrheaComChildren_1":7,"diarrheaComElderly_1":8},{"commonDisease":"Dengue","dengueComDMl_1":8,"dengueComDFm_1":7,"dengueComDChildren_1":8,"dengueComDElderly_1":5},{"commonDisease":"Enumerate","othEnrComDMl_1":8,"othEnrComDFm_1":5,"othEnrComDChildren_1":9,"othEnrComDElderly_1":9}],"BhsVi":[{"vital_indicators":"Under-5 Mortality Rate","under5MrtRateViMl_1":3,"under5MrtRateViFm_1":3,"under5MrtRateViChildren_1":3,"under5MrtRateViElderly_1":3},{"vital_indicators":"Mortality Rate","mrtRateViMl_1":1,"mrtRateViFm_1":2,"mrtRateViChildren_1":2,"mrtRateViElderly_1":3},{"vital_indicators":"Enumerate","othEnrViMl_1":1,"othEnrViFm_1":1,"othEnrViChildren_1":1,"othEnrViElderly_1":1}],"BhsOi":[{"other_indicators":"Crude Birth Rate","crudeBirthRateOi_1":1},{"other_indicators":"Maternal Mortality Rate","maternalMrtRateOi_1":""},{"other_indicators":"Others","othsEnrOi_1":1}]}}'))
+    # bs_hs_data = json.loads('{"BhsPlc":[{"popMl_1":"345","popFm_1":"","popChUnder12_1":"","popElOver60_1":""}],"BhsComDiseases":[{"diarrheaComDMl_1":"dfg","diarrheaComDFm_1":"","diarrheaComChildren_1":"","diarrheaComElderly_1":""},{"dengueComDMl_1":"","dengueComDFm_1":"","dengueComDChildren_1":"","dengueComDElderly_1":""},{"othEnrComDMl_1":"","othEnrComDFm_1":"","othEnrComDChildren_1":"","othEnrComDElderly_1":""}],"BhsVi":[{"under5MrtRateViMl_1":"dfgh","under5MrtRateViFm_1":"","under5MrtRateViChildren_1":"","under5MrtRateViElderly_1":""},{"mrtRateViMl_1":"","mrtRateViFm_1":"","mrtRateViChildren_1":"","mrtRateViElderly_1":""},{"othEnrViMl_1":"","othEnrViFm_1":"","othEnrViChildren_1":"","othEnrViElderly_1":""}],"BhsOi":[{"crudeBirthRateOi_1":"sdf","maternalMrtRateOi_1":"","othsEnrOi_1":""}]}')
+    # bs_hs_data = (yaml.safe_load('{"Table_1":{"BhsPlc":[{"popMl_1":5,"popFm_1":3,"popChUnder12_1":5,"popElOver60_1":7}],"BhsComDiseases":[{"commonDisease":"Diarrhea","diarrheaComDMl_1":5,"diarrheaComDFm_1":6,"diarrheaComChildren_1":7,"diarrheaComElderly_1":8},{"commonDisease":"Dengue","dengueComDMl_1":8,"dengueComDFm_1":7,"dengueComDChildren_1":8,"dengueComDElderly_1":5},{"commonDisease":"Enumerate","othEnrComDMl_1":8,"othEnrComDFm_1":5,"othEnrComDChildren_1":9,"othEnrComDElderly_1":9}],"BhsVi":[{"vital_indicators":"Under-5 Mortality Rate","under5MrtRateViMl_1":3,"under5MrtRateViFm_1":3,"under5MrtRateViChildren_1":3,"under5MrtRateViElderly_1":3},{"vital_indicators":"Mortality Rate","mrtRateViMl_1":1,"mrtRateViFm_1":2,"mrtRateViChildren_1":2,"mrtRateViElderly_1":3},{"vital_indicators":"Enumerate","othEnrViMl_1":1,"othEnrViFm_1":1,"othEnrViChildren_1":1,"othEnrViElderly_1":1}],"BhsOi":[{"other_indicators":"Crude Birth Rate","crudeBirthRateOi_1":1},{"other_indicators":"Maternal Mortality Rate","maternalMrtRateOi_1":""},{"other_indicators":"Others","othsEnrOi_1":1}]}}'))
 
     for interface_table in bs_table_hs_data:
         print 'interface table', ' -->', interface_table, '\n'
@@ -163,18 +159,18 @@ def bs_save_hs_data_mock(request):
                 model_object.lmd = timezone.now()
                 model_object.district_id = com_data['district']
 
-
                 print 'row', ' --> ', row, '\n', ' object '
                 # for index, property in enumerate(row):
                 for index, property in enumerate(sorted(row)):
-                    #db_property = bs_hs_property_mapper[interface_table][db_table][index]
-                    #setattr(model_object, db_property, row[property])
+                    # db_property = bs_hs_property_mapper[interface_table][db_table][index]
+                    # setattr(model_object, db_property, row[property])
                     setattr(model_object, property, row[property])
 
                     print 'property ', ' --> ', property, ' db_property ', row[property], ' index ', '\n'
                     model_object.save()
 
     return HttpResponse(com_data['district'])
+
 
 # saving base line data
 @csrf_exempt
@@ -316,7 +312,8 @@ def bs_save_data(request):
             bs_full_date = datetime.date(int(bs_year), int(bs_month), 1)
 
             bd_session = BdSessionKeys(bs_date=com_data['bs_date'], table_name=interface_table,
-                                       date=todate, district_id=district, data_type='base_line', full_bs_date=bs_full_date)
+                                       date=todate, district_id=district, data_type='base_line',
+                                       full_bs_date=bs_full_date)
             bd_session.save()
 
     else:
@@ -344,7 +341,8 @@ def bs_get_data(request):
 
     for db_table in db_tables:
         model_class = apps.get_model('base_line', db_table)
-        bs_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(bs_date=bs_date).order_by('id'))
+        bs_mtable_data[db_table] = serializers.serialize('json',
+                                                         model_class.objects.filter(bs_date=bs_date).order_by('id'))
 
     return HttpResponse(
         json.dumps(bs_mtable_data),
@@ -402,7 +400,6 @@ def bs_get_data_mock(request):
 
 @csrf_exempt
 def bs_fetch_edit_data(request):
-
     data = (yaml.safe_load(request.body))
     table_name = data['table_name']
     com_data = data['com_data']
@@ -427,7 +424,6 @@ def bs_fetch_edit_data(request):
 
 @csrf_exempt
 def bs_save_edit_data(table_data, com_data):
-
     district = com_data['district']
     bs_date = com_data['bs_date']
 
@@ -438,14 +434,8 @@ def bs_save_edit_data(table_data, com_data):
             print 'db table', ' -->', db_table, '\n'
 
             for row in table_data[interface_table][db_table]:
-
                 model_class = apps.get_model('base_line', db_table)
                 model_object = model_class.objects.filter(bs_date=bs_date, district=district, id=row['id'])
                 model_object.update(**row)
 
                 print 'row', ' --> ', row, ' id ', model_object[0].id, '\n'
-
-
-
-
-

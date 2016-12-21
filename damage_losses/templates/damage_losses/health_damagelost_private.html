@@ -1,5 +1,15 @@
 +{% extends "dashboard/base.html" %}
 {% block content %}
+<script>
+  $(document).ready(function() {
+
+   var nicesx = $("#boxscroll1").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   
+   
+    
+  });
+  
+</script>
 <!--table 7-->
     <!-- Main content -->
     <main class="main" ng-app="dlHealthDamagelostPrivateApp" ng-controller="dlHealthDamagelostPrivateAppController">
@@ -21,8 +31,8 @@
 
          <div>
 			    <ul class='nav nav-wizard'>
-				    <li id="11" class="active"><a href='#step1' data-toggle="tab">1 Number of Affected Patients</a></li>
-				    <li><a href='#step2' data-toggle="tab">2 Breakdown by Type of Educational Facility</a></li>
+				    <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 Number of Affected Patients</a></li>
+				    <li id="li2"><a href='#step2' data-toggle="tab">2 Breakdown by Type of Educational Facility</a></li>
                    
 				    
 				   
@@ -37,8 +47,29 @@
         <col width="98" span="6"/>
     </colgroup>
     <tbody>
+
+<tr style="background:#fff;border:1px solid #fff;text-align:center;">
+<td colspan="1"  style="background:#fff;border:1px solid #fff;text-align:center;">
+
+</td>
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+  <span class="arrow_box" ng-show="submitted && form_health_damagelost_private.incident.$error.required">
+                                Please select Incident
+                                </span>
+</td>
+
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+</td>
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+  <span class="arrow_box" ng-show="submitted && form_health_damagelost_private.district.$error.required">
+                                Please select District
+                                </span>
+</td>
+</tr>
+
+
         <tr class="trhead">
-             <td colspan="3" style="padding-right:5px;text-align:right;">
+             <td  style="padding-left:5px;">
                 Incident
             </td>
             <td colspan="2" style="background:#EFEFEF;">
@@ -55,20 +86,16 @@
                                     {% endfor %}
 
                                 </select>
-                <span ng-show="submitted && form_health_damagelost_private.incident.$error.required">
-                                Please select Incident
-                                </span>
+               
             </td>
-            <td style="padding-left:5px;"> Name of District</td>
+            <td colspan="2" style="padding-left:5px;"> Name of District</td>
             <td colspan="2" style="background:#EFEFEF;">
-                <select ng-model="district" name="district"
+                <select class="form-control" style="width:100%;font-weight:400;" ng-model="district" name="district"
                                         ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"
                                         required >
-                                       <option value="">Select District"</option>
+                                       <option value="">Select District</option>
                                 </select>
-                                <span ng-show="submitted && form_health_damagelost_private.district.$error.required">
-                                Please select District
-                                </span>
+                               
             </td>
 
         </tr>
@@ -95,7 +122,7 @@
         </tr>
                                 </tbody>
                                 </table>
-                                <div style="height:400px;overflow:auto;">
+                                <div  style="height:400px;overflow:auto;">
     <table class="table table-bordered">
         <!--<tr height="20" ng-repeat="dapNapTmf in dlHealthDamagelostPrivateSys.Table_7.DapNapTmf">-->
             <!--<td width="264" ng-bind="dapNapTmf.type_med_fac" height="20" class="tdpa" >-->
@@ -158,13 +185,13 @@
                                         </tbody>
                                     </table>
                             <br>
-                            <a href="#step2" id="2" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span class="glyphicon glyphicon-arrow-right"></span> Fill Breakdown by Type of Educational Facility Informations</a>
+                            <a href="#step2" id="s1" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span class="glyphicon glyphicon-arrow-right"></span> Fill Breakdown by Type of Educational Facility Informations</a>
                             </div>
                             
                         </div>
                         
                         <div class="tab-pane" id="step2">
-                            <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;">
+                            <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
     <colgroup>
         <col width="264"/>
         <col width="98" span="6"/>
@@ -200,7 +227,7 @@
         </tr>
                                 </tbody>
                             </table>
-         <div style="height:400px;overflow:auto;">	
+         <div id="boxscroll1" style="height:400px;overflow:auto;">	
                                 <table class="table table-bordered">
                                     <tbody>
         <tr height="20" class="trheadc">

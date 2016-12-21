@@ -14,7 +14,7 @@
 </script>
 <!-- Main content -->
 <main class="main" ng-app="dsHealthDamagelostOtherMediApp" ng-controller="DsHealthDamagelostOtherMediController"
-      ng-init="init()">
+    >
 
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
@@ -81,7 +81,7 @@
                             <td colspan="3" style="background:#EFEFEF;">
 
                                 <select id="selectbasic" name="incident" ng-model="incident"
-                                        class="form-control" ng-change="changeIncident()"
+                                        class="form-control" ng-change="changedValue(incident)"
                                         style="width:100%;font-weight:400;" required >
 
                                     <option value="" selected="true">Select an Incident</option>
@@ -98,25 +98,16 @@
                             <td colspan="3" style="padding-left:5px;"> Name of District</td>
 
                             <td colspan="2" style="background:#EFEFEF;">
-                                <!--<select id="selectbasic" name="district" ng-model="district"-->
-                                <!--class="form-control"-->
-                                <!--style="width:100%;font-weight:400;" required>-->
 
-                                <!--<option value="" selected="true">Select a District</option>-->
-                                <!--{% for district in districts %}-->
-
-                                <!--<option value={{district.id}}>{{district.name}}</option>-->
-                                <!--{% endfor %}-->
-
-                                <!--</select>-->
+                               <select ng-model="district" name="district"
+                                        ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"
 
                                 <select class="form-control" style="width:100%;font-weight:400;" ng-model="district" name="district"
                                         ng-options="district.Name for district in Districts"
+
                                         required >
                                        <option value="">Select District</option>
                                 </select>
-
-
                                
                             </td>
                         </tr>
