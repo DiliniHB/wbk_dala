@@ -8,10 +8,33 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.core import serializers
 from django.conf import settings
+from users.decorators import permission_required
 
 
-def dl_health_damagelost_other_medical_facilities(request):
+def fetch_districts(user):
     districts = District.objects.all()
+    incidents = IncidentReport.objects.all()
+    if user.is_superuser:
+        return {'districts': districts, 'incidents': incidents}
+    else:
+        role = user.user_role.code_name
+
+        if role == 'district':
+            district_id = user.district_id
+            districts = District.objects.filter(id=district_id)
+            incidents = IncidentReport.objects.filter(effectedarea__district=district_id)
+        elif role == 'provincial':
+            province = user.province
+            districts = province.district_set.all()
+            incidents = IncidentReport.objects.filter(effectedarea__district__province=province).distinct()
+        incidents = IncidentReport.objects.all()
+        return {'districts': districts, 'incidents': incidents}
+
+
+@permission_required("district")
+def dl_health_damagelost_other_medical_facilities(request):
+    fetch_data = fetch_districts(request.user)
+    districts = fetch_data['districts']
     incidents = IncidentReport.objects.all()
 
     context = {
@@ -54,14 +77,14 @@ def health_damagelost_private(request):
 
 
 #Sachie
-def dl_health_other_medical_facilities(request):
-    districts = District.objects.all()
-    incidents = IncidentReport.objects.all()
-    context = {
-        'districts': districts,
-        'incidents': incidents,
-    }
-    return render(request, 'damage_losses/health_damagelost_other_medi.html', context)
+# def dl_health_other_medical_facilities(request):
+#     districts = District.objects.all()
+#     incidents = IncidentReport.objects.all()
+#     context = {
+#         'districts': districts,
+#         'incidents': incidents,
+#     }
+#     return render(request, 'damage_losses/health_damagelost_other_medi.html', context)
 
 
 def dl_health_summary_sector_district(request):
@@ -74,9 +97,11 @@ def dl_health_summary_sector_district(request):
     return render(request, 'damage_losses/health_summery_damageloss_dis.html', context)
 
 
+@permission_required("national")
 def dl_health_summary_damage_nationwide(request):
     districts = District.objects.all()
-    incidents = IncidentReport.objects.all()
+    fetch_data = fetch_districts(request.user)
+    incidents = fetch_data['incidents']
     context = {
         'districts': districts,
         'incidents': incidents,
@@ -138,16 +163,27 @@ def dl_save_data(request):
 @csrf_exempt
 def dl_get_data(request):
     data = (yaml.safe_load(request.body))
+    table_name = data['table_name']
     com_data = data['com_data']
     incident_id = com_data['incident']
-    district = com_data['district']
     db_tables = data['db_tables']
 
     dl_mtable_data = {}
+    filter_fields = {}
+
+    if table_name == 'Table_9':
+        admin_area = com_data['province']
+        filter_fields = {'incident': incident_id, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident_id}
+    else:
+        admin_area = com_data['district']
+        filter_fields = {'incident': incident_id, 'district': admin_area}
 
     for db_table in db_tables:
         model_class = apps.get_model('damage_losses', db_table)
-        dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident_id, district=district).order_by('id'))
+        #dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(incident=incident_id, district=district).order_by('id'))
+        dl_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(**filter_fields).order_by('id'))
 
     return HttpResponse(
         json.dumps(dl_mtable_data),
@@ -164,9 +200,13 @@ def dl_fetch_edit_data(request):
     incident = com_data['incident']
     tables = settings.TABLE_PROPERTY_MAPPER[table_name]
 
+    filter_fields = {}
+
     if table_name == 'Table_9':
         admin_area = com_data['province']
         filter_fields = {'incident': incident, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident}
     else:
         admin_area = com_data['district']
         filter_fields = {'incident': incident, 'district': admin_area}

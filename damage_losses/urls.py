@@ -13,8 +13,6 @@ urlpatterns = [
 
 
     #Dileepa and Sachie's
-    url(r'^dl_health_other_medical_facilities', views.dl_health_other_medical_facilities,
-        name='dl_health_other_medical_facilities'),
     url(r'^dl_health_summary_sector_district', views.dl_health_summary_sector_district,
         name='dl_health_summary_sector_district'),
     url(r'^dl_health_summary_damage_nationwide', views.dl_health_summary_damage_nationwide,

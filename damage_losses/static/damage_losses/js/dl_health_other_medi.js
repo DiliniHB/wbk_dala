@@ -608,7 +608,7 @@ $scope.district;
             data: angular.toJson({
                 'table_data': $scope.dlDataHealthDamagelostOtherMedicalFacilities,
                 'com_data': {
-                    'district': $scope.district,
+                    'district': $scope.district.Id,
                     'incident': $scope.incident,
 
                 },
@@ -629,13 +629,26 @@ $scope.district;
 
 
     // get relevant base-line data for calculations
-    function getBsData() {
+    $scope.changedValue=function getBsData() {
+
+
+        if($scope.incident){
+
+        getDistrictData();
+        }
+
+        if($scope.district && $scope.incident){
+
         $http({
             method: 'POST',
             url: '/base_line/bs_get_data',
             contentType: 'application/json; charset=utf-8',
             data: angular.toJson({
               'db_tables': ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets'],
+               'com_data': {
+                    'district': $scope.district.Id,
+                    'incident': $scope.incident,
+                    }
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -651,11 +664,8 @@ $scope.district;
             console.log(response);
         });
     }
-
-
-    $scope.init = function init() {
-      getBsData();
     }
+
 
  // edit relevant damage_losses data
 
@@ -674,7 +684,7 @@ $scope.district;
     data: angular.toJson({
     'table_name':  'Table_6',
     'com_data': {
-           'district': $scope.district,
+           'district': $scope.district.Id,
             'incident': $scope.incident,
           },
            'is_edit':$scope.is_edit
@@ -698,7 +708,7 @@ $scope.district;
      $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
 }
 
- $scope.changeIncident = function getDistrictData()
+function getDistrictData()
     {
 
 
