@@ -1,5 +1,15 @@
 {% extends "dashboard/base.html" %}
 {% block content %}
+<script>
+  $(document).ready(function() {
+
+   var nicesx = $("#boxscroll1").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   var nicesx = $("#boxscroll2").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   
+    
+  });
+  
+</script>
 <!-- Main content -->
 <main class="main" ng-app="dlHealthSectorDistrictApp" ng-controller="DlHealthSectorDistrictController">
 
@@ -22,24 +32,44 @@
 
         <div>
             <ul class='nav nav-wizard'>
-                <li class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-                <li><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                <li><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
+                <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
+                <li id="li2"><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
+                <li id="li3"><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
 
 
             </ul>
 
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
-                    <table class="table table-bordered" style="width:98.3%;background:#E4E5E6;" ng-form name="form_health_summary_damageloss_dis">
+                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;" ng-form name="form_health_summary_damageloss_dis">
                         <colgroup>
                             <col width="264"/>
                             <col width="98" span="7"/>
                         </colgroup>
                         <tbody>
+
+		<tr style="background:#fff;border:1px solid #fff;text-align:center;">
+<td style="background:#fff;border:1px solid #fff;text-align:center;">
+
+</td>
+<td colspan="3" style="background:#fff;border:1px solid #fff;text-align:center;">
+ <span class="arrow_box" ng-show="submitted && form_health_summary_damageloss_dis.incident.$error.required">
+                                Please select Incident
+                                </span>
+</td>
+
+<td colspan="2" style="background:#fff;border:1px solid #fff;text-align:center;">
+</td>
+<td colspan="3" style="background:#fff;border:1px solid #fff;text-align:center;">
+  <span class="arrow_box" ng-show="submitted && form_health_summary_damageloss_dis.district.$error.required">
+                                Please select District
+                                </span>
+</td>
+</tr>
+
                         <tr class="trhead">
 
-                            <td style="padding-right:5px;text-align:right;">
+                            <td style="padding-left:5px;">
                                 Incident
                             </td>
                             <td colspan="3" style="background:#EFEFEF;">
@@ -56,9 +86,7 @@
                                         {{incident.reported_date_time}}</option>
                                         {% endfor %}
                                 </select>
-                                <span ng-show="submitted && form_health_summary_damageloss_dis.incident.$error.required">
-                                Please select Incident
-                                </span>
+                               
                             </td>
                             <td colspan="2"  style="padding-left:5px;"> Name of District</td>
 
@@ -75,14 +103,12 @@
                                         <!--{% endfor %}-->
 
                                 <!--</select>-->
-                                <select ng-model="district" name="district"
+                                <select class="form-control" style="width:100%;font-weight:400;" ng-model="district" name="district"
                                         ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"
                                         required >
                                        <option value="">Select District"</option>
                                 </select>
-                                <span ng-show="submitted && form_health_summary_damageloss_dis.district.$error.required">
-                                Please select District
-                                </span>
+                               
 
                             </td>
                         </tr>
@@ -123,7 +149,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div style="height:400px;overflow:auto;">
+                    <div id="boxscroll1" style="height:400px;overflow:auto;">
                         <table class="table table-bordered">
                             <tr height="20" class="trhead">
                                 <td width="264" height="20" style="padding-left:5px;">
@@ -1223,7 +1249,7 @@
 
                         </table>
                         <br>
-                        <a href='#step2' data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
+                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> Fill Private Sector
                             Informations</a>
                     </div>
                 </div>
@@ -1473,7 +1499,7 @@
                         </tbody>
                     </table>
                     <br>
-                    <a href="#step3" id="3" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
+                    <a href="#step3" id="s2" class="btn btn-sm btn-info pull-right" data-toggle="tab"><span
                             class="glyphicon glyphicon-arrow-right"></span> Fill Total Damages and Losses
                         Informations</a>
 
