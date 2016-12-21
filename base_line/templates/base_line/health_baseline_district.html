@@ -2,6 +2,19 @@
 {% load static %}
 
 {% block content %}
+
+
+<script>
+  $(document).ready(function() {
+
+   var nicesx = $("#boxscroll").niceScroll({touchbehavior:false,cursorcolor:"#4679B2",cursoropacitymax:0.6,cursorwidth:8});
+   
+   
+    
+  });
+  
+</script>
+
 <!-- Main content -->
 
 <main class="main" ng-app="bsPubMedicalFacilitiesApp" ng-controller="BsPubMedicalFacilitiesController">
@@ -36,10 +49,28 @@
                             <col width="98" span="3"/>
                         </colgroup>
                         <tbody>
+<tr style="background:#fff;border:1px solid #fff;text-align:center;">
+<td  style="background:#fff;border:1px solid #fff;text-align:center;" border="0" >
 
+</td>
+
+<td colspan="1"  style="background:#fff;border:1px solid #fff;text-align:center;">
+<span class="arrow_box" ng-show="submitted && form_health_baseline_district.district.$error.required">
+                                Please select District
+                                </span>
+</td>
+<td colspan="1" style="background:#fff;border:1px solid #fff;text-align:center;">
+</td>
+
+<td colspan="1" style="background:#fff;border:1px solid #fff;text-align:center;">
+<span class="arrow_box" ng-show="submitted && form_health_baseline_district.baselineDate.$error.required">
+                                    Please select Date
+                                   </span>
+</td>
+</tr>
                         <tr class="trhead">
                             <td style="padding-left:5px;"> Name of District or RDH</td>
-
+ 
                             <td colspan="1" style="background:#EFEFEF;">
                                 <select id="selectbasic" name="district" ng-model='district' class="form-control"
                                         style="font-weight:400;" required>
@@ -50,9 +81,7 @@
                                     <option value={{district.id}}>{{district.name}}
                                         {% endfor %}
                                 </select>
-                                <span ng-show="submitted && form_health_baseline_district.district.$error.required">
-                                Please select District
-                                </span>
+                               
                             </td>
                             <td colspan="1" style="padding-right:5px;text-align:right;">
                                 Year/Month
@@ -60,9 +89,7 @@
                             <td colspan="1" style="background:#EFEFEF;font-weight:normal;">
                                 <input id="datepicker" type="text" placeholder="" ng-model="baselineDate"
                                        class="form-control input-md" name ="baselineDate" required>
-                                   <span ng-show="submitted && form_health_baseline_district.baselineDate.$error.required">
-                                    Please select Date
-                                   </span>
+                                   
                             </td>
 
                         </tr>
@@ -90,7 +117,7 @@
                         </tbody>
                     </table>
 
-                    <div style="height:400px;overflow:auto;">
+                    <div id="boxscroll" style="height:400px;overflow:auto;">
 
                         <table class="table table-bordered">
                             <colgroup>

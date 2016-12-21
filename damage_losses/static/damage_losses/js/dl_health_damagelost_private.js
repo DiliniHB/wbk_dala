@@ -155,6 +155,7 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
                     'district': $scope.district,
                     'dl_date': $scope.dlDate,
                     'incident': $scope.incident,
+
                 },
                 'is_edit': $scope.is_edit
             }),

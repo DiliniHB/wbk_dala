@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'settings',
     'users',
     'reports',
-
+    'charts',
+    # 'db_tools'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -54,6 +55,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'dbtools.middleware.ReadOnlyMiddleware',
 ]
 
 ROOT_URLCONF = 'dala.urls'
@@ -83,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'OPTIONS': {
-            'options': '-c search_path=health,public'
-        },
+                'options': '-c search_path=health,public'
+            },
         'NAME': 'dala',
         'USER': 'postgres',
 
@@ -142,6 +144,37 @@ TABLE_PROPERTY_MAPPER = {
             'BmfPvtMf': ['type_pvt_mf', 'number', 'male', 'female', 'id']
 
         },
+    'Table_8':
+        {
+         'DshPubLmh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                       'losses_y1', 'losses_y2', 'total_losses'],
+         'DshPubMoh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                       'losses_y1', 'losses_y2', 'total_losses'],
+         'DshPubOmf': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                       'losses_y1', 'losses_y2', 'total_losses'],
+         'DshPvtFa': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                      'losses_y1', 'losses_y2', 'total_losses'],
+         'DshTdlOwship': ['ownership', 'damages', 'losses_y1', 'losses_y2', 'total']
+        },
+    'Table_9':
+        {'DspPubD1Lmh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPubD1Moh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPubD1Omc': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPubDnLmh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPubDnMoh': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPubDnOmc': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPvtD1': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspPvtDn': ['facilities_assets', 'total_num_affected', 'male', 'female', 'total_damages',
+                         'losses_y1', 'losses_y2', 'total_losses', 'id'],
+         'DspTdlOwship': [ 'ownership', 'damages', 'losses_y1', 'losses_y2', 'total']
+         },
     'Table_4':
         {
             'BucOmarStructure': ['particulars', 'base_hospital', 'divisional_hospital',
