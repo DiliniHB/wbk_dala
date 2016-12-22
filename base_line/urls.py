@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^bs_health_status$', views.bs_health_status, name='bs_health_status'),
     url(r'^bs_save_hs_data$', views.bs_save_hs_data, name='bs_save_hs_data'),
     url(r'^bs_get_data$', views.bs_get_data, name='bs_get_data'),
+    url(r'^bs_get_data_mock$', views.bs_get_data_mock, name='bs_get_data_mock'),
     url(r'^bs_fetch_edit_data$', views.bs_fetch_edit_data, name='bs_fetch_edit_data'),
 
     # Dileepa and Sachie's

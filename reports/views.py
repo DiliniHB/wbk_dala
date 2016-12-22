@@ -7,12 +7,15 @@ from django.apps import apps
 from django.conf import settings
 import json
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from users.decorators import super_user_permission
 
 
+@super_user_permission()
 def index_report(request):   
     return render(request, 'reports/index_report.html')
 
 
+@super_user_permission()
 def index_chart(request):   
     return render(request, 'reports/index_chart.html')
 
@@ -66,6 +69,8 @@ def dl_fetch_report_data(request):
     if table_name == 'Table_9':
         admin_area = com_data['province']
         filter_fields = {'incident': incident, 'province': admin_area}
+    elif table_name == 'Table_10':
+        filter_fields = {'incident': incident}
     else:
         admin_area = com_data['district']
         filter_fields = {'incident': incident, 'district': admin_area}

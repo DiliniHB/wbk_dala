@@ -31,6 +31,32 @@ def fetch_districts(user):
         return {'districts': districts, 'incidents': incidents}
 
 
+@csrf_exempt
+def fetch_incident_districts(request):
+    dl_data = (yaml.safe_load(request.body))
+    incident_id = dl_data['incident']
+    incident = IncidentReport.objects.get(pk=incident_id)
+    affected_district = incident.effectedarea_set.values('district__id', 'district__name').distinct()
+
+    return HttpResponse(
+        json.dumps(list(affected_district)),
+        content_type='application/javascript; charset=utf8'
+    )
+
+
+@csrf_exempt
+def fetch_incident_provinces(request):
+    dl_data = (yaml.safe_load(request.body))
+    incident_id = dl_data['incident']
+    incident = IncidentReport.objects.get(pk=incident_id)
+    affected_provinces = incident.effectedarea_set.values('district__id', 'district__province_id', 'district__province__name').distinct()
+
+    return HttpResponse(
+        json.dumps(list(affected_provinces)),
+        content_type='application/javascript; charset=utf8'
+    )
+
+
 @permission_required("district")
 def dl_health_damagelost_other_medical_facilities(request):
     fetch_data = fetch_districts(request.user)
@@ -140,7 +166,6 @@ def dl_save_data(request):
                             print 'Table 10'
                         else:
                             model_object.district_id = com_data['district']
-                        model_object.district_id = com_data['district']
                         model_object.incident_id = com_data['incident']
 
                         print 'row', ' --> ', row, '\n', ' object '

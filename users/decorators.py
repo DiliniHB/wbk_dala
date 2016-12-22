@@ -43,3 +43,18 @@ def permission_required(perm):
             return False
 
     return user_passes_test(has_perm, login_url='/admin/login/')
+
+
+def super_user_permission():
+    def has_perm(user):
+        print 'you here '
+        if user.id is not None:
+            print ' there is user '
+            if user.is_superuser:
+                return True
+            else:
+                raise PermissionDenied
+        else:
+            return False
+
+    return user_passes_test(has_perm, login_url='/admin/login/')
