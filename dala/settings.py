@@ -87,7 +87,7 @@ DATABASES = {
         'OPTIONS': {
                 'options': '-c search_path=health,public'
             },
-        'NAME': 'dala1',
+        'NAME': 'dala',
         'USER': 'postgres',
 
     },
