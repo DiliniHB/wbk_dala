@@ -219,4 +219,25 @@ $("#modal-container-239453").modal('show');
               ]
 
   }
+   // Sachie
+   // get relevant base-line data for calculations
+    $scope.changedValue=function getBsData() {
+
+
+        if($scope.incident){
+
+       $http({
+    method: "POST",
+    url: "/damage_losses/fetch_incident_districts",
+    data: angular.toJson({'incident': $scope.incident }),
+    }).success(function(data) {
+        $scope.districts = data;
+        $scope.district = "";
+        console.log(data);
+
+    })
+        }
+
+
+    }
 }])
