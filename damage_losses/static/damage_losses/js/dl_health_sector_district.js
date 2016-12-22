@@ -226,9 +226,10 @@ app.controller("DlHealthSectorDistrictController", ['$scope','$http',function ($
             url: '/damage_losses/dl_save_data',
             contentType: 'application/json; charset=utf-8',
             data: angular.toJson({
+
                 'table_data': $scope.dlhealthsectordistrict,
                 'com_data': {
-                    'district': $scope.district.Id,
+                    'district': $scope.district,
                     'incident' : $scope.incident,
 
 
@@ -256,7 +257,17 @@ $("#modal-container-239453").modal('show');
 
         if($scope.incident){
 
-        getDistrictData();
+
+       $http({
+    method: "POST",
+    url: "/damage_losses/fetch_incident_districts",
+    data: angular.toJson({'incident': $scope.incident }),
+    }).success(function(data) {
+        $scope.districts = data;
+        $scope.district = "";
+        console.log(data);
+
+    })
         }
 
         if($scope.district && $scope.incident){
@@ -268,9 +279,10 @@ $("#modal-container-239453").modal('show');
         url: '/damage_losses/dl_get_data',
         contentType: 'application/json; charset=utf-8',
         data: angular.toJson({
+                'table_name':'Table_8',
                 'db_tables': ['DmhDfNum','DmhDfPaf','DmhPdfaNum','DmhPdfaPaf','DmhPdfaOassets','DmhLosFi','DmhLosCud','DmhLosHoc','DmhLosOue','DmfDfaNum','DmfDfaPaf','DmfPdfaNum','DmfPdfaPaf','DmfPdaOassets','DmfLosFi','DmfLosCud','DmfLosHoc','DmfLosOue','DapNapTmf','DapBefPc1','DapBefPcn','DapBefOther'],
                 'com_data': {
-                    'district': $scope.district.Id,
+                    'district': $scope.district,
                     'incident': $scope.incident,
 
                 }
@@ -294,25 +306,6 @@ $("#modal-container-239453").modal('show');
 
 
     }
-
-    function getDistrictData()
-    {
-
-
-    $scope.Districts  = [
-
-            {  Id: 1,
-                Name: 'Colombo'
-            }, {
-                Id: 2,
-                Name: 'Gampaha'
-            }, {
-                Id: 3,
-                Name: 'Kaluthara'
-            }
-              ]
-
-  }
 
 
 

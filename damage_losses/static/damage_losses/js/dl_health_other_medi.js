@@ -634,21 +634,31 @@ $("#modal-container-239453").modal('show');
 
         if($scope.incident){
 
-        getDistrictData();
+       $http({
+    method: "POST",
+    url: "/damage_losses/fetch_incident_districts",
+    data: angular.toJson({'incident': $scope.incident }),
+    }).success(function(data) {
+        $scope.districts = data;
+        $scope.district = "";
+        console.log(data);
+
+    })
         }
 
         if($scope.district && $scope.incident){
 
         $http({
             method: 'POST',
-            url: '/base_line/bs_get_data',
+            url: '/base_line/bs_get_data_mock',
             contentType: 'application/json; charset=utf-8',
             data: angular.toJson({
               'db_tables': ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets'],
                'com_data': {
-                    'district': $scope.district.Id,
+                    'district': $scope.district,
                     'incident': $scope.incident,
-                    }
+                    },
+               'table_name': 'Table_4'
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -684,7 +694,7 @@ $("#modal-container-239453").modal('show');
     data: angular.toJson({
     'table_name':  'Table_6',
     'com_data': {
-           'district': $scope.district.Id,
+           'district': $scope.district,
             'incident': $scope.incident,
           },
            'is_edit':$scope.is_edit
@@ -707,25 +717,6 @@ $("#modal-container-239453").modal('show');
      $scope.is_edit = false;
      $scope.dlDataHealthDamagelostOtherMedicalFacilities = init_data;
 }
-
-function getDistrictData()
-    {
-
-
-    $scope.Districts  = [
-
-            {  Id: 1,
-                Name: 'Colombo'
-            }, {
-                Id: 2,
-                Name: 'Gampaha'
-            }, {
-                Id: 3,
-                Name: 'Kaluthara'
-            }
-              ]
-
-  }
 
 
 
