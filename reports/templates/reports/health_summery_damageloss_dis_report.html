@@ -41,14 +41,14 @@
                      <div class="col-sm-3">
 
                         <div class="form-group">
-                            <label for="cvv">Disaster Type</label>
+                            <label for="cvv">Incident</label>
                             <select ng-change="fetchDistricts()" id="ccyear" ng-model="incident" name="incident" class="form-control" required>
                             <option value="">-- Select --</option>
                             {% for incident in incidents %}
                             <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
                             {% endfor %}
                         </select>
-                            <span ng-show="submitted && report_sum_dl_dis.incident.$error.required">
+                            <span style="color:red;" ng-show="submitted && report_sum_dl_dis.incident.$error.required">
                                        Please select Incident
                                  </span>
                         </div>
@@ -62,7 +62,7 @@
                             <option ng-repeat="district in districts" ng-value="district.district__id" ng-bind="district.district__name"></option>
 
                         </select>
-                        <span ng-show="submitted && report_sum_dl_dis.district.$error.required">
+                        <span style="color:red;" ng-show="submitted && report_sum_dl_dis.district.$error.required">
                                        Please select District
                                  </span>
                     </div>

@@ -428,7 +428,7 @@ app.controller("DlHealthSummaryDamageNationwideController", ['$scope','$http',fu
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
-
+$("#modal-container-239453").modal('show');
             console.log(response);
 
         }, function errorCallback(response) {

@@ -616,7 +616,7 @@ $scope.district;
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
-
+$("#modal-container-239453").modal('show');
             console.log(response);
 
         }, function errorCallback(response) {

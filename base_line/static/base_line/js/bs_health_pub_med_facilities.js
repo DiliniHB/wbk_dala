@@ -117,10 +117,11 @@ app.controller("BsPubMedicalFacilitiesController", ['$scope', '$http', function(
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
-
+		$("#modal-container-239453").modal('show');
             console.log(response);
             $scope.is_edit = false;
             $scope.bsDataMedicalFacilities = init_data;
+ 
 
         }, function errorCallback(response) {
 

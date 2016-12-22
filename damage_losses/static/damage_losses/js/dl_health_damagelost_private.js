@@ -160,6 +160,7 @@ app.controller('dlHealthDamagelostPrivateAppController', ['$scope', '$http', fun
             }),
             dataType: 'json',
         }).then(function mySucces(response) {
+$("#modal-container-239453").modal('show');
             //if data sent to server side method successfull
             console.log(response);
             }, function myError(response) {

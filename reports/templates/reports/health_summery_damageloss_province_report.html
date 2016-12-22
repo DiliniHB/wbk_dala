@@ -41,14 +41,14 @@
                     <div class="col-sm-3">
 
                         <div class="form-group">
-                            <label for="cvv">Disaster Type</label>
+                            <label for="cvv">Incident</label>
                             <select ng-change="fetchProvinces()" id="ccyear" name="incident" ng-model="incident" class="form-control" required>
                             <option value="">-- Select --</option>
                             {% for incident in incidents %}
                             <option value="{{ incident.id }}">{{ incident.reported_date_time }}{{ incident.disaster_type }}</option>
                             {% endfor %}
                         </select>
-                            <span ng-show="submitted && report_sum_dl_province.incident.$error.required">
+                            <span style="color:red;" ng-show="submitted && report_sum_dl_province.incident.$error.required">
                                        Please select Incident
                                  </span>
                         </div>
@@ -64,7 +64,7 @@
                             <option ng-repeat="province in provinces" ng-value="province.district__province_id" ng-bind="province.district__province__name"></option>
 
                         </select>
-                        <span ng-show="submitted && report_sum_dl_province.province.$error.required">
+                        <span style="color:red;" ng-show="submitted && report_sum_dl_province.province.$error.required">
                                        Please select Province
                                  </span>
                     </div>

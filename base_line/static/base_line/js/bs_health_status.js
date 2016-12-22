@@ -93,6 +93,8 @@ if(form.$valid){
      $scope.dataHealthStatus = init_data;
      $scope.is_edit = false;
 
+     $("#modal-container-239453").modal('show');
+
  })
  }
 

@@ -458,6 +458,7 @@ app.controller('dlInTheLineMinistryHealthSysAppController', ['$scope', '$http', 
             dataType: 'json',
         }).then(function mySucces(response) {
             //if data sent to server side method successfull
+$("#modal-container-239453").modal('show');
             console.log(response);
             }, function myError(response) {
                 //if data sent to server side method unsuccessfull

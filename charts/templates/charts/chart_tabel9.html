@@ -56,7 +56,7 @@ a:hover {text-decoration:none;}
                     <div class="col-sm-3">
 
                         <div class="form-group">
-                            <label for="cvv">Disaster Type</label>
+                            <label for="cvv">Incident</label>
                             <select ng-change="fetchProvinces()" id="ccyear" ng-model="incident" name="incident" class="form-control" required>
                                 <option value="">-- Select --</option>
                                 {% for incident in incidents %}
@@ -65,7 +65,7 @@ a:hover {text-decoration:none;}
                                 </option>
                                 {% endfor %}
                             </select>
-                            <span ng-show="submitted && chart_sum_dl_province.incident.$error.required">
+                            <span style="color:red" ng-show="submitted && chart_sum_dl_province.incident.$error.required">
                                        Please select Incident
                             </span>
                         </div>
@@ -82,7 +82,7 @@ a:hover {text-decoration:none;}
                                     ng-bind="province.district__province__name"></option>
 
                         </select>
-                        <span ng-show="submitted && chart_sum_dl_province.province.$error.required">
+                        <span style="color:red" ng-show="submitted && chart_sum_dl_province.province.$error.required">
                              Please select District
                         </span>
                     </div>
@@ -106,11 +106,12 @@ a:hover {text-decoration:none;}
             </div>
         </div>
 
-        <div class="animated fadeIn">
-            <div class="card-columns col-2">
-                <div class="card">
+<h3 style="width:100%;background:#FF5733;padding:6px;color:#fff;">Damage and Losses</h3>
+<div class="row">
+<div class="col-md-6">
+<div class="card">
                     <div class="card-header">
-                        Damage and Losses
+                        
                         Public Sector - Line Ministry Health System
 
                     </div>
@@ -121,19 +122,7 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        Public Sector - MOH
-
-                    </div>
-                    <div class="card-block">
-                        <div class="chart-wrapper">
-                            <nvd3 id="line_chart" options='options' data='dspPubDnMohDl' api="api2"
-                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
+<div class="card">
                     <div class="card-header">
                         Public Sector - Other Medical Facilities
 
@@ -145,19 +134,7 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        Private Sector
-
-                    </div>
-                    <div class="card-block">
-                        <div class="chart-wrapper">
-                            <nvd3 id="line_chart" options='options' data='dspPvtDn' api="api4"
-                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
+ <div class="card">
                     <div class="card-header">
                         Ownership
 
@@ -170,9 +147,47 @@ a:hover {text-decoration:none;}
                     </div>
                 </div>
 
-                <div class="card">
+</div>
+
+<div class="col-md-6">
+
+ <div class="card">
                     <div class="card-header">
-                        Total number of health facilities and assets affected
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPubDnMohDl' api="api2"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+
+ <div class="card">
+                    <div class="card-header">
+                        Private Sector
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPvtDn' api="api4"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+</div>
+
+</div>
+
+<!-- first category -->
+
+<h3 style="width:100%;background:#FF5733;padding:6px;color:#fff;">Total number of health facilities and assets affected</h3>
+<div class="row">
+<div class="col-md-6">
+<div class="card">
+                    <div class="card-header">
+                        
                         Public Sector - Line Ministry Health System
 
                     </div>
@@ -183,19 +198,7 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        Public Sector - MOH
-
-                    </div>
-                    <div class="card-block">
-                        <div class="chart-wrapper">
-                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPubDnMohTotAfc' api="api7"
-                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
+<div class="card">
                     <div class="card-header">
                         Public Sector - Other Medical Facilities
 
@@ -207,7 +210,23 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
+
+</div>
+
+<div class="col-md-6">
+<div class="card">
+                    <div class="card-header">
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='optionsDiscrete' data='dspPubDnMohTotAfc' api="api7"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+ <div class="card">
                     <div class="card-header">
                         Private Sector
 
@@ -219,9 +238,16 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
+
+</div>
+</div>
+
+<h3 style="width:100%;background:#FF5733;padding:6px;color:#fff;"> Total number of patients affected</h3>
+<div class="row">
+<div class="col-md-6">
+ <div class="card">
                     <div class="card-header">
-                        Total number of patients affected
+                       
                         Public Sector - Line Ministry Health System
 
                     </div>
@@ -232,19 +258,8 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        Public Sector - MOH
 
-                    </div>
-                    <div class="card-block">
-                        <div class="chart-wrapper">
-                            <nvd3 id="line_chart" options='options' data='dspPubDnMohTotPaAfc' api="api11"
-                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
+ <div class="card">
                     <div class="card-header">
                         Public Sector - Other Medical Facilities
 
@@ -256,7 +271,23 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
-                <div class="card">
+</div>
+
+<div class="col-md-6">
+<div class="card">
+                    <div class="card-header">
+                        Public Sector - MOH
+
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-wrapper">
+                            <nvd3 id="line_chart" options='options' data='dspPubDnMohTotPaAfc' api="api11"
+                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                        </div>
+                    </div>
+                </div>
+
+  <div class="card">
                     <div class="card-header">
                         Private Sector
 
@@ -268,6 +299,33 @@ a:hover {text-decoration:none;}
                         </div>
                     </div>
                 </div>
+</div>
+</div>
+
+
+
+
+        <div class="animated fadeIn">
+            <div class="card-columns col-2">
+                
+
+
+
+
+
+               
+                
+               
+               
+
+                
+                
+                
+               
+               
+                
+               
+              
 
             </div>
         </div>
