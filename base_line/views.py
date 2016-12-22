@@ -347,21 +347,22 @@ def bs_get_data(request):
 @csrf_exempt
 def bs_get_data_mock(request):
     todate = timezone.now()
-    #data = (yaml.safe_load(request.body))
-    district = 1
-    incident_id = 9
-    incident = IncidentReport.objects.get(pk=9)
+    data = (yaml.safe_load(request.body))
+    com_data = data['com_data']
+    district = com_data['district']
+    incident_id = com_data['incident']
+    incident = IncidentReport.objects.get(pk=incident_id)
     incident_date = incident.reported_date_time
-    table_name = 'Table_1'
-    db_tables = ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets']
-
+    table_name = data['table_name']
+    db_tables = data['db_tables']
     bs_mtable_data = {}
 
-    bd_sessions = not BdSessionKeys.objects.extra(select={'difference': 'full_bs_date - %s'},
+    bd_sessions = BdSessionKeys.objects.extra(select={'difference': 'full_bs_date - %s'},
                                                   select_params=(incident_date,)).\
         filter(table_name=table_name, district=district).\
         values('difference', 'id', 'bs_date').order_by('difference').latest('difference')
 
+    print bd_sessions
     bs_date = bd_sessions['bs_date']
 
     for db_table in db_tables:
@@ -370,22 +371,8 @@ def bs_get_data_mock(request):
         bs_mtable_data[db_table] = serializers.serialize('json',
                                                          model_class.objects.filter(bs_date=bs_date, district=district).order_by('id'))
 
-    '''incident_date = incident[0].reported_date_time
-    db_tables = ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets']
-
-    # get closest data based on district incident date and table number
-    bs_session = BdSessionKeys.objects.values('bs_date').latest('date')
-    bs_date = bs_session['bs_date']
-
-    bs_mtable_data = {}
-
-    for db_table in db_tables:
-        model_class = apps.get_model('base_line', db_table)
-        bs_mtable_data[db_table] = serializers.serialize('json', model_class.objects.filter(bs_date=bs_date).order_by('id'))
-'''
-
     return HttpResponse(
-        json.dumps(list(bs_mtable_data)),
+        json.dumps((bs_mtable_data)),
 
         content_type='application/javascript; charset=utf8'
     )

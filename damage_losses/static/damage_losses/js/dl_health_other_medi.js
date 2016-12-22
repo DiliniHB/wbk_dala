@@ -641,14 +641,15 @@ $scope.district;
 
         $http({
             method: 'POST',
-            url: '/base_line/bs_get_data',
+            url: '/base_line/bs_get_data_mock',
             contentType: 'application/json; charset=utf-8',
             data: angular.toJson({
               'db_tables': ['BucOmarStructure','BucOmarSupplies','BucOmarMequipment','BucOmarOassets','BucOmarcStructure','BucOmarcCrpm','BucOmarcMequipment','BucOmarcOassets'],
                'com_data': {
                     'district': $scope.district.Id,
                     'incident': $scope.incident,
-                    }
+                    },
+               'table_name': 'Table_4'
             }),
             dataType: 'json',
         }).then(function successCallback(response) {
@@ -710,8 +711,6 @@ $scope.district;
 
 function getDistrictData()
     {
-
-
     $scope.Districts  = [
 
             {  Id: 1,
