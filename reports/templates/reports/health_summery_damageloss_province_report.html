@@ -87,18 +87,12 @@
         </div>
 
         <div>
-            <ul class='nav nav-wizard'>
-                <li id="li1" class="active"><a href='#step1' data-toggle="tab">1 Public Sector</a></li>
-                <li id="li2"><a href='#step2' data-toggle="tab">2 Private Sector</a></li>
-                <li id="li3"><a href='#step3' data-toggle="tab">3 Total Damages and Losses</a></li>
-
-
-            </ul>
+           
 
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="step1">
 
-                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
+                    <table class="table table-bordered" style="width:100%;">
                         <colgroup>
                             <col width="202"/>
                             <col width="90" span="7"/>
@@ -140,10 +134,7 @@
                                 Year 2
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                    <div id="boxscroll1" style="height:400px;overflow:auto;">
-                        <table class="table table-bordered">
+                       
                             <tr height="20" class="trhead">
                                 <td width="202" height="20" class="trhead">
                                     District 1
@@ -472,25 +463,9 @@
 
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <a href='#step2' id="s1" data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Private Sector
-                            Informations</a>
-                    </div>
 
-                </div>
 
-                <div class="tab-pane" id="step2">
-
-                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
-                        <colgroup>
-                            <col width="264"/>
-                            <col width="98" span="6"/>
-                        </colgroup>
-                        <tbody>
-
-                        <tr height="34" class="trheadc">
+			   <tr height="34" class="trheadc">
                             <td rowspan="2" width="202" height="54" style="text-align:left;padding-left:5px;">
                                 Facilities and Assets
                             </td>
@@ -524,11 +499,8 @@
                                 Year 2
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                    <div style="height:400px;overflow:auto;">
-                        <table class="table table-bordered">
-                            <tr height="20" class="trheadc">
+
+  <tr height="20" class="trheadc">
                                 <td width="202" height="20">
                                     District 1
                                 </td>
@@ -624,24 +596,8 @@
 
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <a href='#step3' id="s2" data-toggle="tab" class="btn btn-sm btn-info pull-right"> View Total Damages
-                            and Losses Informations</a>
 
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="step3">
-                    <table class="table table-bordered" style="width:100%;background:#E4E5E6;">
-                        <colgroup>
-                            <col width="202"/>
-                            <col width="90" span="7"/>
-                        </colgroup>
-                        <tbody>
-
-                        <tr height="20" class="trheadc">
+		  <tr height="20" class="trheadc">
                             <td rowspan="2" width="202" height="40" style="text-align:left;padding-left:5px;">
                                 Ownership
                             </td>
@@ -663,12 +619,8 @@
                                 Year 2
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
 
-                    <div style="height:400px;overflow:auto;">
-                        <table class="table table-bordered">
-                            <tr ng-repeat="dspTdlOwship in dlHsProvince.Table_9.DspTdlOwship" height="20">
+ <tr ng-repeat="dspTdlOwship in dlHsProvince.Table_9.DspTdlOwship" height="20">
                                 <td ng-bind="dspTdlOwship.ownership" ng-if="dspTdlOwship.ownership == 'TOTAL'" width="202" height="20" class="boldash">
 
                                 </td>
@@ -688,12 +640,13 @@
 
                                 </td>
                             </tr>
+
+
+
                             </tbody>
                         </table>
+                        <br>
                        
-
-                    </div>
-                </div>
 
 
             </div>
