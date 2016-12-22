@@ -103,11 +103,12 @@
                                         <!--{% endfor %}-->
 
                                 <!--</select>-->
-                                <select class="form-control" style="width:100%;font-weight:400;" ng-model="district" name="district"
-                                        ng-options="district.Name for district in Districts track by district.Id " ng-change="changedValue()"
-                                        required >
-                                       <option value="">Select District</option>
-                                </select>
+                               <select name="district" id="ccyear" ng-model="district" class="form-control" required>
+                            <option value="">Select District</option>
+
+                            <option ng-repeat="district in districts" ng-value="district.district__id" ng-bind="district.district__name"></option>
+
+                        </select>
                                
 
                             </td>
