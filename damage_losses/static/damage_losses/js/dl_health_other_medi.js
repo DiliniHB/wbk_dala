@@ -608,7 +608,7 @@ $scope.district;
             data: angular.toJson({
                 'table_data': $scope.dlDataHealthDamagelostOtherMedicalFacilities,
                 'com_data': {
-                    'district': $scope.district.Id,
+                    'district': $scope.district,
                     'incident': $scope.incident,
 
                 },
